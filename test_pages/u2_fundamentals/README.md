@@ -2,21 +2,19 @@
 Coding basics, vars, arrays, canvas, drawing concepts.  
 Intro to canvas-sketch (see resources)
   
-## Markup examples quick ref edit in each template:
-  
-### Links
-To URL:
-[create_TOC_for_md.py](https://github.com/UnacceptableBehaviour/movie_picker/blob/master/create_TOC_for_md.py) 
-  
-To image:  
-![Amoeba Dance](https://github.com/UnacceptableBehaviour/js_canvas/blob/master/test_pages/_template/amoeba-dance.png)  
-[Image credit to Memo Akten](http://www.memo.tv/works/amoeba-dance/)  
-  
-### Code
+canvas-sketch in output mode:  
+![canvas-sketch](https://github.com/UnacceptableBehaviour/js_canvas/blob/master/test_pages/u2_fundamentals/sketches/output/01/2022.01.06-19.59.17.png)  
+
+Running canvas-sketch:  
 ```
-> cd into directory: /path/js_canvas/test_pages/copy_of_template
-> open index.html
+# ignore file following this name in path
+# add 'node_modules/' line to git ignore
+
+> canvas-sketch sktch-01.js --new                 # normal mode
+> canvas-sketch sktch-01.js --output=output/01    # output mode - create image in dir output/01
 ```
+Settings can be used to create A4 size canvas & ppi setting for printing. Handy!
+  
 
 ### Table - Titles at top
   
@@ -43,11 +41,6 @@ https://github.com/mattdesl/canvas-sketch
 From README.md:  
 canvas-sketch is a loose collection of tools, modules and resources for creating generative art in JavaScript and the browser.  
 [canvas-sketch documentation](https://github.com/mattdesl/canvas-sketch/blob/master/docs/README.md)  
-Running canvas-sketch:  
-```
-> canvas-sketch sktch-01.js --new     # normal mode
-
-```
 
 
 
