@@ -34,8 +34,8 @@ factorial time		| O(n!)						| Brute force travelling salesman
 
 # Resources
 #### Domestika - Creative Coding: Making Visuals with JavaScript
-https://www.domestika.org/auth/login#course_lesson_28425
+https://www.domestika.org/auth/login#course_lesson_28425  
 [Creative Coding: Making Visuals with JavaScript](https://www.domestika.org/auth/login#course_lesson_28425)
 
 #### Markdown syntax (.md)
-https://www.markdownguide.org/basic-syntax/
+https://www.markdownguide.org/basic-syntax/  
