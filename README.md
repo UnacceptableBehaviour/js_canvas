@@ -7,8 +7,8 @@ Basic template to create JS visiulasation tests - copy '_template' direcory & go
 To URL:
 [create_TOC_for_md.py](https://github.com/UnacceptableBehaviour/movie_picker/blob/master/create_TOC_for_md.py) 
   
-To image:
-![Amoeba Dance](https://github.com/UnacceptableBehaviour/js_canvas/blob/master/test_pages/_template/amoeba-dance.png)
+To image:  
+![Amoeba Dance](https://github.com/UnacceptableBehaviour/js_canvas/blob/master/test_pages/_template/amoeba-dance.png)  
 [Image credit to Memo Akten](http://www.memo.tv/works/amoeba-dance/)  
   
 ### Code
