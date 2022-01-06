@@ -1,8 +1,16 @@
 # JS Visualisation Tests Template
-Quick copy template & test.  
+Basic template to create JS visiulasation tests - copy '_template' direcory & go.  
   
-Markup examples quick ref:
-
+## Markup examples quick ref edit in each template:
+  
+### Links
+To URL:
+[create_TOC_for_md.py](https://github.com/UnacceptableBehaviour/movie_picker/blob/master/create_TOC_for_md.py) 
+  
+To image:
+![Amoeba Dance](https://github.com/UnacceptableBehaviour/js_canvas/blob/master/test_pages/_template/amoeba-dance.png)
+[Image credit to Memo Akten](http://www.memo.tv/works/amoeba-dance/)  
+  
 ### Code
 ```
 > cd into directory: /path/js_canvas/test_pages/copy_of_template
@@ -20,13 +28,6 @@ quadratic time		| O(n^2)						| Bubble sort
 factorial time		| O(n!)						| Brute force travelling salesman
 **HIGH**  | - | [many more here - wikipedia](https://en.wikipedia.org/wiki/Time_complexity#Table_of_common_time_complexities)
 
-### Link
-To image:
-![Amoeba Dance](https://s3.dualstack.us-east-2.amazonaws.com/pythondotorg-assets/media/dev/peps/pep-3147/pep-3147-1.png)
-[Image credit to Memo Akten](http://www.memo.tv/works/amoeba-dance/)  
-  
-To URL:
-[create_TOC_for_md.py](https://github.com/UnacceptableBehaviour/movie_picker/blob/master/create_TOC_for_md.py) 
 
 
 
