@@ -74,5 +74,3 @@ for (let i=0; i < 5; i++){
 //Array.forEach( item => {
 //   console.log(item)           
 //});
-
-

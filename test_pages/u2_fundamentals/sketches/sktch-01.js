@@ -7,19 +7,23 @@ const settings = {            // create settings object
 // callback anonymous function for 
 const sketch = () => {
   return ({ context, width, height }) => {
-    context.fillStyle = 'beige';
+    context.fillStyle = 'black';
     context.fillRect(0, 0, width, height);
     
     const w = 60;
     const h = 60;
     const gap = 20;
     let x,y;
-    
+
+    context.fillStyle = 'black';         // property
+    context.fillRect(0,0,600,600);
+
     for (let i=0; i < 5; i++){
       for (let j=0; j < 5; j++){
         x = 100 + (w + gap) *i;
         y = 100 + (h + gap) *j;
         
+        context.strokeStyle = "white";
         context.beginPath();            // outer rect
         context.rect(x,y, w,h);
         context.stroke();       
