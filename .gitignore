@@ -5,4 +5,4 @@
 # ignore directory and contents
 /z_data
 /scratch
-/node_modules/
+node_modules/
