@@ -15,22 +15,9 @@ Running canvas-sketch:
 ```
 Settings can be used to create A4 size canvas & ppi setting for printing. Handy!
   
-
-### Table - Titles at top
+Invert colours for final exersize:  
+![canvas-sketch](https://github.com/UnacceptableBehaviour/js_canvas/blob/master/test_pages/u2_fundamentals/sketches/output/01/2022.01.06-20.39.59.png)  
   
-name | notation | example
-| - | - | - | 
-**LOW** | - | -
-constant time		| O(1)						| Simple calculations, array lookups
-logarithmic time		| O(log n)					| Binary search
-quadratic time		| O(n^2)						| Bubble sort
-factorial time		| O(n!)						| Brute force travelling salesman
-**HIGH**  | - | [many more here - wikipedia](https://en.wikipedia.org/wiki/Time_complexity#Table_of_common_time_complexities)
-
-
-
-
-
 # Resources
 #### Domestika - Creative Coding: Making Visuals with JavaScript
 https://www.domestika.org/auth/login#course_lesson_28425  
