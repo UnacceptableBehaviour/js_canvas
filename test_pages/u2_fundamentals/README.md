@@ -1,5 +1,6 @@
 # U2 - Fundamentals
-Coding basics
+Coding basics, vars, arrays, canvas, drawing concepts.  
+Intro to canvas-sketch (see resources)
   
 ## Markup examples quick ref edit in each template:
   
@@ -36,6 +37,17 @@ factorial time		| O(n!)						| Brute force travelling salesman
 #### Domestika - Creative Coding: Making Visuals with JavaScript
 https://www.domestika.org/auth/login#course_lesson_28425  
 [Creative Coding: Making Visuals with JavaScript](https://www.domestika.org/auth/login#course_lesson_28425)
+  
+#### canvas-sketch (npm package)
+https://github.com/mattdesl/canvas-sketch  
+From README.md:  
+canvas-sketch is a loose collection of tools, modules and resources for creating generative art in JavaScript and the browser.  
+[canvas-sketch documentation](https://github.com/mattdesl/canvas-sketch/blob/master/docs/README.md)  
+Running canvas-sketch:  
+```
+> canvas-sketch sktch-01.js --new     # normal mode
 
-#### Markdown syntax (.md)
-https://www.markdownguide.org/basic-syntax/  
+```
+
+
+
