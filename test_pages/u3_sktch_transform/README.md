@@ -1,8 +1,13 @@
 # U3 - Sketch Transforms
-Contents notes
+Contents notes:
+command | description
+- | -
+context.translate(x,y) | Remaps the (0,0) position on the canvas
+context.rotate(45 * Math.PI / 180) | rotates around origin (0,0)
+context.save() & context.restore() | save and restore context state 
   
-canvas-sketch in output mode:  
-![canvas-sketch](https://github.com/UnacceptableBehaviour/js_canvas/blob/master/test_pages/u2_fundamentals/sketches/output/01/2022.01.06-19.59.17.png)  
+Testing understanding - translate rotate:  
+![canvas-sketch](https://github.com/UnacceptableBehaviour/js_canvas/blob/master/test_pages/u3_sktch_transform/01-translate-rotate.png)  
 
 Running canvas-sketch:  
 ```
@@ -24,5 +29,6 @@ From README.md:
 canvas-sketch is a loose collection of tools, modules and resources for creating generative art in JavaScript and the browser.  
 [canvas-sketch documentation](https://github.com/mattdesl/canvas-sketch/blob/master/docs/README.md)  
 
-
+#### W3 Canvas Reference
+https://www.w3schools.com/tags/ref_canvas.asp
 
