@@ -4,7 +4,8 @@ command | description
 | - | - |
 context.translate(x,y) | Remaps the (0,0) position on the canvas
 context.rotate(45 * Math.PI / 180) | rotates around origin (0,0) in rads - Equation shows 45deg in rads
-context.save() & context.restore() | save and restore context state 
+context.save() & context.restore() | save and restore context state
+canvas-sketch-util | [canvas-sketch-util](https://github.com/mattdesl/canvas-sketch-util)  
   
 Testing understanding - translate rotate:  
 ![canvas-sketch](https://github.com/UnacceptableBehaviour/js_canvas/blob/master/test_pages/u3_sktch_transform/01-translate-rotate.png)  
@@ -17,9 +18,13 @@ Running canvas-sketch:
 > canvas-sketch sketch-02 --open        # opens a new browser tab
 ```
   
-I'm sure there's a reason for doing it this way!  
-![canvas-sketch](https://github.com/UnacceptableBehaviour/js_canvas/blob/master/test_pages/u3_sktch_transform/02-25-slices.png)  
-Code @ [sketch-02.js](https://github.com/UnacceptableBehaviour/js_canvas/blob/e6420bce798bb87b03b7a50b2fe37cf94d03c0ae/test_pages/u3_sktch_transform/sketch-02.js)
+I'm sure there's a reason for doing it this way!
+| - | - |
+|![canvas-sketch](https://github.com/UnacceptableBehaviour/js_canvas/blob/master/test_pages/u3_sktch_transform/02-25-slices.png)  
+Code @ [sketch-02.js](https://github.com/UnacceptableBehaviour/js_canvas/blob/e6420bce798bb87b03b7a50b2fe37cf94d03c0ae/test_pages/u3_sktch_transform/sketch-02.js) |
+![canvas-sketch](https://github.com/UnacceptableBehaviour/js_canvas/blob/master/test_pages/u3_sktch_transform/03-untils.png)  
+Code @ [sketch-02.js](https://github.com/UnacceptableBehaviour/js_canvas/blob/3c9105e59dc721d79d172e783e3ed1fb0e0cb9de/test_pages/u3_sktch_transform/sketch-02.js)  
+
   
   
 # Resources
