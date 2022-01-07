@@ -16,8 +16,11 @@ Running canvas-sketch:
 > canvas-sketch sketch-02 --new --open  # NO .js -creates template file sketch-02.js
 > canvas-sketch sketch-02 --open        # opens a new browser tab
 ```
-
-
+  
+I'm sure there's a reason for doing it this way!  
+![canvas-sketch](https://github.com/UnacceptableBehaviour/js_canvas/blob/master/test_pages/u3_sktch_transform/02-25-slices.png)  
+Code @ [sketch-02.js](https://github.com/UnacceptableBehaviour/js_canvas/blob/e6420bce798bb87b03b7a50b2fe37cf94d03c0ae/test_pages/u3_sktch_transform/sketch-02.js)
+  
   
 # Resources
 #### Domestika - Creative Coding: Making Visuals with JavaScript
