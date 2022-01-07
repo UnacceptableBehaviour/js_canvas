@@ -8,7 +8,8 @@ context.save() & context.restore() | save and restore context state
   
 Testing understanding - translate rotate:  
 ![canvas-sketch](https://github.com/UnacceptableBehaviour/js_canvas/blob/master/test_pages/u3_sktch_transform/01-translate-rotate.png)  
-
+Code @ [sketch-02.js](https://github.com/UnacceptableBehaviour/js_canvas/blob/efdcdd07826df5c5b8e8721b5c3ae99c9b3df5f7/test_pages/u3_sktch_transform/sketch-02.js)
+  
 Running canvas-sketch:  
 ```
 > cd u3_sktch_transform
