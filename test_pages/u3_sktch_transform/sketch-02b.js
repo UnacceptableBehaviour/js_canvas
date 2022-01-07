@@ -79,7 +79,7 @@ const sketch = () => {
       context.stroke();
       
       //let outer_radius = radius + (scy * (h - h*0.5));
-      let outer_radius = radius + (w * scx);
+      let outer_radius = radius + (h * scy);
       let sclH = scy * h;
       console.log(`> scl x:${scx} y:${scy} \nrect:${w},${h}\n sclx:${scx * w} scly:${sclH} oRad:${outer_radius}\n--ratio:${outer_radius/sclH}`);
       context.beginPath();
