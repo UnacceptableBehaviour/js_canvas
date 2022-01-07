@@ -3,7 +3,7 @@ Contents notes:
 command | description
 | - | - |
 context.translate(x,y) | Remaps the (0,0) position on the canvas
-context.rotate(45 * Math.PI / 180) | rotates around origin (0,0)
+context.rotate(45 * Math.PI / 180) | rotates around origin (0,0) in rads - Equation shows 45deg in rads
 context.save() & context.restore() | save and restore context state 
   
 Testing understanding - translate rotate:  
