@@ -1,7 +1,7 @@
 # U3 - Sketch Transforms
-Contents notes:
+Contents notes:  
 command | description
-- | -
+| - | - |
 context.translate(x,y) | Remaps the (0,0) position on the canvas
 context.rotate(45 * Math.PI / 180) | rotates around origin (0,0)
 context.save() & context.restore() | save and restore context state 
