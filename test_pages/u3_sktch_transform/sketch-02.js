@@ -9,6 +9,11 @@ function deg2rad(deg) {
   return (deg /180 * Math.PI);
 };
 
+const randomRange = (min, max) => {
+  // 0 to <1 EG 0.999999 
+  return Math.random() * (max - min) + min;
+};
+
 const sketch = () => {
   return ({ context, width, height }) => {
     context.fillStyle = 'white';
@@ -21,7 +26,7 @@ const sketch = () => {
     const w = width * 0.01;
     const h = height * 0.1;
     let x,y;
-		const num = 25;
+		const num = 12;
 		const radius = width * 0.3;
         
     //context.translate(x,y); // Remaps the (0,0) position on the canvas
@@ -41,11 +46,14 @@ const sketch = () => {
 			context.save();
 			context.translate(x, y);
 			context.rotate(-angle);
+      context.scale(randomRange(1,4), randomRange(0.5,1.5));  // scale(x,y)
       
-			context.beginPath();
-			
+			context.beginPath();			
       context.rect(-w * 0.5, -h * 0.5, w, h);
 			context.fill();
+      // or
+      //context.strokeRect(-w * 0.5, -h * 0.5, w, h);  // rect border
+      
 			context.restore();
 
 		}
