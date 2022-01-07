@@ -13,14 +13,15 @@ Running canvas-sketch:
 Settings can be used to create A4 size canvas & ppi setting for printing. Handy!
   
 This generates a lot of node packages - debatable whethter or not to include them in repo.
-But they do create a lot of noise when doing a diff
-# ignore file following this name in path
+But they do create a lot of noise when doing a diff!  
+Ignore files following this 'path_name_directory' in path.  
 Add following line to .gitignore file.  
 ```
 node_modules/
+# any file found deeper than node_modules/ will be ignored
 # put comments like this on separate line since they apear to nause things up on the same line :(
 ```
-Add note on specifying file to ignore for git diff.
+Add note on specifying file to ignore for git diff.  
   
   
 Invert colours for final exersize:  
