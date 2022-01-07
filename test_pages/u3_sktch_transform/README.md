@@ -19,11 +19,11 @@ Running canvas-sketch:
 ```
   
 I'm sure there's a reason for doing it this way!
+v1 | v2
 | - | - |
-|![canvas-sketch](https://github.com/UnacceptableBehaviour/js_canvas/blob/master/test_pages/u3_sktch_transform/02-25-slices.png)  
-Code @ [sketch-02.js](https://github.com/UnacceptableBehaviour/js_canvas/blob/e6420bce798bb87b03b7a50b2fe37cf94d03c0ae/test_pages/u3_sktch_transform/sketch-02.js) |
+![canvas-sketch](https://github.com/UnacceptableBehaviour/js_canvas/blob/master/test_pages/u3_sktch_transform/02-25-slices.png) | 
 ![canvas-sketch](https://github.com/UnacceptableBehaviour/js_canvas/blob/master/test_pages/u3_sktch_transform/03-untils.png)  
-Code @ [sketch-02.js](https://github.com/UnacceptableBehaviour/js_canvas/blob/3c9105e59dc721d79d172e783e3ed1fb0e0cb9de/test_pages/u3_sktch_transform/sketch-02.js)  
+Code @ [sketch-02.js](https://github.com/UnacceptableBehaviour/js_canvas/blob/e6420bce798bb87b03b7a50b2fe37cf94d03c0ae/test_pages/u3_sktch_transform/sketch-02.js) | Code @ [sketch-02.js](https://github.com/UnacceptableBehaviour/js_canvas/blob/3c9105e59dc721d79d172e783e3ed1fb0e0cb9de/test_pages/u3_sktch_transform/sketch-02.js)  
 
   
   
