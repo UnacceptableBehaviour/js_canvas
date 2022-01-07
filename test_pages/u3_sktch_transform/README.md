@@ -27,12 +27,12 @@ Code @ [sketch-02.js](https://github.com/UnacceptableBehaviour/js_canvas/blob/e6
   
   
 Some experiments:
-| 1 | 2 | 3 | 4 |
-| - | - | - | - |
-| ![sk]() | ![sk]() | ![sk]() | ![sk]() |
-| ![sk]() | ![sk]() | ![sk]() | ![sk]() |
-| ![sk]() | ![sk]() | ![sk]() | ![sk]() |
-| ![sk]() | ![sk]() | ![sk]() | ![sk]() |
+| 1 | 2 | 3 | 
+| - | - | - | 
+| ![sk](https://github.com/UnacceptableBehaviour/js_canvas/blob/master/test_pages/u3_sktch_transform/2022.01.07-18.59.01.png) | ![sk](https://github.com/UnacceptableBehaviour/js_canvas/blob/master/test_pages/u3_sktch_transform/2022.01.07-19.14.07.png) | ![sk](https://github.com/UnacceptableBehaviour/js_canvas/blob/master/test_pages/u3_sktch_transform/2022.01.07-19.19.36.png) | 
+| ![sk](https://github.com/UnacceptableBehaviour/js_canvas/blob/master/test_pages/u3_sktch_transform/2022.01.07-19.19.36.png) | ![sk](https://github.com/UnacceptableBehaviour/js_canvas/blob/master/test_pages/u3_sktch_transform/2022.01.07-23.12.19.png) | ![sk](https://github.com/UnacceptableBehaviour/js_canvas/blob/master/test_pages/u3_sktch_transform/2022.01.07-19.29.22.png) | 
+| ![sk](https://github.com/UnacceptableBehaviour/js_canvas/blob/master/test_pages/u3_sktch_transform/2022.01.07-20.28.17.png) | ![sk](https://github.com/UnacceptableBehaviour/js_canvas/blob/master/test_pages/u3_sktch_transform/2022.01.07-20.37.22.png) | ![sk](https://github.com/UnacceptableBehaviour/js_canvas/blob/master/test_pages/u3_sktch_transform/2022.01.07-20.40.05.png) | 
+
   
   
 # Resources
