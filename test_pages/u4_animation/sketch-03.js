@@ -12,18 +12,27 @@ const cl = (str) => {
 }
 
 // canvas
-const sketch = () => {
+// { context, width, height } - missing
+const sketch = ({ context, width, height }) => {
+  
+  const agents = [];
+
+  for (let i = 0; i < 40; i++) {
+    const x = random.range(0, width);
+    const y = random.range(0, height);
+
+    agents.push(new Agent(x, y));
+  }
+  
+  // TODO look at canvasSketch(sketch, settings); code to see how this variable make it here!
+  // js_canvas/test_pages/u4_animation/node_modules/canvas-sketch/lib/canvas-sketch.js
   return ({ context, width, height }) => {
     context.fillStyle = 'beige';
     context.fillRect(0, 0, width, height);
-    
-    const agentA = new Agent(800,400);
-    agentA.dbg();
-    const agentB = new Agent(200,200);
-    agentB.dbg();
-    
-    agentA.draw(context);
-    agentB.draw(context);
+
+    agents.forEach( agent => {
+      agent.draw(context); 
+    });
     
   };
 };
