@@ -55,15 +55,34 @@ class Agent {
     this.rad = random.rangeFloor(5, 21);
   }
   draw(context){
+    // isolate drawing behaviour by saving & restoring context
+    context.save()
+    
+    context.translate(this.pos.x, this.pos.y);  // move the origin / move canvas under plotter pen - see if it helps to think of it like this!?
+    
     context.beginPath();
-    context.arc(this.pos.x, this.pos.y, this.rad, 0, Math.PI*2); // arc(x,y,r,sAngle,eAngle,counterclockwise);
+    // was this befor translate intorduced
+    // context.arc(this.pos.x, this.pos.y, this.rad, 0, Math.PI*2); // arc(x,y,r,sAngle,eAngle,counterclockwise);
+    context.arc(0,0, this.rad, 0, Math.PI*2);    
     context.fillStyle = 'black';
-    context.fill();        
+    context.fill();
+    //context.moveTo(this.pos.x, this.pos.y);
+    context.moveTo(0,0);
+    context.lineTo(0, this.rad+15);
+    context.lineTo(30, this.rad+15);
+    context.stroke();
+    
+    context.restore()
   }
   dbg(){
     console.log(this);    
   }
 }
 
-
+    //context.beginPath();
+    //// show origin
+    //context.fillStyle = 'red';
+    //context.arc(0, 0, 5, 0, 2*Math.PI);
+    //context.fill();
+    
 canvasSketch(sketch, settings);
