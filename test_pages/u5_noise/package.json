@@ -1,0 +1,15 @@
+{
+  "name": "u5_noise",
+  "version": "1.0.0",
+  "description": "Contents notes:   command | description | - | - | JS classes | language - |-  canvas-sketch-util | [canvas-sketch-util](https://github.com/mattdesl/canvas-sketch-util)",
+  "main": "sketch-04.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "canvas-sketch": "^0.7.4"
+  }
+}
