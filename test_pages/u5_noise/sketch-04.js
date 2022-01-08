@@ -48,8 +48,10 @@ const sketch = () => {
 			context.translate(x,y);             // for each tile
       context.translate(margx,margy);     // include the margin around the tiles
       context.translate(cellw * 0.5, cellh * 0.5);  // translate to centre odf cell
+      context.rotate(45 * Math.PI/180)
       
       context.beginPath();
+      context.lineWidth = 8;
 			context.moveTo(w * -0.5, 0);
 			context.lineTo(w *  0.5, 0);
 			context.stroke();
