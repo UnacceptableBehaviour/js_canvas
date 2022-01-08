@@ -46,9 +46,12 @@ const sketch = ({ context, width, height }) => {
 
 				const dist = agent.pos.getDistance(other.pos);
 				
-				if (dist > 300) continue;
+        const connectionLimit = 300;
+				if (dist > connectionLimit) continue;
 				
-				//context.lineWidth = math.mapRange(dist, 0, 200, 12, 1);
+        // maps one range to another based on the value of a variable
+        // var is dist. map 0 to 
+				context.lineWidth = math.mapRange(dist, 0, connectionLimit, connectionLimit/10, 1);
 
 				context.beginPath();
 				context.moveTo(agent.pos.x, agent.pos.y);
@@ -90,7 +93,8 @@ class Agent {
   constructor(x, y, radius){
     this.pos = new Vector(x,y);
     this.vel = new Vector(random.range(-4, 4), random.range(-4, 4)); 
-    this.rad = random.rangeFloor(5, 21);
+    //this.rad = random.rangeFloor(5, 21);
+    this.rad = 5;
   }
   
   draw(context){
