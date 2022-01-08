@@ -59,6 +59,8 @@ class Agent {
     context.save()
     
     context.translate(this.pos.x, this.pos.y);  // move the origin / move canvas under plotter pen - see if it helps to think of it like this!?
+    context.rotate( random.rangeFloor(0, 360) * Math.PI / 180);
+    context.scale(4,1);
     
     context.beginPath();
     // was this befor translate intorduced
@@ -66,10 +68,9 @@ class Agent {
     context.arc(0,0, this.rad, 0, Math.PI*2);    
     context.fillStyle = 'black';
     context.fill();
-    //context.moveTo(this.pos.x, this.pos.y);
+    
     context.moveTo(0,0);
-    context.lineTo(0, this.rad+15);
-    context.lineTo(30, this.rad+15);
+    context.lineTo(0, this.rad+25);
     context.stroke();
     
     context.restore()
