@@ -3,13 +3,21 @@ const random = require('canvas-sketch-util/random');
 const math = require('canvas-sketch-util/math');
 
 const settings = {
-  dimensions: [ 1048, 1048 ]
+  dimensions: [ 1048, 1048 ],
+  animate: true
 };
 
 // helpers
 const cl = (str) => {
   console.log(str);
 }
+
+// call on every frame update - - - - - < <
+const animate = () => {
+	console.log('domestika');
+	requestAnimationFrame(animate);
+};
+// animate();
 
 // canvas
 // { context, width, height } - missing
@@ -30,8 +38,30 @@ const sketch = ({ context, width, height }) => {
     context.fillStyle = 'beige';
     context.fillRect(0, 0, width, height);
 
+    for (let i = 0; i < agents.length; i++) {
+			const agent = agents[i];
+
+			for (let j = i + 1; j < agents.length; j++) {
+				const other = agents[j];
+
+				//const dist = agent.pos.getDistance(other.pos);
+				//
+				//if (dist > 200) continue;
+				//
+				//context.lineWidth = math.mapRange(dist, 0, 200, 12, 1);
+
+				context.beginPath();
+				context.moveTo(agent.pos.x, agent.pos.y);
+				context.lineTo(other.pos.x, other.pos.y);
+				context.stroke();
+			}
+		}
+    
+    
     agents.forEach( agent => {
-      agent.draw(context); 
+      agent.update();
+      agent.draw(context);
+      agent.bounce(width, height);
     });
     
   };
@@ -52,32 +82,40 @@ class Vector {
 class Agent {
   constructor(x, y, radius){
     this.pos = new Vector(x,y);
+    this.vel = new Vector(random.range(-4, 4), random.range(-4, 4)); 
     this.rad = random.rangeFloor(5, 21);
   }
+  
   draw(context){
     // isolate drawing behaviour by saving & restoring context
     context.save()
     
-    context.translate(this.pos.x, this.pos.y);  // move the origin / move canvas under plotter pen - see if it helps to think of it like this!?
-    context.rotate( random.rangeFloor(0, 360) * Math.PI / 180);
-    context.scale(4,1);
-    
+    context.translate(this.pos.x, this.pos.y);  // move the origin / move canvas under plotter pen - see if it helps to think of it like this!?    
+    context.lineWidth = 4;    
     context.beginPath();
-    // was this befor translate intorduced
-    // context.arc(this.pos.x, this.pos.y, this.rad, 0, Math.PI*2); // arc(x,y,r,sAngle,eAngle,counterclockwise);
+    // was this before translate intorduced
+    // context.arc(this.pos.x, this.pos.y, this.rad, 0, Math.PI*2); // arc(x,y,r,sAngle,eAngle,counterclockwise);    
     context.arc(0,0, this.rad, 0, Math.PI*2);    
     context.fillStyle = 'black';
-    context.fill();
-    
-    context.moveTo(0,0);
-    context.lineTo(0, this.rad+25);
     context.stroke();
-    
+
     context.restore()
   }
+  
+  bounce(width, height) {
+		if (this.pos.x <= 0 || this.pos.x >= width)  this.vel.x *= -1;
+		if (this.pos.y <= 0 || this.pos.y >= height) this.vel.y *= -1;
+	}
+
+	update() {
+		this.pos.x += this.vel.x;
+		this.pos.y += this.vel.y;
+	}
+  
   dbg(){
     console.log(this);    
   }
+
 }
 
     //context.beginPath();
