@@ -30,9 +30,14 @@ Some experiments:
 | 1 | 2 | 3 | 
 | - | - | - | 
 | ![sk](https://github.com/UnacceptableBehaviour/js_canvas/blob/master/test_pages/u3_sktch_transform/2022.01.07-18.59.01.png) | ![sk](https://github.com/UnacceptableBehaviour/js_canvas/blob/master/test_pages/u3_sktch_transform/2022.01.07-19.14.07.png) | ![sk](https://github.com/UnacceptableBehaviour/js_canvas/blob/master/test_pages/u3_sktch_transform/2022.01.07-19.19.36.png) | 
+| - | - | - | 
 | ![sk](https://github.com/UnacceptableBehaviour/js_canvas/blob/master/test_pages/u3_sktch_transform/2022.01.07-19.19.36.png) | ![sk](https://github.com/UnacceptableBehaviour/js_canvas/blob/master/test_pages/u3_sktch_transform/2022.01.07-23.12.19.png) | ![sk](https://github.com/UnacceptableBehaviour/js_canvas/blob/master/test_pages/u3_sktch_transform/2022.01.07-19.29.22.png) | 
+| - | Code @ [sketch-02b.js](https://github.com/UnacceptableBehaviour/js_canvas/blob/45cb64a7d8c3f157eaa51f0371ec7386bd66b13d/test_pages/u3_sktch_transform/sketch-02b.js) | - | 
 | ![sk](https://github.com/UnacceptableBehaviour/js_canvas/blob/master/test_pages/u3_sktch_transform/2022.01.07-20.28.17.png) | ![sk](https://github.com/UnacceptableBehaviour/js_canvas/blob/master/test_pages/u3_sktch_transform/2022.01.07-20.37.22.png) | ![sk](https://github.com/UnacceptableBehaviour/js_canvas/blob/master/test_pages/u3_sktch_transform/2022.01.07-20.40.05.png) | 
-
+| - | Code @ [sketch-02.js](https://github.com/UnacceptableBehaviour/js_canvas/blob/0e1e4a4d2c1e33bff3421432f094163daf3b0c1f/test_pages/u3_sktch_transform/sketch-02.js) | - | 
+  
+Couldn't get the inner and outer arce to match the rectagle on the centre canvas.
+  
   
   
 # Resources

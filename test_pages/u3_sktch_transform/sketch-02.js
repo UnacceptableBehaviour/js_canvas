@@ -47,7 +47,7 @@ const sketch = () => {
 		let x, y;
 
 		const num = 150;
-		const radius = width * 0.15;
+		const radius = width * 0.25;
 
 		for (let i = 0; i < num; i++) {
 			const slice = math.degToRad(360 / num);
@@ -57,7 +57,7 @@ const sketch = () => {
 			y = cy + radius * Math.cos(angle);
 
 			context.save();
-			context.translate(x, y);
+			context.translate(x -cx, y-cy);
 			context.rotate(-angle);
 			context.scale(random.range(0.1, 2), random.range(0.2, 0.5));
 
@@ -69,7 +69,7 @@ const sketch = () => {
 			context.restore();
 
 			context.save();
-			context.translate(cx, cy);
+			context.translate(x -cx, y-cy);
 			context.rotate(-angle);
 
 			context.lineWidth = random.range(30, 50);
