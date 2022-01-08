@@ -31,10 +31,22 @@ From README.md:
 canvas-sketch is a loose collection of tools, modules and resources for creating generative art in JavaScript and the browser.  
 [canvas-sketch documentation](https://github.com/mattdesl/canvas-sketch/blob/master/docs/README.md)  
 
-#### Canvas Sket Utils
+#### Exporting Animations
+https://github.com/mattdesl/canvas-sketch/blob/master/docs/exporting-artwork.md#exporting-animations
+```
+> sudo npm install @ffmpeg-installer/ffmpeg --global    # install video encoder - enables --stream flag in CLI
+> canvas-sketch sketch-03 --output=anim --stream        # re-run w/ --stream flag set
+#      ^cmd     ^project name  ^o/p folder   ^allow direct capture to video
+# CTRL + SHIFT + S to start recording, and same to stop
+```
+
+
+#### Canvas Sketch Utils
 math, random, color, geometry ,penplot, shader
 https://github.com/mattdesl/canvas-sketch-util
 
 #### W3 Canvas Reference
 https://www.w3schools.com/tags/ref_canvas.asp
 
+#### Node Reference
+https://nodejs.dev/learn/where-does-npm-install-the-packages
