@@ -31,6 +31,10 @@ From README.md:
 canvas-sketch is a loose collection of tools, modules and resources for creating generative art in JavaScript and the browser.  
 [canvas-sketch documentation](https://github.com/mattdesl/canvas-sketch/blob/master/docs/README.md)  
 
+#### Canvas Sket Utils
+math, random, color, geometry ,penplot, shader
+https://github.com/mattdesl/canvas-sketch-util
+
 #### W3 Canvas Reference
 https://www.w3schools.com/tags/ref_canvas.asp
 
