@@ -60,7 +60,7 @@ const sketch = () => {
 			const n = random.noise2D(x + frame * 10, y, 0.001); //(x + frame * 10, y, params.freq); // returns between -1 & 1
 			// const n = random.noise3D(x, y, f * 10, params.freq);      
 			const angle = n * Math.PI * 0.2; // * params.amp;   // 2*PI rad in circle -1 thu 1 give whole 360
-            
+
       context.save();                     // < - - - - - - - - - - - - context save
 			context.translate(x,y);             // for each tile
       context.translate(margx,margy);     // include the margin around the tiles
@@ -76,6 +76,7 @@ const sketch = () => {
       context.beginPath();
       
       context.restore();                  // < - - - - - - - - - - - - context restore
+
     }
     
     
@@ -85,22 +86,29 @@ const sketch = () => {
 
 canvasSketch(sketch, settings);
 
-      //const g = random.noise2D(x, y)
-      //const greyScale = Math.floor( math.mapRange(g, -1,1,0,0xFFFFFF) ); 
-      //cl(`noise: ${g} - gs:${greyScale}`);
-      
-//      // add shaded square in background
-//			context.save();
-//      context.translate(x,y);             // for each tile
+//      const g = random.noise2D(x + frame, y);
+//      const greyScale = Math.floor( math.mapRange(g, -1,1,0,0xFFFFFF) );
+//      cl(`g:${g} - greyS:${greyScale} - g.toStr:${greyScale.String(16)}`);
+//      //  greyScale.String(16) comes back undefined!??? :?
+//            
+//      context.save();                     // < - - - - - - - - - - - - context save
+//			context.translate(x,y);             // for each tile
 //      context.translate(margx,margy);     // include the margin around the tiles
 //      context.translate(cellw * 0.5, cellh * 0.5);  // translate to centre odf cell
-//      // hollow box - works
-//			context.strokeStyle = greyScale;
-//      context.strokeRect(w * -0.5,w * -0.5,w,w);
-//      //
-//      // filledRect - No work :<
+//      //context.rotate(angle);
+//
 //      context.beginPath();
-//			context.fillStyle = greyScale; // take a grey scal from 2D noise
-//			context.fillRect(w * -0.5,w * -0.5,w,w);
-//			context.fill();
-//			context.restore();
+////			context.strokeStyle = 'red'; 
+////      context.strokeRect(w * -0.5,w * -0.5,w,w);
+//      //
+//      context.fillStyle = greyScale.String;
+//      //context.fillStyle = 'black';
+//      context.fillStyle = '#000000';
+//      context.fillRect(w * -0.5,w * -0.5,w,w);
+//      context.fill();
+//      
+//      context.restore();                  // < - - - - - - - - - - - - context restore
+
+//
+
+//
