@@ -44,8 +44,7 @@ const sketch = () => {
 		const margx = (width  - gridw) * 0.5;
 		const margy = (height - gridh) * 0.5;
     
-    
-    for (let i = 0; i < numCells; i++) {
+		for (let i = 0; i < numCells; i++) {
 			const col = i % cols;
 			const row = Math.floor(i / cols);
 
@@ -53,36 +52,67 @@ const sketch = () => {
 			const y = row * cellh;
 			const w = cellw * 0.8;
 			const h = cellh * 0.8;
-      
-      // https://github.com/mattdesl/canvas-sketch-util/blob/master/docs/random.md#noise2D
-      // x,y co-ordinate of noise
-      // how large is the 2d array? didn't complain at 1000x1000
-			const n = random.noise2D(x + frame * 10, y, 0.001); //(x + frame * 10, y, params.freq); // returns between -1 & 1
-			// const n = random.noise3D(x, y, f * 10, params.freq);      
-			const angle = n * Math.PI * 0.2; // * params.amp;   // 2*PI rad in circle -1 thu 1 give whole 360
 
+			const f = params.animate ? frame : params.frame;
+
+			//const n = random.noise2D(x + frame * 10, y, params.freq);
+			const n = random.noise3D(x, y, f * 10, params.freq);
+
+
+			const angle = n * Math.PI * params.amp;
+			
+			// const scale = (n + 1) / 2 * 30;
+			// const scale = (n * 0.5 + 0.5) * 30;
+			const scale = math.mapRange(n, -1, 1, params.scaleMin, params.scaleMax);
+			
+			//context.save();
+			//context.beginPath();
+			//cBox = boxPalette[colorBoxSelectorRadials];
+			//#context.fillStyle = // take a grey scal from 2D noise
+			//context.rect(-w * 0.5, random.range(0, -h * 0.5), w, h);
+			//context.fill();
+			//context.restore();
+			
       context.save();                     // < - - - - - - - - - - - - context save
 			context.translate(x,y);             // for each tile
       context.translate(margx,margy);     // include the margin around the tiles
       context.translate(cellw * 0.5, cellh * 0.5);  // translate to centre odf cell
-      context.rotate(angle);
-      
-      context.beginPath();
-      context.lineWidth = 8;
+			
+			context.rotate(angle);
+
+			context.lineWidth = scale;
+			context.lineCap = params.lineCap;
+
+			context.beginPath();
 			context.moveTo(w * -0.5, 0);
 			context.lineTo(w *  0.5, 0);
 			context.stroke();
-      
-      context.beginPath();
-      
-      context.restore();                  // < - - - - - - - - - - - - context restore
 
-    }
-    
-    
+			context.restore();                  // < - - - - - - - - - - - - context restore
+		}    
     
   };
 };
+
+const createPane = () => {
+	const pane = new Tweakpane.Pane();
+	let folder;
+
+	folder = pane.addFolder({ title: 'Grid '});
+	folder.addInput(params, 'lineCap', { options: { butt: 'butt', round: 'round', square: 'square' }});
+	folder.addInput(params, 'cols', { min: 2, max: 50, step: 1 });
+	folder.addInput(params, 'rows', { min: 2, max: 50, step: 1 });
+	folder.addInput(params, 'scaleMin', { min: 1, max: 100 });
+	folder.addInput(params, 'scaleMax', { min: 1, max: 100 });
+	//
+	folder = pane.addFolder({ title: 'Noise' });
+	folder.addInput(params, 'freq', { min: -0.01, max: 0.01 });
+	folder.addInput(params, 'amp', { min: 0, max: 1 });
+	folder.addInput(params, 'animate');
+	folder.addInput(params, 'frame', { min: 0, max: 999 });
+};
+
+createPane();
 
 canvasSketch(sketch, settings);
 

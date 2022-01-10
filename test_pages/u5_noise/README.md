@@ -41,6 +41,10 @@ https://github.com/mattdesl/canvas-sketch/blob/master/docs/exporting-artwork.md#
 # CTRL + SHIFT + S to start recording, and same to stop
 ```
 
+#### Tweakpane - npm package - Hiroki Kokubun
+https://github.com/cocopon/tweakpane
+UI Gadget that allows you to live tweak model parameters on screen.
+
 
 #### Canvas Sketch Utils
 math, random, color, geometry ,penplot, shader
