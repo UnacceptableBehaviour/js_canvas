@@ -1,7 +1,9 @@
 # U6 - Sketch - Fonts - aligning - Bit reading 
 Contents notes:  
-Canvas fonts: https://www.w3schools.com/tags/canvas_font.asp  
-
+Canvas fonts - fillText: https://www.w3schools.com/tags/canvas_font.asp
+Alignment - https://www.w3schools.com/tags/canvas_textbaseline.asp
+Canvas 2d Ref Mozilla: https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D
+measureText: https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/measureText
     
   
 Some experiments:
