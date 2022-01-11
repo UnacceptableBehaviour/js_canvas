@@ -103,6 +103,9 @@ function placementMarker(ctx, x,y, col='red') {
     ctx.restore();   
 }
 
+let opTxt = 'A';
+let fontSize = 1200;
+let fontFamily = 'serif';
 
 const sketch = () => {
   return ({ context, width, height }) => {
@@ -110,12 +113,10 @@ const sketch = () => {
     context.fillRect(0, 0, width, height);
     
     context.fillStyle = 'black';
-    context.font = '900px serif';
+    context.font = `${fontSize}px ${fontFamily}`;
     context.textBaseline = 'top';
     //context.textBaseline = 'middle';
     //context.textAlign = 'center';     // ** WARNING ** NOT context.textAlign('center'); function!
-    
-    opTxt = 'ox';
     
     let textMetrics = context.measureText(opTxt);
     cl(textMetrics);
@@ -138,10 +139,12 @@ const sketch = () => {
 		const mw = textMetrics.actualBoundingBoxLeft + textMetrics.actualBoundingBoxRight;
 		const mh = textMetrics.actualBoundingBoxAscent + textMetrics.actualBoundingBoxDescent;    
 
-    // to centre
+    // translate to centre
+    const x = (width - mw) * 0.5 - mx;
+    const y = (height - mh) * 0.5 - my;
 
     context.save();
-    //context.translate(width * 0.5, 0);
+    context.translate(x, y);
     
     context.beginPath();
     context.rect(mx, my, mw, mh);
