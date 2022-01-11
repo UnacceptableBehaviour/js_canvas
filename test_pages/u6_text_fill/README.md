@@ -9,8 +9,8 @@ measureText: https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingCon
 Some experiments:
 | 1 | 2 | 3 | 
 | - | - | - | 
-| ![sk](https://github.com/UnacceptableBehaviour/js_canvas/blob/master/test_pages/u6_text_fill/2022.01.11-18.30.43.png) | ![sk]() | ![sk]() |
-| Code @ [sketch-05.js](https://github.com/UnacceptableBehaviour/js_canvas/blob/e494f399d9f610c4b33930f2651ca72b4eab8b2f/test_pages/u6_text_fill/sketch-05.js) | Code @ [sketch-05.js]() | Code @ [sketch-05.js]() | 
+| ![sk](https://github.com/UnacceptableBehaviour/js_canvas/blob/master/test_pages/u6_text_fill/2022.01.11-18.30.43.png) | ![sk](https://github.com/UnacceptableBehaviour/js_canvas/blob/master/test_pages/u6_text_fill/2022.01.11-20.34.58.png) | ![sk]() |
+| Code @ [sketch-05.js](https://github.com/UnacceptableBehaviour/js_canvas/blob/e494f399d9f610c4b33930f2651ca72b4eab8b2f/test_pages/u6_text_fill/sketch-05.js) | Code @ [sketch-05.js](https://github.com/UnacceptableBehaviour/js_canvas/blob/497338f1b3d73796bf9d217e37253a3495eb1bb6/test_pages/u6_text_fill/sketch-05.js) | Code @ [sketch-05.js]() | 
 | ![sk]() | ![sk]() | ![sk]() |
 | Code @ [sketch-05.js]() | Code @ [sketch-05.js]() | Code @ [sketch-05.js]() | 
 | ![sk]() | ![sk]() | ![sk]() |
