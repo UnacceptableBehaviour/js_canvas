@@ -1,13 +1,11 @@
 const canvasSketch = require('canvas-sketch');
 
-// helpers
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+// helpers  - - - - -
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 const cl = (str) => {
   console.log(str);
 }
-
-const settings = {
-  dimensions: [ 1080, 1080 ]
-};
 
 function placeHorizMeasure(ctx, text, xl, xr, y, col, lnD, lnW = 2) {
   
@@ -103,6 +101,14 @@ function placementMarker(ctx, x,y, col='red') {
     ctx.restore();   
 }
 
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+let manager;
+
+const settings = {
+  dimensions: [ 1080, 1080 ]
+};
+
 let opTxt = 'A';
 let fontSize = 1200;
 let fontFamily = 'serif';
@@ -163,4 +169,20 @@ const sketch = () => {
   };
 };
 
-canvasSketch(sketch, settings);
+const onKeyUp = (e) => {
+	opTxt = e.key.toUpperCase();
+	manager.render();
+};
+
+document.addEventListener('keyup', onKeyUp);
+
+const start = async () => {
+	manager = await canvasSketch(sketch, settings);   // returns new SketchManager();
+};
+
+start();  // instantiate
+// instead of just running once w/
+// canvasSketch(sketch, settings);
+// assign sketchManger and call it when key up events happen
+
+
