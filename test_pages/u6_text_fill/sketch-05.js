@@ -113,32 +113,32 @@ let opTxt = 'A';
 let fontSize = 1200;
 let fontFamily = 'serif';
 
-const sketch = () => {
+// data source canvas
+const typeCanvas = document.createElement('canvas');
+const typeContext = typeCanvas.getContext('2d');
+
+const sketch = ({ context, width, height }) => {
+  // data source canvas
+  const cell = 20;
+	const cols = Math.floor(width  / cell);
+	const rows = Math.floor(height / cell);
+	const numCells = cols * rows;
+
+	typeCanvas.width  = cols;
+	typeCanvas.height = rows;
+  
   return ({ context, width, height }) => {
-    context.fillStyle = 'beige';
-    context.fillRect(0, 0, width, height);
+    typeContext.fillStyle = 'black';
+    typeContext.fillRect(0, 0, cols, rows);
     
-    context.fillStyle = 'black';
-    context.font = `${fontSize}px ${fontFamily}`;
-    context.textBaseline = 'top';
-    //context.textBaseline = 'middle';
-    //context.textAlign = 'center';     // ** WARNING ** NOT context.textAlign('center'); function!
+    fontSize = cols * 1.1;
+    typeContext.fillStyle = 'white';
+    typeContext.font = `${fontSize}px ${fontFamily}`;
+    typeContext.textBaseline = 'top';
     
-    let textMetrics = context.measureText(opTxt);
+    
+    let textMetrics = typeContext.measureText(opTxt);
     cl(textMetrics);
-    // Dumps
-    //TextMetrics {width: 866.6015625,
-    //      actualBoundingBoxLeft: 415.72265625,
-    //      actualBoundingBoxRight: 413.37890625,
-    //      fontBoundingBoxAscent: 780,
-    //      fontBoundingBoxDescent: 600, …}
-    //actualBoundingBoxAscent: 508.0078125
-    //actualBoundingBoxDescent: 300
-    //actualBoundingBoxLeft: 415.72265625
-    //actualBoundingBoxRight: 413.37890625
-    //fontBoundingBoxAscent: 780
-    //fontBoundingBoxDescent: 600
-    //width: 866.6015625
 
 		const mx = textMetrics.actualBoundingBoxLeft * -1;
 		const my = textMetrics.actualBoundingBoxAscent * -1;
@@ -146,26 +146,27 @@ const sketch = () => {
 		const mh = textMetrics.actualBoundingBoxAscent + textMetrics.actualBoundingBoxDescent;    
 
     // translate to centre
-    const x = (width - mw) * 0.5 - mx;
-    const y = (height - mh) * 0.5 - my;
+    const x = (cols - mw) * 0.5 - mx;
+    const y = (rows - mh) * 0.5 - my;
 
-    context.save();
-    context.translate(x, y);
+    typeContext.save();
+    typeContext.translate(x, y);
     
-    context.beginPath();
-    context.rect(mx, my, mw, mh);
-    context.stroke();
-    //context.restore();
+    typeContext.beginPath();
+    typeContext.rect(mx, my, mw, mh);
+    typeContext.stroke();
     // placeHorizMeasure(ctx, text, xl, xr, y, col, lnD, lnW = 2)
-    placeHorizMeasure(context, `mw (${Math.floor(mw)})`, mx, mx+mw, my+mh+10, 'blue', 15);
+    //placeHorizMeasure(context, `mw (${Math.floor(mw)})`, mx, mx+mw, my+mh+10, 'blue', 15);
     // function placeVertMeasure(ctx, text, x, yt, yb, col, lnD, lnW = 2)
-    placeVertMeasure(context, `mh (${Math.floor(mh)})`, mx+mw+10, my, my+mh, 'blue', 15);
-    placementMarker(context, mx, my, 'blue');
+    //placeVertMeasure(context, `mh (${Math.floor(mh)})`, mx+mw+10, my, my+mh, 'blue', 15);
+    //placementMarker(context, mx, my, 'blue');
 
-    context.fillText(opTxt, 0, 0);
-    placementMarker(context, 0, 0, 'red');
+    typeContext.fillText(opTxt, 0, 0);
+    //placementMarker(context, 0, 0, 'red');
     
-    context.restore();
+    typeContext.restore();
+    
+    context.drawImage(typeCanvas, 0, 0);
   };
 };
 
