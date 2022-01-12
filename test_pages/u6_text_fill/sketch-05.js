@@ -234,12 +234,13 @@ const sketch = ({ context, width, height }) => {
   };
 };
 
+
 const getGlyph = (v) => {
 	if (v < 50) return '';
 	if (v < 100) return '.';
 	if (v < 150) return '-';
 	if (v < 200) return '+';
-  if (v < 210) return 'alcubierre';
+  if (v < 210) return random.pick(['weinberg','penrose','smolin','thorne','susskind','gross','witten','hooft','rovelli','randall','feynmann','alcubierre']);
 
 	const glyphs = '_=/o%$'.split('');
   //const glyphs = '_= /'.split('');
