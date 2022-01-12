@@ -3,6 +3,18 @@ Basic template to create JS visiulasation tests - copy '_template' direcory & go
   
 ## Markup examples quick ref edit in each template:
   
+Some experiments:  
+| 1 | 2 | 3 | 
+| - | - | - | 
+| ![sk]() | ![sk]() | ![sk]() |
+| Code @ [sketch-04.js]() | Code @ [sketch-04.js]() | Code @ [sketch-04.js]() | 
+| ![sk]() | ![sk]() | ![sk]() |
+| Code @ [sketch-04.js]() | Code @ [sketch-04.js]() | Code @ [sketch-04.js]() | 
+| ![sk]() | ![sk]() | ![sk]() |
+| Code @ [sketch-04.js]() | Code @ [sketch-04.js]() | Code @ [sketch-04.js]() | 
+  
+Notes on experiments.  
+  
 ### Links
 To URL:
 [create_TOC_for_md.py](https://github.com/UnacceptableBehaviour/movie_picker/blob/master/create_TOC_for_md.py) 
