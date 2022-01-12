@@ -1,4 +1,5 @@
 const canvasSketch = require('canvas-sketch');
+const random = require('canvas-sketch-util/random');
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 // helpers  - - - - -
@@ -109,7 +110,7 @@ const settings = {
   dimensions: [ 1080, 1080 ]
 };
 
-let opTxt = '𝛅'; //'𝛑'; //'𝛀' '𝚿' '𝛅' '𝛜' '𝛛'  '𝛑'  '𝛍' '𝛟';
+let opTxt = '𝛑';//'𝛅'; //'𝛑'; //'𝛀' '𝚿' '𝛅' '𝛜' '𝛛'  '𝛑'  '𝛍' '𝛟';
 let fontSize = 1200;
 let fontFamily = 'serif';
 
@@ -166,15 +167,20 @@ const sketch = ({ context, width, height }) => {
     // function placeVertMeasure(ctx, text, x, yt, yb, col, lnD, lnW = 2)
     //placeVertMeasure(context, `mh (${Math.floor(mh)})`, mx+mw+10, my, my+mh, 'blue', 15);
     //placementMarker(context, mx, my, 'blue');    
+
+
+    // set backround blak
+    context.fillStyle = 'black';
+    context.fillRect(0,0, width,height);
+    
+    
     
     const typeData = dataSourceContext.getImageData(0,0,cols,rows).data;
     //cl(typeData);                         // data large array RGBA
     context.drawImage(typeCanvas, 0, 0);  // place image on main canvas context fro debug/display
                                             // this isn't necessary to read the data & construct art
     
-    // set backround blak
-    context.fillStyle = 'black';
-    context.fillRect(0,0, width,height); 
+
     
     
     for (let i = 0; i < numCells; i++) {
@@ -194,13 +200,15 @@ const sketch = ({ context, width, height }) => {
 			//context.font = `${cell * 2}px ${fontFamily}`;
 			//if (Math.random() < 0.1) context.font = `${cell * 6}px ${fontFamily}`;
 			//
-			//context.fillStyle = 'white';
-			context.fillStyle = `rgb(${r}, ${g}, ${b})`;  // 'rgb(255,0,255)'; paint magenta
+			
+      // 'rgb(255,0,255)'; paint magenta
+			context.fillStyle = `rgb(${r}, ${g}, ${b})`;  // fill: 1,2,3
+                       
       
       //cl(`rgb(${r}, ${g}, ${b})`);
 			context.save();
-			context.translate(x, y);                        // fill: 1,2,3
-			context.translate(cell * 0.5, cell * 0.5);    // fill: 3
+			context.translate(x, y);                      // fill: 1,2,3,4
+			context.translate(cell * 0.5, cell * 0.5);    // fill: 3,4
 
       // fill 1: rect as large pixel
       //context.fillRect(0, 0, cell, cell);
@@ -210,16 +218,35 @@ const sketch = ({ context, width, height }) => {
       //placementMarker(context, cell/2, cell/2, cell/2, `rgb(${r}, ${g}, ${b})`); 
       
       // fill 3: use source character as pixel
-      context.font = `${cell}px ${fontFamily}`;      
-      context.fillText(opTxt, 0,0);
+      //context.font = `${cell}px ${fontFamily}`;      
+      //context.fillText(opTxt, 0,0);
       
-			//context.fillText(glyph, 0, 0);
+      // fill 4: assci art shade
+      context.font = `${cell}px ${fontFamily}`;
+      if (Math.random() < 0.05) context.font = `${cell * 6}px ${fontFamily}`;      
+      const glyph = getGlyph(r);      
+      context.fillStyle = 'white';      // character provide the greyscale 
+			context.fillText(glyph, 0, 0);
 			
 			context.restore();
 
 		}
   };
 };
+
+const getGlyph = (v) => {
+	if (v < 50) return '';
+	if (v < 100) return '.';
+	if (v < 150) return '-';
+	if (v < 200) return '+';
+  if (v < 210) return 'alcubierre';
+
+	const glyphs = '_=/o%$'.split('');
+  //const glyphs = '_= /'.split('');
+
+	return random.pick(glyphs);
+};
+
 
 const onKeyUp = (e) => {
 	opTxt = e.key.toUpperCase();
