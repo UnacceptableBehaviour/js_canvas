@@ -91,12 +91,12 @@ function placeVertMeasure(ctx, text, x, yt, yb, col, lnD, lnW = 2) {
   ctx.restore();
 }
 
-function placementMarker(ctx, x,y, col='red') {
+function placementMarker(ctx, x,y, sz, col='red') {
     ctx.save();
     // show rect place
     ctx.beginPath();
     ctx.fillStyle = col;
-    ctx.arc(x, y, 10, 0, 2*Math.PI);
+    ctx.arc(x, y, sz, 0, 2*Math.PI);
     ctx.fill(); 
     ctx.restore();   
 }
@@ -196,7 +196,11 @@ const sketch = ({ context, width, height }) => {
 			context.translate(x, y);
 			//context.translate(cell * 0.5, cell * 0.5);
 
-			context.fillRect(0, 0, cell, cell);
+			//context.fillRect(0, 0, cell, cell);
+
+      // place circle in centre of cell (cell/2) with radius cell/2
+      placementMarker(context, cell/2, cell/2, cell/2, `rgb(${r}, ${g}, ${b})`); 
+
 			//context.fillText(glyph, 0, 0);
 			
 			context.restore();
