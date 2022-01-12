@@ -11,10 +11,10 @@ canvas.getImageData(x,y,width,height): https://www.w3schools.com/tags/canvas_get
 Some experiments:
 | 1 | 2 | 3 | 
 | - | - | - | 
-| ![sk](https://github.com/UnacceptableBehaviour/js_canvas/blob/master/test_pages/u6_text_fill/2022.01.11-18.30.43.png) | ![sk](https://github.com/UnacceptableBehaviour/js_canvas/blob/master/test_pages/u6_text_fill/2022.01.11-20.34.58.png) | ![sk]() |
-| Code @ [sketch-05.js](https://github.com/UnacceptableBehaviour/js_canvas/blob/e494f399d9f610c4b33930f2651ca72b4eab8b2f/test_pages/u6_text_fill/sketch-05.js) | Code @ [sketch-05.js](https://github.com/UnacceptableBehaviour/js_canvas/blob/497338f1b3d73796bf9d217e37253a3495eb1bb6/test_pages/u6_text_fill/sketch-05.js) | Code @ [sketch-05.js]() | 
-| ![sk]() | ![sk]() | ![sk]() |
-| Code @ [sketch-05.js]() | Code @ [sketch-05.js]() | Code @ [sketch-05.js]() | 
+| ![sk](https://github.com/UnacceptableBehaviour/js_canvas/blob/master/test_pages/u6_text_fill/2022.01.11-18.30.43.png) | ![sk](https://github.com/UnacceptableBehaviour/js_canvas/blob/master/test_pages/u6_text_fill/2022.01.11-20.34.58.png) | ![sk](https://github.com/UnacceptableBehaviour/js_canvas/blob/master/test_pages/u6_text_fill/2022.01.11-20.45.07.png) |
+| Code @ [sketch-05.js](https://github.com/UnacceptableBehaviour/js_canvas/blob/e494f399d9f610c4b33930f2651ca72b4eab8b2f/test_pages/u6_text_fill/sketch-05.js) | Code @ [sketch-05.js](https://github.com/UnacceptableBehaviour/js_canvas/blob/497338f1b3d73796bf9d217e37253a3495eb1bb6/test_pages/u6_text_fill/sketch-05.js) | Code @ [sketch-05.js](https://github.com/UnacceptableBehaviour/js_canvas/blob/3a033eaec1ade26f906c36791efe6dae1650b3bc/test_pages/u6_text_fill/sketch-05.js) | Guides added
+| ![sk](https://github.com/UnacceptableBehaviour/js_canvas/blob/master/test_pages/u6_text_fill/2022.01.12-09.19.53.png) | ![sk]() | ![sk]() |
+| Code @ [sketch-05.js](https://github.com/UnacceptableBehaviour/js_canvas/blob/705dd7feda71c58b3122e02f6760bfcb7003d294/test_pages/u6_text_fill/sketch-05.js) | Code @ [sketch-05.js]() | Code @ [sketch-05.js]() | 
 | ![sk]() | ![sk]() | ![sk]() |
 | Code @ [sketch-05.js]() | Code @ [sketch-05.js]() | Code @ [sketch-05.js]() | 
   
