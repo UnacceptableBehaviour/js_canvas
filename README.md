@@ -4,7 +4,7 @@ course which I recommend 100%. A great way to learn a modern programming languag
   
 For each lesson in the course theres an **IMAGE** of the final page / canvas, **DESCRIPTION**, **CODE** and **README**
 
-
+| Notes | Info | 
 | - | - | 
 | ![sk]() | desc |
 | Code @ [sketch-XX.js]() | [README.md]() | 
