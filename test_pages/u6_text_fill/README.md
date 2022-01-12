@@ -1,11 +1,11 @@
 # U6 - Sketch - Fonts - aligning - Bit reading 
 Contents notes:  
-Canvas fonts - fillText: https://www.w3schools.com/tags/canvas_font.asp
-Alignment - https://www.w3schools.com/tags/canvas_textbaseline.asp
-Canvas 2d Ref Mozilla: https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D
-measureText: https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/measureText
-ES6 / JS - asynch / await & Promises
-canvas.getImageData(x,y,width,height): https://www.w3schools.com/tags/canvas_getimagedata.asp
+Canvas fonts - fillText: https://www.w3schools.com/tags/canvas_font.asp  
+Alignment - https://www.w3schools.com/tags/canvas_textbaseline.asp  
+Canvas 2d Ref Mozilla: https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D  
+measureText: https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/measureText  
+ES6 / JS - asynch / await & Promises  
+canvas.getImageData(x,y,width,height): https://www.w3schools.com/tags/canvas_getimagedata.asp  
     
   
 Some experiments:
@@ -15,8 +15,8 @@ Some experiments:
 | Code @ [sketch-05.js](https://github.com/UnacceptableBehaviour/js_canvas/blob/e494f399d9f610c4b33930f2651ca72b4eab8b2f/test_pages/u6_text_fill/sketch-05.js) | Code @ [sketch-05.js](https://github.com/UnacceptableBehaviour/js_canvas/blob/497338f1b3d73796bf9d217e37253a3495eb1bb6/test_pages/u6_text_fill/sketch-05.js) | Code @ [sketch-05.js](https://github.com/UnacceptableBehaviour/js_canvas/blob/3a033eaec1ade26f906c36791efe6dae1650b3bc/test_pages/u6_text_fill/sketch-05.js) | Guides added
 | ![sk](https://github.com/UnacceptableBehaviour/js_canvas/blob/master/test_pages/u6_text_fill/2022.01.12-09.19.53.png) | ![sk](https://github.com/UnacceptableBehaviour/js_canvas/blob/master/test_pages/u6_text_fill/2022.01.12-09.43.48.png) | ![sk](https://github.com/UnacceptableBehaviour/js_canvas/blob/master/test_pages/u6_text_fill/2022.01.12-11.06.16.png) |
 | Code @ [sketch-05.js](https://github.com/UnacceptableBehaviour/js_canvas/blob/705dd7feda71c58b3122e02f6760bfcb7003d294/test_pages/u6_text_fill/sketch-05.js) | Code @ [sketch-05.js](https://github.com/UnacceptableBehaviour/js_canvas/blob/f856c789262b5528e75997fc7f5b72b26adca375/test_pages/u6_text_fill/sketch-05.js) | Code @ [sketch-05.js](https://github.com/UnacceptableBehaviour/js_canvas/blob/0117662b07efb207e09bc011122730dbb7956b27/test_pages/u6_text_fill/sketch-05.js) | 
-| ![sk]() | ![sk]() | ![sk]() |
-| Code @ [sketch-05.js]() | Code @ [sketch-05.js]() | Code @ [sketch-05.js]() | 
+| ![sk](https://github.com/UnacceptableBehaviour/js_canvas/blob/master/test_pages/u6_text_fill/2022.01.12-11.41.56.png) | ![sk]() | ![sk]() |
+| Code @ [sketch-05.js](https://github.com/UnacceptableBehaviour/js_canvas/blob/3104beba657e99941dfd6b1f78ce6ab0dac7ae6a/test_pages/u6_text_fill/sketch-05.js) | Code @ [sketch-05.js]() | Code @ [sketch-05.js]() | 
   
 Notes on experiments.
   
