@@ -115,7 +115,7 @@ let fontFamily = 'serif';
 
 // data source canvas
 const typeCanvas = document.createElement('canvas');
-const typeContext = typeCanvas.getContext('2d');
+const dataSourceContext = typeCanvas.getContext('2d');
 
 const sketch = ({ context, width, height }) => {
   // data source canvas
@@ -128,16 +128,16 @@ const sketch = ({ context, width, height }) => {
 	typeCanvas.height = rows;
   
   return ({ context, width, height }) => {
-    typeContext.fillStyle = 'black';
-    typeContext.fillRect(0, 0, cols, rows);
+    dataSourceContext.fillStyle = 'black';
+    dataSourceContext.fillRect(0, 0, cols, rows);
     
     fontSize = cols * 1.2;              // dataSourceContext
-    typeContext.fillStyle = 'white';
-    typeContext.font = `${fontSize}px ${fontFamily}`;
-    typeContext.textBaseline = 'top';
+    dataSourceContext.fillStyle = 'white';
+    dataSourceContext.font = `${fontSize}px ${fontFamily}`;
+    dataSourceContext.textBaseline = 'top';
     
     
-    let textMetrics = typeContext.measureText(opTxt);
+    let textMetrics = dataSourceContext.measureText(opTxt);
     cl(textMetrics);
 
 		const mx = textMetrics.actualBoundingBoxLeft * -1;
@@ -149,15 +149,15 @@ const sketch = ({ context, width, height }) => {
     const x = (cols - mw) * 0.5 - mx;
     const y = (rows - mh) * 0.5 - my;
 
-    typeContext.save();               // place dataSource Text 
-    typeContext.translate(x, y);
+    dataSourceContext.save();               // place dataSource Text 
+    dataSourceContext.translate(x, y);
     
-    typeContext.beginPath();
-    typeContext.rect(mx, my, mw, mh);
-    typeContext.stroke();
-    typeContext.fillText(opTxt, 0, 0);
+    dataSourceContext.beginPath();
+    dataSourceContext.rect(mx, my, mw, mh);
+    dataSourceContext.stroke();
+    dataSourceContext.fillText(opTxt, 0, 0);
     
-    typeContext.restore();
+    dataSourceContext.restore();
     
     // legacy diagnostics
     //placementMarker(context, 0, 0, 'red');
@@ -167,10 +167,15 @@ const sketch = ({ context, width, height }) => {
     //placeVertMeasure(context, `mh (${Math.floor(mh)})`, mx+mw+10, my, my+mh, 'blue', 15);
     //placementMarker(context, mx, my, 'blue');    
     
-    const typeData = typeContext.getImageData(0,0,cols,rows).data;
+    const typeData = dataSourceContext.getImageData(0,0,cols,rows).data;
     //cl(typeData);                         // data large array RGBA
-    //context.drawImage(typeCanvas, 0, 0);  // place image on main canvas context fro debug/display
+    context.drawImage(typeCanvas, 0, 0);  // place image on main canvas context fro debug/display
                                             // this isn't necessary to read the data & construct art
+    
+    // set backround blak
+    context.fillStyle = 'black';
+    context.fillRect(0,0, width,height);
+    
     
     for (let i = 0; i < numCells; i++) {
 			const col = i % cols;
@@ -190,17 +195,24 @@ const sketch = ({ context, width, height }) => {
 			//if (Math.random() < 0.1) context.font = `${cell * 6}px ${fontFamily}`;
 			//
 			//context.fillStyle = 'white';
-      context.fillStyle = `rgb(${r}, ${g}, ${b})`;  // 'rgb(255,0,255)'; paint magenta
+			context.fillStyle = `rgb(${r}, ${g}, ${b})`;  // 'rgb(255,0,255)'; paint magenta
+      
       //cl(`rgb(${r}, ${g}, ${b})`);
 			context.save();
-			context.translate(x, y);
-			//context.translate(cell * 0.5, cell * 0.5);
+			context.translate(x, y);                        // fill: 1,2,3
+			context.translate(cell * 0.5, cell * 0.5);    // fill: 3
 
-			//context.fillRect(0, 0, cell, cell);
+      // fill 1: rect as large pixel
+      //context.fillRect(0, 0, cell, cell);
 
+      // fill 2: shaded circle instead of pixel
       // place circle in centre of cell (cell/2) with radius cell/2
-      placementMarker(context, cell/2, cell/2, cell/2, `rgb(${r}, ${g}, ${b})`); 
-
+      //placementMarker(context, cell/2, cell/2, cell/2, `rgb(${r}, ${g}, ${b})`); 
+      
+      // fill 3: use source character as pixel
+      context.font = `${cell}px ${fontFamily}`;      
+      context.fillText(opTxt, 0,0);
+      
 			//context.fillText(glyph, 0, 0);
 			
 			context.restore();
