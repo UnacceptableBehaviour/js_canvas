@@ -6,10 +6,10 @@ For each lesson in the course theres an **IMAGE** of the final page / canvas, **
 
 | Notes | Info | 
 | - | - | 
-| ![sk]() | desc |
-| Code @ [sketch-XX.js]() | [README.md]() | 
-| ![sk]() | desc |
-| Code @ [sketch-XX.js]() | [README.md]() | 
+| ![sk](https://github.com/UnacceptableBehaviour/js_canvas/blob/master/test_pages/u2_fundamentals/sketches/output/01/2022.01.06-20.50.29.png) | Fundamentals: setting up node & canvas-sketch and drawing to canvas - plus javascripts basics |
+| Code @ [sktch-01.js](https://github.com/UnacceptableBehaviour/js_canvas/blob/2eef344c56e5ee552d4d128f4e41e0568ad040a2/test_pages/u2_fundamentals/sketches/sktch-01.js) | [README.md](https://github.com/UnacceptableBehaviour/js_canvas/blob/master/test_pages/u2_fundamentals/README.md) | 
+| ![sk](https://github.com/UnacceptableBehaviour/js_canvas/blob/master/test_pages/u3_sktch_transform/2022.01.07-20.37.22.png) | Transforms: translate, rotate, scale, context.save/restore, fill, stroke |
+| Code @ [sketch-02.js](https://github.com/UnacceptableBehaviour/js_canvas/blob/20e8c06d827270aef5b03e4ad834fe849d9bf727/test_pages/u3_sktch_transform/sketch-02.js) | [README.md](https://github.com/UnacceptableBehaviour/js_canvas/blob/master/test_pages/u3_sktch_transform/README.md) | 
 | ![sk]() | desc |
 | Code @ [sketch-XX.js]() | [README.md]() | 
 | ![sk]() | desc |
@@ -22,7 +22,7 @@ For each lesson in the course theres an **IMAGE** of the final page / canvas, **
 | Code @ [sketch-XX.js]() | [README.md]() | 
 
 
-
+## Revison - running an example from above
 
   
 
