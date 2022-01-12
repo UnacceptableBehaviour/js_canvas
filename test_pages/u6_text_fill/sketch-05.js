@@ -109,7 +109,7 @@ const settings = {
   dimensions: [ 1080, 1080 ]
 };
 
-let opTxt = 'A';
+let opTxt = '𝛅'; //'𝛑'; //'𝛀' '𝚿' '𝛅' '𝛜' '𝛛'  '𝛑'  '𝛍' '𝛟';
 let fontSize = 1200;
 let fontFamily = 'serif';
 
@@ -119,19 +119,19 @@ const typeContext = typeCanvas.getContext('2d');
 
 const sketch = ({ context, width, height }) => {
   // data source canvas
-  const cell = 20;
+  const cell = 20;  // cell dimension
 	const cols = Math.floor(width  / cell);
 	const rows = Math.floor(height / cell);
 	const numCells = cols * rows;
 
-	typeCanvas.width  = cols;
+	typeCanvas.width  = cols;   // scaled down dataSourceContext 1 pixel per cell
 	typeCanvas.height = rows;
   
   return ({ context, width, height }) => {
     typeContext.fillStyle = 'black';
     typeContext.fillRect(0, 0, cols, rows);
     
-    fontSize = cols * 1.1;
+    fontSize = cols * 1.2;              // dataSourceContext
     typeContext.fillStyle = 'white';
     typeContext.font = `${fontSize}px ${fontFamily}`;
     typeContext.textBaseline = 'top';
@@ -149,24 +149,59 @@ const sketch = ({ context, width, height }) => {
     const x = (cols - mw) * 0.5 - mx;
     const y = (rows - mh) * 0.5 - my;
 
-    typeContext.save();
+    typeContext.save();               // place dataSource Text 
     typeContext.translate(x, y);
     
     typeContext.beginPath();
     typeContext.rect(mx, my, mw, mh);
     typeContext.stroke();
+    typeContext.fillText(opTxt, 0, 0);
+    
+    typeContext.restore();
+    
+    // legacy diagnostics
+    //placementMarker(context, 0, 0, 'red');
     // placeHorizMeasure(ctx, text, xl, xr, y, col, lnD, lnW = 2)
     //placeHorizMeasure(context, `mw (${Math.floor(mw)})`, mx, mx+mw, my+mh+10, 'blue', 15);
     // function placeVertMeasure(ctx, text, x, yt, yb, col, lnD, lnW = 2)
     //placeVertMeasure(context, `mh (${Math.floor(mh)})`, mx+mw+10, my, my+mh, 'blue', 15);
-    //placementMarker(context, mx, my, 'blue');
+    //placementMarker(context, mx, my, 'blue');    
+    
+    const typeData = typeContext.getImageData(0,0,cols,rows).data;
+    //cl(typeData);                         // data large array RGBA
+    //context.drawImage(typeCanvas, 0, 0);  // place image on main canvas context fro debug/display
+                                            // this isn't necessary to read the data & construct art
+    
+    for (let i = 0; i < numCells; i++) {
+			const col = i % cols;
+			const row = Math.floor(i / cols);
 
-    typeContext.fillText(opTxt, 0, 0);
-    //placementMarker(context, 0, 0, 'red');
-    
-    typeContext.restore();
-    
-    context.drawImage(typeCanvas, 0, 0);
+			const x = col * cell;
+			const y = row * cell;
+
+			const r = typeData[i * 4 + 0];
+			const g = typeData[i * 4 + 1];
+			const b = typeData[i * 4 + 2];
+			const a = typeData[i * 4 + 3];
+			//
+			//const glyph = getGlyph(r);
+			//
+			//context.font = `${cell * 2}px ${fontFamily}`;
+			//if (Math.random() < 0.1) context.font = `${cell * 6}px ${fontFamily}`;
+			//
+			//context.fillStyle = 'white';
+      context.fillStyle = `rgb(${r}, ${g}, ${b})`;  // 'rgb(255,0,255)'; paint magenta
+      //cl(`rgb(${r}, ${g}, ${b})`);
+			context.save();
+			context.translate(x, y);
+			//context.translate(cell * 0.5, cell * 0.5);
+
+			context.fillRect(0, 0, cell, cell);
+			//context.fillText(glyph, 0, 0);
+			
+			context.restore();
+
+		}
   };
 };
 

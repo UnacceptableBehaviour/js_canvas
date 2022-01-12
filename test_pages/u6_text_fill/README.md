@@ -4,6 +4,8 @@ Canvas fonts - fillText: https://www.w3schools.com/tags/canvas_font.asp
 Alignment - https://www.w3schools.com/tags/canvas_textbaseline.asp
 Canvas 2d Ref Mozilla: https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D
 measureText: https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/measureText
+ES6 / JS - asynch / await & Promises
+canvas.getImageData(x,y,width,height): https://www.w3schools.com/tags/canvas_getimagedata.asp
     
   
 Some experiments:
