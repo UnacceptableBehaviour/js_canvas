@@ -1,6 +1,6 @@
 # JS Visualisation Using canvas-sketch
 Course notes from [Creative Coding: Making Visuals with JavaScript](https://www.domestika.org/auth/login#course_lesson_28425) a
-course which I recommend 100%. A great way to learn a modern programming language and creative art.
+course which I recommend 100%. A great way to learn a modern programming language (javascript) and creative art.
   
 For each lesson in the course theres an **IMAGE** of the final page / canvas, **DESCRIPTION**, **CODE** and **README**
 
@@ -10,8 +10,8 @@ For each lesson in the course theres an **IMAGE** of the final page / canvas, **
 | Code @ [sktch-01.js](https://github.com/UnacceptableBehaviour/js_canvas/blob/2eef344c56e5ee552d4d128f4e41e0568ad040a2/test_pages/u2_fundamentals/sketches/sktch-01.js) | [README.md](https://github.com/UnacceptableBehaviour/js_canvas/blob/master/test_pages/u2_fundamentals/README.md) | 
 | ![sk](https://github.com/UnacceptableBehaviour/js_canvas/blob/master/test_pages/u3_sktch_transform/2022.01.07-20.37.22.png) | Transforms: translate, rotate, scale, context.save/restore, fill, stroke |
 | Code @ [sketch-02.js](https://github.com/UnacceptableBehaviour/js_canvas/blob/20e8c06d827270aef5b03e4ad834fe849d9bf727/test_pages/u3_sktch_transform/sketch-02.js) | [README.md](https://github.com/UnacceptableBehaviour/js_canvas/blob/master/test_pages/u3_sktch_transform/README.md) | 
-| ![sk]() | desc |
-| Code @ [sketch-XX.js]() | [README.md]() | 
+| ![sk](https://github.com/UnacceptableBehaviour/js_canvas/blob/master/test_pages/u4_animation/2022.01.08-13.31.47.png) | Animation: recording animations, requestAnimationFrame, lines, circles, fill, width, JS loops, some optimisation |
+| Code @ [sketch-03.js](https://github.com/UnacceptableBehaviour/js_canvas/blob/4615bddb2019897e88c26f46f8d1523d82b4e808/test_pages/u4_animation/sketch-03.js) | [README.md](https://github.com/UnacceptableBehaviour/js_canvas/blob/master/test_pages/u4_animation/README.md) | 
 | ![sk]() | desc |
 | Code @ [sketch-XX.js]() | [README.md]() | 
 | ![sk]() | desc |

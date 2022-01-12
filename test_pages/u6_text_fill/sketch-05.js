@@ -110,7 +110,7 @@ const settings = {
   dimensions: [ 1080, 1080 ]
 };
 
-let opTxt = random.pick(['𝛑', '𝛅', '𝛀', '𝚿', '𝛅', '𝛜', '𝛛', '𝛍', '𝛟']);
+let opTxt = '𝚿';//random.pick(['𝛑', '𝛅', '𝛀', '𝚿', '𝛅', '𝛜', '𝛛', '𝛍', '𝛟']);
 let fontSize = 1200;
 let fontFamily = 'serif';
 
@@ -222,9 +222,11 @@ const sketch = ({ context, width, height }) => {
       //context.fillText(opTxt, 0,0);
       
       // fill 4: assci art shade
+      const glyph = getGlyph(r);
       context.font = `${cell}px ${fontFamily}`;
-      if (Math.random() < 0.05) context.font = `${cell * 4}px ${fontFamily}`;      
-      const glyph = getGlyph(r);      
+      if (Math.random() < 0.03) context.font = `${cell * 4}px ${fontFamily}`;
+      if (glyph.length > 1) context.font = `${cell * random.rangeFloor(2,5)}px ${fontFamily}`;
+      
       context.fillStyle = 'white';      // character provide the greyscale 
 			context.fillText(glyph, 0, 0);
 			
