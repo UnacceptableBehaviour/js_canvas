@@ -1,22 +1,16 @@
 # U5 - Sketch - Noise - Animation
 Contents notes:  
-command | description
-| - | - |
-JS classes | language
-- |- 
-canvas-sketch-util | [canvas-sketch-util](https://github.com/mattdesl/canvas-sketch-util)  
-    
+Introduction to Perlin Noise, Simplex Noise, direction artifacts, 3d simplex noise, animation based on that
+noise and adding a control panel (to allow control of different variables in realtime) called
+[Tweakpane](https://github.com/cocopon/tweakpane).
+  
   
 Some experiments:
 | 1 | 2 | 3 | 
 | - | - | - | 
-| ![sk]() | ![sk]() | ![sk]() |
-| Code @ [sketch-04.js]() | Code @ [sketch-04.js]() | Code @ [sketch-04.js]() | 
-| ![sk]() | ![sk]() | ![sk]() |
-| Code @ [sketch-04.js]() | Code @ [sketch-04.js]() | Code @ [sketch-04.js]() | 
-| ![sk]() | ![sk]() | ![sk]() |
-| Code @ [sketch-04.js]() | Code @ [sketch-04.js]() | Code @ [sketch-04.js]() | 
-  
+| ![sk](https://github.com/UnacceptableBehaviour/js_canvas/blob/master/test_pages/u5_noise/2022.01.12-20.48.51.png) | ![sk](https://github.com/UnacceptableBehaviour/js_canvas/blob/master/test_pages/u5_noise/2022.01.10-19.48.27.png) | ![sk](https://github.com/UnacceptableBehaviour/js_canvas/blob/master/test_pages/u5_noise/perlin_tweakpane.png) |
+| - | Code @ [sketch-04.js](https://github.com/UnacceptableBehaviour/js_canvas/blob/90c0c01067f439f686041fc9bc759ba0b953d40e/test_pages/u5_noise/sketch-04.js) | Code @ [sketch-04.js](https://github.com/UnacceptableBehaviour/js_canvas/blob/786d5cbb875ec367ea4c766a493bdc08a5bef751/test_pages/u5_noise/sketch-04.js) | 
+    
 Notes on experiments.
   
   
