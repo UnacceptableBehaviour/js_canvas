@@ -174,7 +174,7 @@ const sketch = ({ context, width, height }) => {
     
     // set backround blak
     context.fillStyle = 'black';
-    context.fillRect(0,0, width,height);
+    context.fillRect(0,0, width,height); 
     
     
     for (let i = 0; i < numCells; i++) {
