@@ -13,9 +13,9 @@ For each lesson in the course theres an **IMAGE** of the final page / canvas, **
 | ![sk](https://github.com/UnacceptableBehaviour/js_canvas/blob/master/test_pages/u4_animation/2022.01.08-13.31.47.png) | Animation: recording animations, requestAnimationFrame, lines, circles, fill, width, JS loops, some optimisation |
 | Code @ [sketch-03.js](https://github.com/UnacceptableBehaviour/js_canvas/blob/4615bddb2019897e88c26f46f8d1523d82b4e808/test_pages/u4_animation/sketch-03.js) | [README.md](https://github.com/UnacceptableBehaviour/js_canvas/blob/master/test_pages/u4_animation/README.md) | 
 | ![sk]() | desc |
-| Code @ [sketch-XX.js]() | [README.md]() | 
-| ![sk]() | desc |
-| Code @ [sketch-XX.js]() | [README.md]() | 
+| Code @ [sketch-XX.js]() | [README.md](https://github.com/UnacceptableBehaviour/js_canvas/blob/master/test_pages/u5_noise/README.md) | 
+| ![sk](https://github.com/UnacceptableBehaviour/js_canvas/blob/master/test_pages/u6_text_fill/2022.01.12-20.08.04.png) | Fonts, reading image data, basic image processing, JS asynch/await, event listeners |
+| Code @ [sketch-05.js](https://github.com/UnacceptableBehaviour/js_canvas/blob/9597c3b8d717ad8bb9a5bafb4cd04bf7bbcc772c/test_pages/u6_text_fill/sketch-05.js) | [README.md](https://github.com/UnacceptableBehaviour/js_canvas/blob/master/test_pages/u6_text_fill/README.md) | 
 | ![sk]() | desc |
 | Code @ [sketch-XX.js]() | [README.md]() | 
 | ![sk]() | desc |
