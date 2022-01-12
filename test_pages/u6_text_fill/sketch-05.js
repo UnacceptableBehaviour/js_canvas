@@ -223,7 +223,7 @@ const sketch = ({ context, width, height }) => {
       
       // fill 4: assci art shade
       context.font = `${cell}px ${fontFamily}`;
-      if (Math.random() < 0.05) context.font = `${cell * 6}px ${fontFamily}`;      
+      if (Math.random() < 0.05) context.font = `${cell * 4}px ${fontFamily}`;      
       const glyph = getGlyph(r);      
       context.fillStyle = 'white';      // character provide the greyscale 
 			context.fillText(glyph, 0, 0);
