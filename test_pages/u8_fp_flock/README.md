@@ -11,12 +11,12 @@ Draw static line of birds, diagonally. From (0,50,100) to (100,50,0). Z=0 being 
 Some experiments:  
 | 1 | 2 | 3 | 
 | - | - | - | 
+| ![sk](https://github.com/UnacceptableBehaviour/js_canvas/blob/master/test_pages/u8_fp_flock/2022.01.13-00.53.35.png) | ![sk]() | ![sk]() |
+| Code @ [u8_fp_flock.js](https://github.com/UnacceptableBehaviour/js_canvas/blob/f6d6ac88c0342b6f0cf6a9ead2f2c6677de5f2c9/test_pages/u8_fp_flock/u8_fp_flock.js) | Code @ [u8_fp_flock.js]() | Code @ [u8_fp_flock.js]() | 
 | ![sk]() | ![sk]() | ![sk]() |
-| Code @ [sketch-04.js]() | Code @ [sketch-04.js]() | Code @ [sketch-04.js]() | 
+| Code @ [u8_fp_flock.js]() | Code @ [u8_fp_flock.js]() | Code @ [u8_fp_flock.js]() | 
 | ![sk]() | ![sk]() | ![sk]() |
-| Code @ [sketch-04.js]() | Code @ [sketch-04.js]() | Code @ [sketch-04.js]() | 
-| ![sk]() | ![sk]() | ![sk]() |
-| Code @ [sketch-04.js]() | Code @ [sketch-04.js]() | Code @ [sketch-04.js]() | 
+| Code @ [u8_fp_flock.js]() | Code @ [u8_fp_flock.js]() | Code @ [u8_fp_flock.js]() | 
   
 Notes on experiments.  
   
