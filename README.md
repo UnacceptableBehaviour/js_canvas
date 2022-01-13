@@ -20,7 +20,8 @@ For each lesson in the course theres an **IMAGE** of the final page / canvas, **
 | Code @ [sketch-XX.js]() | [README.md]() | 
 | ![sk]() | desc |
 | Code @ [sketch-XX.js]() | [README.md]() | 
-
+| ![sk]() | desc |
+| Code @ [sketch-XX.js]() | [README.md]() | 
 
 ## Revison - running an example from above
 
