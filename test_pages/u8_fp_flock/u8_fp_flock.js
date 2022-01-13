@@ -1,6 +1,7 @@
 const canvasSketch = require('canvas-sketch');
 const math = require('canvas-sketch-util/math');
 const random = require('canvas-sketch-util/random');
+const Tweakpane = require('tweakpane');
 
 // helpers
 const cl = (str) => {
@@ -33,38 +34,40 @@ const settings = {
   animate: true
 };
 
-// PARAMETERS
+// PARAMETERS - #TWEAKABLE
+const params = {
+  noOfBoids: 100,                    
+  boidMaxRad: 40,
+  boidMinRad: 2,
+  velocityMin: 0,
+  velocityMax: 10,
+  borderStroke: true,
+  
+  flockDensity: 0.3,   // 1: No space between birds, 0 = no birds  
+  nearestNeighbourEffect: 7,
+  nNEffect: true,
+  visualRangeEffect: 50,
+  vREffect: false,
+}
 
-let noOfBoids = 100;                  // #TWEAKABLE
-let flockDensity = 0.3;   // 1 = No space between birds, 0 = no birds
-
-let boidMaxRad = 40;                  // #TWEAKABLE
-let boidMinRad = 2;                   // #TWEAKABLE
-
-let nearestNeighbourEffect = 7;       // #TWEAKABLE
-let nNEffect = true;
-let visualRangeEffect = 50;
-let vREffect = false;
-
-let velocityMin = 0;
-let velocityMax = 10;
-
-let borderStroke = true;              // #TWEAKABLE
 
 
 const sketch = ({ context, width, height }) => {
 
   let flock = [];
   
-  for (i=0; i<noOfBoids; i++ ) {
-    let pos = new Vector( random.rangeFloor(1,scene.x), random.rangeFloor(1,scene.y), random.rangeFloor(1,scene.z));
-    let vel = new Vector( random.rangeFloor(velocityMin,velocityMax), random.rangeFloor(velocityMin,velocityMax), random.rangeFloor(velocityMin,velocityMax));    
-    flock.push(new Boid(pos, vel, scene, i));
-  }
+  adjustFlockSize(flock, params.noOfBoids);
+  //for (i=0; i<params.noOfBoids; i++ ) {
+  //  let pos = new Vector( random.rangeFloor(1,scene.x), random.rangeFloor(1,scene.y), random.rangeFloor(1,scene.z));
+  //  let vel = new Vector( random.rangeFloor(params.velocityMin,params.velocityMax), random.rangeFloor(params.velocityMin,params.velocityMax), random.rangeFloor(params.velocityMin,params.velocityMax));    
+  //  flock.push(new Boid(pos, vel, scene, i));
+  //}
   
   return ({ context, width, height }) => {
     context.fillStyle = 'beige';
     context.fillRect(0, 0, width, height);
+
+    adjustFlockSize(flock, params.noOfBoids);
     
     flock.sort(compareZ);
     
@@ -77,7 +80,31 @@ const sketch = ({ context, width, height }) => {
   };
 };
 
+// class Flock - TODO - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+let birdsCreated = 0;
 
+function adjustFlockSize(flock, numberOfBoids) {
+  if (flock.length === numberOfBoids) return;
+  while (flock.length < numberOfBoids) {
+    addBoidToFlock(flock);
+  }
+  while (flock.length > numberOfBoids) {
+    removeBoidFromFlock(flock);
+  }  
+}
+
+function addBoidToFlock(flock) {
+  let pos = new Vector( random.rangeFloor(1,scene.x), random.rangeFloor(1,scene.y), random.rangeFloor(1,scene.z));
+  let vel = new Vector( random.rangeFloor(params.velocityMin,params.velocityMax), random.rangeFloor(params.velocityMin,params.velocityMax), random.rangeFloor(params.velocityMin,params.velocityMax));    
+  birdsCreated += 1;
+  flock.push(new Boid(pos, vel, scene, birdsCreated));
+}
+
+function removeBoidFromFlock(flock) {
+  flock.pop();
+  return flock.length;
+}
+// class Flock - TODO - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 
 // Boid compare helper - TODO how to add to Boid so array.sort uses automatically? Is poss?
@@ -101,7 +128,7 @@ class Boid {
   }
   
   radiusFromPos(){
-    return math.mapRange(this.pos.z, 0, this.scene.x, boidMinRad, boidMaxRad, true);
+    return math.mapRange(this.pos.z, 0, this.scene.x, params.boidMinRad, params.boidMaxRad, true);
   }
   
   draw(context){    
@@ -112,7 +139,7 @@ class Boid {
     context.beginPath();
     context.arc(0,0, this.rad, 0, Math.PI*2);        
     context.strokeStyle = 'black';
-    if (borderStroke) context.stroke();
+    if (params.borderStroke) context.stroke();
     context.fillStyle = 'red';
     context.fill();
     
@@ -150,6 +177,42 @@ class Boid {
 
 }
 
+const createpane = () => {
+  const pane = new Tweakpane.Pane();  
+  let folder;
+  
+  folder = pane.addFolder({ title: 'Boids '});
+  folder.addInput(params, 'noOfBoids', { min: 10, max: 500, step: 10 });
+  folder.addInput(params, 'boidMinRad', { min: 1, max: 100, step: 1 });
+  folder.addInput(params, 'boidMaxRad', { min: 1, max: 100, step: 1 }); 
+  folder.addInput(params, 'velocityMin', { min: 1, max: 100, step: 1 });
+  folder.addInput(params, 'velocityMax', { min: 1, max: 100, step: 1 });
+  folder.addInput(params, 'borderStroke');
+
+  
+  //folder = pane.addFolder({ title: 'Flock '});
+  //flockDensity: 0.3,   // 1: No space between birds, 0 = no birds  
+  //nearestNeighbourEffect: 7,
+  //nNEffect: true,
+  //visualRangeEffect: 50,
+  //vREffect: false,  
+  
+}
+	//
+	//folder = pane.addFolder({ title: 'Grid '});
+	//folder.addInput(params, 'lineCap', { options: { butt: 'butt', round: 'round', square: 'square' }});
+	//folder.addInput(params, 'cols', { min: 2, max: 50, step: 1 });
+	//folder.addInput(params, 'rows', { min: 2, max: 50, step: 1 });
+	//folder.addInput(params, 'scaleMin', { min: 1, max: 100 });
+	//folder.addInput(params, 'scaleMax', { min: 1, max: 100 });
+	////
+	//folder = pane.addFolder({ title: 'Noise' });
+	//folder.addInput(params, 'freq', { min: -0.01, max: 0.01 });
+	//folder.addInput(params, 'amp', { min: 0, max: 1 });
+	//folder.addInput(params, 'animate');
+	//folder.addInput(params, 'frame', { min: 0, max: 999 });
+
+ createpane();
 
 canvasSketch(sketch, settings);
 
