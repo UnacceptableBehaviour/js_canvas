@@ -1,65 +1,10 @@
 const canvasSketch = require('canvas-sketch');
 const math = require('canvas-sketch-util/math');
+const random = require('canvas-sketch-util/random');
 
 // helpers
 const cl = (str) => {
   console.log(str);
-}
-
-const settings = {
-  dimensions: [ 1200, 1200 ]
-};
-
-// PARAMETERS
-
-let noOfBoids = 40;                   // #TWEAKABLE
-let flockDensity = 0.3;   // 1 = No space between birds, 0 = no birds
-
-let nearestNeighbourEffect = 7;       // #TWEAKABLE
-let nNEffect = true;
-let visualRangeEffect = 50;
-let vREffect = false;
-
-let borderStroke = true;              // #TWEAKABLE
-
-
-const sketch = ({ context, width, height }) => {
-  // contruct the bird cage? construct the flock!
-  
-  let initialSpacing = width/noOfBoids;
-  let scene = new Vector(width, height, width); // use with for depth to create cube
-  
-  let flock = [];
-  
-  for (i=0; i<noOfBoids; i++ ) {
-    let pos = new Vector( i*initialSpacing, height/2, width - i*initialSpacing);
-    flock.push(new Boid(pos, scene));
-  }
-  
-  return ({ context, width, height }) => {
-    context.fillStyle = 'beige';
-    context.fillRect(0, 0, width, height);
-    
-    flock.sort(compareZ);
-    
-    flock.forEach( boid => {
-       boid.draw(context);           
-    });
-    
-  };
-};
-
-canvasSketch(sketch, settings);
-
-// get z order paint farthest 1st
-function compareZ(boidA, boidB) {
-  if ( boidA.pos.z < boidB.pos.z ){
-    return -1;
-  }
-  if ( boidA.pos.z > boidB.pos.z ){
-    return 1;
-  }
-  return 0;
 }
 
 class Vector {
@@ -81,25 +26,105 @@ class Vector {
   }
 }
 
+//const scene = new Vector(1200, 1200, 1200);
+const scene = new Vector(200, 200, 200);
+
+const settings = {
+  dimensions: [ scene.x, scene.y ],
+  //animate: true
+};
+
+// PARAMETERS
+
+let noOfBoids = 10;                   // #TWEAKABLE
+let flockDensity = 0.3;   // 1 = No space between birds, 0 = no birds
+
 let boidMaxRad = 40;   // #TWEAKABLE
 let boidMinRad = 2;    // #TWEAKABLE
 
-class Boid {
-  constructor(pos, scene){
-    this.pos = pos; //new Vector(x,y,z);
-    this.vel = 0;   //new Vector(x,y,z);
-    this.rad = this.radiusFromPos(scene);
+let nearestNeighbourEffect = 7;       // #TWEAKABLE
+let nNEffect = true;
+let visualRangeEffect = 50;
+let vREffect = false;
+
+let velocityMin = 0;
+let velocityMax = 10;
+
+let borderStroke = true;              // #TWEAKABLE
+
+
+const sketch = ({ context, width, height }) => {
+
+  let flock = [];
+  
+  for (i=0; i<noOfBoids; i++ ) {
+    let pos = new Vector( random.rangeFloor(1,scene.x), random.rangeFloor(1,scene.y), random.rangeFloor(1,scene.z));
+    let vel = new Vector( random.rangeFloor(velocityMin,velocityMax), random.rangeFloor(velocityMin,velocityMax), random.rangeFloor(velocityMin,velocityMax));    
+    flock.push(new Boid(pos, vel, scene, i));
   }
   
-  radiusFromPos(scene){
-    return math.mapRange(this.pos.z, 0, scene.x, boidMinRad, boidMaxRad, true);
+  return ({ context, width, height }) => {
+    context.fillStyle = 'beige';
+    context.fillRect(0, 0, width, height);
+    
+    cl('- - - - - - - - S');
+    flock.forEach( boid => {
+      cl(`z:${boid.pos.z} - id:${boid.id}`);
+    });    
+    cl('- - - - - - - - M');
+    flock.sort(Boid.compareZ);
+    //flock.sort(compareZ);
+    flock.forEach( boid => {
+      cl(`z:${boid.pos.z} - id:${boid.id}`);
+    });  
+    cl('- - - - - - - - E');
+    
+    flock.forEach( boid => {
+       boid.draw(context);
+       boid.bounce();
+       boid.update();
+    });
+    
+  };
+};
+
+
+
+// TODO add to Boid class
+// howto overload sort
+// get z order paint farthest 1st
+function compareZ(boidA, boidB) {
+  if ( boidA.pos.z < boidB.pos.z ){
+    return -1;
+  }
+  if ( boidA.pos.z > boidB.pos.z ){
+    return 1;
+  }
+  return 0;
+}
+
+
+
+
+
+class Boid {
+  constructor(pos, vel, scene, id){
+    this.pos = pos; //new Vector(x,y,z);
+    this.vel = vel;   //new Vector(x,y,z);
+    this.scene = scene;    
+    this.rad = this.radiusFromPos();
+    this.id = id;
+  }
+  
+  radiusFromPos(){
+    return math.mapRange(this.pos.z, 0, this.scene.x, boidMinRad, boidMaxRad, true);
   }
   
   draw(context){    
     context.save();                             // isolate drawing behaviour by saving & restoring context
     
     context.translate(this.pos.x, this.pos.y);  // move the origin / move canvas under plotter pen - see if it helps to think of it like this!?    
-    //context.lineWidth = 4;    
+    context.lineWidth = 4;    
     context.beginPath();
     context.arc(0,0, this.rad, 0, Math.PI*2);        
     context.strokeStyle = 'black';
@@ -110,27 +135,47 @@ class Boid {
     context.restore();
   }
   
-//  bounce(width, height) {
-//		if (this.pos.x <= 0 || this.pos.x >= width)  this.vel.x *= -1;
-//		if (this.pos.y <= 0 || this.pos.y >= height) this.vel.y *= -1;
-//	}
-//
+  bounce() {
+		if (this.pos.x <= 0 || this.pos.x >= this.scene.x)  this.vel.x *= -1;
+		if (this.pos.y <= 0 || this.pos.y >= this.scene.y) this.vel.y *= -1;
+    if (this.pos.z <= 0 || this.pos.z >= this.scene.z) this.vel.z *= -1;
+	}
+
 //  traverse(width, height) {
-//    if (this.pos.x <= 0)  this.pos.x = width-1;
-//    if (this.pos.x >= width) this.pos.x = 1;
+//    if (this.pos.x <= 0)  this.pos.x = this.scene.x-1;
+//    if (this.pos.x >= this.scene.x) this.pos.x = 1;
 //    
-//		if (this.pos.y <= 0) this.pos.y = height-1;
-//		if (this.pos.y >= height) this.pos.y = 1;
-//	}
-//  
-//  
-//	update() {
-//		this.pos.x += this.vel.x;
-//		this.pos.y += this.vel.y;
+//		if (this.pos.y <= 0) this.pos.y = this.scene.y-1;
+//		if (this.pos.y >= this.scene.y) this.pos.y = 1;
+//
+//		if (this.pos.z <= 0) this.pos.z = this.scene.z-1;
+//		if (this.pos.z >= this.scene.z) this.pos.z = 1;
 //	}
   
+  
+	update() {
+		this.pos.x += this.vel.x;
+		this.pos.y += this.vel.y;
+    this.pos.z += this.vel.z;
+    this.rad = this.radiusFromPos();
+	}
+
+  compareZ(boidA, boidB) {
+    if ( boidA.pos.z < boidB.pos.z ){
+      return -1;
+    }
+    if ( boidA.pos.z > boidB.pos.z ){
+      return 1;
+    }
+    return 0;
+  }
+
   dbg(){
     console.log(this);    
   }
 
 }
+
+
+canvasSketch(sketch, settings);
+
