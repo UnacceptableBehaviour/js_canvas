@@ -51,6 +51,7 @@ const sketch = ({ context, width, height }) => {
 
 canvasSketch(sketch, settings);
 
+// get z order paint farthest 1st
 function compareZ(boidA, boidB) {
   if ( boidA.pos.z < boidB.pos.z ){
     return -1;
