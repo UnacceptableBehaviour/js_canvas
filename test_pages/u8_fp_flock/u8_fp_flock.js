@@ -22,6 +22,10 @@ class Vector {
     return Math.sqrt(dx * dx + dy * dy + dz * dz);
 	}
   
+  magnitude(){
+    return Math.sqrt(this.x * this.x + this.y * this.y + this.z * this.z);
+  }
+  
   dbg(){
     console.log(this);    
   }
@@ -34,20 +38,24 @@ const settings = {
   animate: true
 };
 
+//const centreOfCage = 
 // PARAMETERS - #TWEAKABLE
 const params = {
-  noOfBoids: 100,                    
+  noOfBoids: 40,                    
   boidMaxRad: 40,
   boidMinRad: 2,
   velocityMin: 0,
-  velocityMax: 10,
+  velocityMax: 3,
   borderStroke: true,
   
   flockDensity: 0.3,   // 1: No space between birds, 0 = no birds  
+  rule1multiplier: 0.1,
   nearestNeighbourEffect: 7,
   nNEffect: true,
   visualRangeEffect: 50,
   vREffect: false,
+  
+  centreOfScene: new Vector(scene.x/2, scene.y/2, scene.z/2),
 }
 
 
@@ -55,8 +63,12 @@ const params = {
 const sketch = ({ context, width, height }) => {
 
   let flock = [];
+  const velZero = new Vector(0,0,0);
   
+  let stationaryCentrePoint = new Boid(params.centreOfScene, velZero, scene, -1);     // (pos, vel, scene, id)
+    
   adjustFlockSize(flock, params.noOfBoids);
+  
   //for (i=0; i<params.noOfBoids; i++ ) {
   //  let pos = new Vector( random.rangeFloor(1,scene.x), random.rangeFloor(1,scene.y), random.rangeFloor(1,scene.z));
   //  let vel = new Vector( random.rangeFloor(params.velocityMin,params.velocityMax), random.rangeFloor(params.velocityMin,params.velocityMax), random.rangeFloor(params.velocityMin,params.velocityMax));    
@@ -71,9 +83,11 @@ const sketch = ({ context, width, height }) => {
     
     flock.sort(compareZ);
     
+    stationaryCentrePoint.draw(context);
+    
     flock.forEach( boid => {
        boid.draw(context);
-       boid.bounce();
+       //boid.bounce();
        boid.update();
     });
     
@@ -101,7 +115,10 @@ function addBoidToFlock(flock) {
 }
 
 function removeBoidFromFlock(flock) {
-  flock.pop();
+  //const removedBoid = flock.pop();
+  //if (removedBoid.id === -1) {
+  //  flock.unshift(removedBoid);
+  //}
   return flock.length;
 }
 // class Flock - TODO - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -165,11 +182,66 @@ class Boid {
   
   
 	update() {
+    //this.ruleOneGravitateToPoint0(params.centreOfScene);
+    this.ruleOneGravitateToPoint1(params.centreOfScene);
 		this.pos.x += this.vel.x;
 		this.pos.y += this.vel.y;
     this.pos.z += this.vel.z;
     this.rad = this.radiusFromPos();
 	}
+  
+  ruleOneGravitateToPoint0(point){
+    const accel = 0.1;
+    
+    if (point.x - this.pos.x > 0) {
+      this.vel.x += accel;
+      // clamp to velocityMin/Max
+    } else {
+      this.vel.x -= accel;
+    }
+    if (point.y - this.pos.y > 0) {
+      this.vel.y += accel;
+      // clamp to velocityMin/Max
+    } else {
+      this.vel.y -= accel;
+    }
+    if (point.z - this.pos.z > 0) {
+      this.vel.z += accel;
+      // clamp to velocityMin/Max
+    } else {
+      this.vel.z -= accel;
+    }    
+  }
+  // point vel vector @ point - maintain magnitude
+  ruleOneGravitateToPoint1(point){
+    const velMag = this.vel.magnitude();
+    const velSquared = velMag * velMag;
+    
+    // ratios of x^2,y^2,z^2 sum to vel^2 
+    
+    const dx = point.x - this.pos.x;
+		const dy = point.y - this.pos.y;
+    const dz = point.z - this.pos.z;
+    const sx = Math.sign(dx);
+		const sy = Math.sign(dy);
+    const sz = Math.sign(dz);
+    
+    //const xRat = (dx * dx) / params.rule1multiplier * (dx * dx + dy * dy + dz * dz);
+    //const yRat = (dy * dy) / params.rule1multiplier * (dx * dx + dy * dy + dz * dz);
+    //const zRat = (dz * dz) / params.rule1multiplier * (dx * dx + dy * dy + dz * dz);
+    const xRat = (dx * dx) / (dx * dx + dy * dy + dz * dz);
+    const yRat = (dy * dy) / (dx * dx + dy * dy + dz * dz);
+    const zRat = (dz * dz) / (dx * dx + dy * dy + dz * dz);
+    //this.vel.x = Math.sqrt( velSquared * xRat) * sx;
+    //this.vel.y = Math.sqrt( velSquared * yRat) * sy;
+    //this.vel.z = Math.sqrt( velSquared * zRat) * sz;
+    this.vel.x += params.rule1multiplier * Math.sqrt( velSquared * xRat) * sx;
+    this.vel.y += params.rule1multiplier * Math.sqrt( velSquared * yRat) * sy;
+    this.vel.z += params.rule1multiplier * Math.sqrt( velSquared * zRat) * sz;    
+    //cl(`> - - - dx:${dx} - dy:${dy} - dz:${dz}`);
+    //cl(`velMag:${velMag} - velSquared:${velSquared} - xRat:${xRat} - yRat:${yRat} - zRat:${zRat}`);
+    //cl(this.vel);
+  }  
 
   dbg(){
     console.log(this);    
@@ -188,31 +260,16 @@ const createpane = () => {
   folder.addInput(params, 'velocityMin', { min: 1, max: 100, step: 1 });
   folder.addInput(params, 'velocityMax', { min: 1, max: 100, step: 1 });
   folder.addInput(params, 'borderStroke');
-
   
   folder = pane.addFolder({ title: 'Flock '});
-  //flockDensity: 0.3,   // 1: No space between birds, 0 = no birds
+  folder.addInput(params, 'rule1multiplier', { min: 0.01, max: 0.2, step: 0.01 });
   folder.addInput(params, 'flockDensity', { min: 0, max: 1, step: 0.05 });
   folder.addInput(params, 'nearestNeighbourEffect', { min: 1, max: 20, step: 1 });
   folder.addInput(params, 'nNEffect');
   folder.addInput(params, 'visualRangeEffect', { min: 1, max: 500, step: 5 });
   folder.addInput(params, 'vREffect');
 }
-	//
-	//folder = pane.addFolder({ title: 'Grid '});
-	//folder.addInput(params, 'lineCap', { options: { butt: 'butt', round: 'round', square: 'square' }});
-	//folder.addInput(params, 'cols', { min: 2, max: 50, step: 1 });
-	//folder.addInput(params, 'rows', { min: 2, max: 50, step: 1 });
-	//folder.addInput(params, 'scaleMin', { min: 1, max: 100 });
-	//folder.addInput(params, 'scaleMax', { min: 1, max: 100 });
-	////
-	//folder = pane.addFolder({ title: 'Noise' });
-	//folder.addInput(params, 'freq', { min: -0.01, max: 0.01 });
-	//folder.addInput(params, 'amp', { min: 0, max: 1 });
-	//folder.addInput(params, 'animate');
-	//folder.addInput(params, 'frame', { min: 0, max: 999 });
 
- createpane();
-
+createpane();
 canvasSketch(sketch, settings);
 
