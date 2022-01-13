@@ -26,21 +26,20 @@ class Vector {
   }
 }
 
-//const scene = new Vector(1200, 1200, 1200);
-const scene = new Vector(200, 200, 200);
+const scene = new Vector(1200, 1200, 1200);
 
 const settings = {
   dimensions: [ scene.x, scene.y ],
-  //animate: true
+  animate: true
 };
 
 // PARAMETERS
 
-let noOfBoids = 10;                   // #TWEAKABLE
+let noOfBoids = 100;                  // #TWEAKABLE
 let flockDensity = 0.3;   // 1 = No space between birds, 0 = no birds
 
-let boidMaxRad = 40;   // #TWEAKABLE
-let boidMinRad = 2;    // #TWEAKABLE
+let boidMaxRad = 40;                  // #TWEAKABLE
+let boidMinRad = 2;                   // #TWEAKABLE
 
 let nearestNeighbourEffect = 7;       // #TWEAKABLE
 let nNEffect = true;
@@ -67,17 +66,7 @@ const sketch = ({ context, width, height }) => {
     context.fillStyle = 'beige';
     context.fillRect(0, 0, width, height);
     
-    cl('- - - - - - - - S');
-    flock.forEach( boid => {
-      cl(`z:${boid.pos.z} - id:${boid.id}`);
-    });    
-    cl('- - - - - - - - M');
-    flock.sort(Boid.compareZ);
-    //flock.sort(compareZ);
-    flock.forEach( boid => {
-      cl(`z:${boid.pos.z} - id:${boid.id}`);
-    });  
-    cl('- - - - - - - - E');
+    flock.sort(compareZ);
     
     flock.forEach( boid => {
        boid.draw(context);
@@ -90,9 +79,8 @@ const sketch = ({ context, width, height }) => {
 
 
 
-// TODO add to Boid class
-// howto overload sort
-// get z order paint farthest 1st
+
+// Boid compare helper - TODO how to add to Boid so array.sort uses automatically? Is poss?
 function compareZ(boidA, boidB) {
   if ( boidA.pos.z < boidB.pos.z ){
     return -1;
@@ -102,10 +90,6 @@ function compareZ(boidA, boidB) {
   }
   return 0;
 }
-
-
-
-
 
 class Boid {
   constructor(pos, vel, scene, id){
@@ -159,16 +143,6 @@ class Boid {
     this.pos.z += this.vel.z;
     this.rad = this.radiusFromPos();
 	}
-
-  compareZ(boidA, boidB) {
-    if ( boidA.pos.z < boidB.pos.z ){
-      return -1;
-    }
-    if ( boidA.pos.z > boidB.pos.z ){
-      return 1;
-    }
-    return 0;
-  }
 
   dbg(){
     console.log(this);    
