@@ -16,18 +16,19 @@ Initially add velocity and fly in straight line bouncing off birdcage walls.
 const tweakpane = require('tweakpane');
 ```
   
-3. Create a bird type & state: lead / follower bird, landed / flying.  
+3. Rule 1
+X. Create a bird type & state: lead / follower bird, landed / flying.  
   
-4. Generate lead bird flight: Change direction randomly to start.
-New direction should be inside the forward hemisphere of current direction.  
+X. Generate lead bird flight: Change direction randomly to start.
+New direction should be inside the forward hemisphere of current velocity.  
   
 Some experiments:  
 | 1 | 2 | 3 | 
 | - | - | - | 
 | ![sk](https://github.com/UnacceptableBehaviour/js_canvas/blob/master/test_pages/u8_fp_flock/2022.01.13-00.53.35.png) | ![sk](https://github.com/UnacceptableBehaviour/js_canvas/blob/master/test_pages/u8_fp_flock/2022.01.13-11.05.53.png) | ![sk](https://github.com/UnacceptableBehaviour/js_canvas/blob/master/test_pages/u8_fp_flock/2022.01.13-12.09.37.png) |
 | Code @ [u8_fp_flock.js](https://github.com/UnacceptableBehaviour/js_canvas/blob/f6d6ac88c0342b6f0cf6a9ead2f2c6677de5f2c9/test_pages/u8_fp_flock/u8_fp_flock.js) | Code @ [u8_fp_flock.js](https://github.com/UnacceptableBehaviour/js_canvas/blob/8cedf36999324846dae38e2e8ed00a02235e4f8f/test_pages/u8_fp_flock/u8_fp_flock.js) | Code @ [u8_fp_flock.js](https://github.com/UnacceptableBehaviour/js_canvas/blob/0257b3b42294a290537521a121e3fd2461d593d1/test_pages/u8_fp_flock/u8_fp_flock.js) | 
-| ![sk](https://github.com/UnacceptableBehaviour/js_canvas/blob/master/test_pages/u8_fp_flock/2022.01.13-13.55.54.png) | ![sk]() | ![sk]() |
-| Code @ [u8_fp_flock.js](https://github.com/UnacceptableBehaviour/js_canvas/blob/e60d98fb22722167d1204d26061cd756a071db45/test_pages/u8_fp_flock) | Code @ [u8_fp_flock.js]() | Code @ [u8_fp_flock.js]() | 
+| ![sk](https://github.com/UnacceptableBehaviour/js_canvas/blob/master/test_pages/u8_fp_flock/2022.01.13-13.55.54.png) | ![sk](https://github.com/UnacceptableBehaviour/js_canvas/blob/master/test_pages/u8_fp_flock/2022.01.13-19.25.39.png) | ![sk]() |
+| Code @ [u8_fp_flock.js](https://github.com/UnacceptableBehaviour/js_canvas/blob/e60d98fb22722167d1204d26061cd756a071db45/test_pages/u8_fp_flock) | Rule1 @ [u8_fp_flock.js](https://github.com/UnacceptableBehaviour/js_canvas/blob/6f7e87edc86729c82f9eecdce42aa5d9519e063b/test_pages/u8_fp_flock/u8_fp_flock.js) | Code @ [u8_fp_flock.js]() | 
 | ![sk]() | ![sk]() | ![sk]() |
 | Code @ [u8_fp_flock.js]() | Code @ [u8_fp_flock.js]() | Code @ [u8_fp_flock.js]() | 
   
@@ -46,12 +47,12 @@ https://www.markdownguide.org/basic-syntax/
 
 
 #### Murmurations
-https://scitechdaily.com/patterns-of-flocks-of-starlings-mathematically-behave-how-magnets-would-move/
+Visual w track: https://www.youtube.com/watch?v=YjDYE5CUb7Q  
+    
+Boids Algorithm: https://www.youtube.com/watch?v=4LWmRuB-uNU  
+1. Fly towards centre of mass.  
+2. Avoid other birds.  
+3. Match Velocity of Nearest neighbours.  
+It doesn't mention a lead bird, the simulation drops a load of random boids onto the canvas and runs from there.  
 
-Visual w track: https://www.youtube.com/watch?v=YjDYE5CUb7Q
-
-Boids Algorithm: https://www.youtube.com/watch?v=4LWmRuB-uNU
-1. Fly towards centre of mass
-2. Avoid other birds
-3. Match Velocity of Nearest neighbours ()
 
