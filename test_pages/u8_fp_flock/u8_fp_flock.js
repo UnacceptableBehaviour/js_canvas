@@ -10,7 +10,18 @@ const settings = {
   dimensions: [ 1200, 1200 ]
 };
 
-let noOfBoids = 40;
+// PARAMETERS
+
+let noOfBoids = 40;                   // #TWEAKABLE
+let flockDensity = 0.3;   // 1 = No space between birds, 0 = no birds
+
+let nearestNeighbourEffect = 7;       // #TWEAKABLE
+let nNEffect = true;
+let visualRangeEffect = 50;
+let vREffect = false;
+
+let borderStroke = true;              // #TWEAKABLE
+
 
 const sketch = ({ context, width, height }) => {
   // contruct the bird cage? construct the flock!
@@ -19,6 +30,7 @@ const sketch = ({ context, width, height }) => {
   let scene = new Vector(width, height, width); // use with for depth to create cube
   
   let flock = [];
+  
   for (i=0; i<noOfBoids; i++ ) {
     let pos = new Vector( i*initialSpacing, height/2, width - i*initialSpacing);
     flock.push(new Boid(pos, scene));
@@ -27,6 +39,8 @@ const sketch = ({ context, width, height }) => {
   return ({ context, width, height }) => {
     context.fillStyle = 'beige';
     context.fillRect(0, 0, width, height);
+    
+    flock.sort(compareZ);
     
     flock.forEach( boid => {
        boid.draw(context);           
@@ -37,6 +51,15 @@ const sketch = ({ context, width, height }) => {
 
 canvasSketch(sketch, settings);
 
+function compareZ(boidA, boidB) {
+  if ( boidA.pos.z < boidB.pos.z ){
+    return -1;
+  }
+  if ( boidA.pos.z > boidB.pos.z ){
+    return 1;
+  }
+  return 0;
+}
 
 class Vector {
   constructor(x, y, z){
@@ -63,7 +86,7 @@ let boidMinRad = 2;    // #TWEAKABLE
 class Boid {
   constructor(pos, scene){
     this.pos = pos; //new Vector(x,y,z);
-    this.vel = 0; //new Vector(random.range(-4, 4), random.range(-4, 4)); 
+    this.vel = 0;   //new Vector(x,y,z);
     this.rad = this.radiusFromPos(scene);
   }
   
@@ -77,9 +100,10 @@ class Boid {
     context.translate(this.pos.x, this.pos.y);  // move the origin / move canvas under plotter pen - see if it helps to think of it like this!?    
     //context.lineWidth = 4;    
     context.beginPath();
-    context.arc(0,0, this.rad, 0, Math.PI*2);    
+    context.arc(0,0, this.rad, 0, Math.PI*2);        
+    context.strokeStyle = 'black';
+    if (borderStroke) context.stroke();
     context.fillStyle = 'red';
-    //context.stroke();
     context.fill();
     
     context.restore();
