@@ -190,13 +190,13 @@ const createpane = () => {
   folder.addInput(params, 'borderStroke');
 
   
-  //folder = pane.addFolder({ title: 'Flock '});
-  //flockDensity: 0.3,   // 1: No space between birds, 0 = no birds  
-  //nearestNeighbourEffect: 7,
-  //nNEffect: true,
-  //visualRangeEffect: 50,
-  //vREffect: false,  
-  
+  folder = pane.addFolder({ title: 'Flock '});
+  //flockDensity: 0.3,   // 1: No space between birds, 0 = no birds
+  folder.addInput(params, 'flockDensity', { min: 0, max: 1, step: 0.05 });
+  folder.addInput(params, 'nearestNeighbourEffect', { min: 1, max: 20, step: 1 });
+  folder.addInput(params, 'nNEffect');
+  folder.addInput(params, 'visualRangeEffect', { min: 1, max: 500, step: 5 });
+  folder.addInput(params, 'vREffect');
 }
 	//
 	//folder = pane.addFolder({ title: 'Grid '});
