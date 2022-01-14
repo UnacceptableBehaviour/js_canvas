@@ -79,7 +79,9 @@ const params = {
 }
 
 
-
+// SKETCH - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+// SKETCH - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+// SKETCH - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 const sketch = ({ context, width, height }) => {
 
   let flock = [];
@@ -87,8 +89,10 @@ const sketch = ({ context, width, height }) => {
   
   let stationaryCentrePoint = new Boid(params.centreOfScene, velZero, scene, -1);     // (pos, vel, scene, id)
       
-  placeFlockOnGround(flock);  
-  //adjustFlockSize(flock, params.noOfBoids);   // create flock to start
+  //placeFlockOnGround(flock);  
+  adjustFlockSize(flock, params.noOfBoids);   // create flock to start
+  
+  flock[flock.length/2].makeIndependantBoid();  // create lead bird
   
   return ({ context, width, height }) => {
     context.fillStyle = 'beige';
@@ -124,6 +128,11 @@ const sketch = ({ context, width, height }) => {
     
   };
 };
+// SKETCH - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+// SKETCH - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+// SKETCH - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+
 
 // class Flock - TODO - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 let birdsCreated = 0;
@@ -161,9 +170,9 @@ function placeFlockOnGround(flock) {
   for (let x=0; x<side; x++) {        
     for (let z=0; z<side; z++) {
       let placeX = gndX + step * x;
-      let placeZ = gndZ + step * z;
-      //let pos = new Vector(placeX,0,placeZ); //(placeX,placeZ,cubeSize);
-      let pos = new Vector(placeX,placeZ,cubeSize);
+      let placeZ = gndZ + step * z;      
+      let pos = new Vector(placeX,cubeSize,placeZ); 
+      //let pos = new Vector(placeX,placeZ,cubeSize);
       let vel = new Vector(0,0,0);
       id++;
       stationaryBoid = new Boid(pos, vel, scene, id); // (pos, vel, scene, id)
@@ -231,6 +240,7 @@ class Boid {
     this.rad = this.radiusFromPos();
     this.id = id;
     this.nearest = [];
+    this.lead = false;
     birdsCreated += 1;    // make class var?    
   }
   
@@ -247,10 +257,20 @@ class Boid {
     context.arc(0,0, this.rad, 0, Math.PI*2);        
     context.strokeStyle = 'black';
     if (params.borderStroke) context.stroke();
-    context.fillStyle = 'red';
+    if (this.lead) {
+      context.fillStyle = 'yellow';
+    }else {
+      context.fillStyle = 'red';  
+    }
+    
     context.fill();
     
     context.restore();
+  }
+  
+  makeIndependantBoid(){
+    this.lead = true;
+    this.vel = new Vector(0,-2,0);
   }
   
   bounce() {
@@ -261,34 +281,23 @@ class Boid {
   
 	update() {
     //this.ruleOneGravitateToPoint0(params.centreOfScene);
-    this.ruleOneGravitateToPoint1(params.centreOfScene);
-		this.pos.x += this.vel.x;
-		this.pos.y += this.vel.y;
-    this.pos.z += this.vel.z;
-    this.rad = this.radiusFromPos();
+    if (this.lead) {
+      this.pos.x += this.vel.x;
+      this.pos.y += this.vel.y;
+      this.pos.z += this.vel.z;
+      this.rad = this.radiusFromPos();            
+    } else {
+      this.ruleOneGravitateToPoint1(params.centreOfScene);
+      this.pos.x += this.vel.x;
+      this.pos.y += this.vel.y;
+      this.pos.z += this.vel.z;
+      this.rad = this.radiusFromPos();
+    }
+     
 	}
 
-  //let testData = [12,4,77,54,88,32,62,27,1,25,66,98,8,45,35,62];
-  //let lowest7 = [];
-  //let max = 0;
-  //testData.forEach(no => {
-  //  if (lowest7.length < params.nearestNeighbourEffect) { // fill array first
-  //    if (no > max) max = no;
-  //    lowest7.push(no);
-  //    lowest7 = lowest7.sort(compNum);
-  //  } else if (no < max) {  // check for max b4 insert & sort
-  //    lowest7.push(no);
-  //    lowest7 = lowest7.sort(compNum);
-  //  }
-  //  if (lowest7.length > params.nearestNeighbourEffect) lowest7.pop();
-  //});
-  //
-  //cl(lowest7);  
   
   updateNearest(flock){
-    //this.nearest
-    //compBoidDistPair
-    //getDistance
     let max = 0;
     this.nearest = [];
     flock.forEach( b => { 
@@ -362,9 +371,11 @@ class Boid {
 		const sy = Math.sign(dy);
     const sz = Math.sign(dz);
     
-    const xRat = (dx * dx) / (dx * dx + dy * dy + dz * dz);
-    const yRat = (dy * dy) / (dx * dx + dy * dy + dz * dz);
-    const zRat = (dz * dz) / (dx * dx + dy * dy + dz * dz);
+    let sumOfSqrs = dx * dx + dy * dy + dz * dz;
+    
+    const xRat = (dx * dx) / (sumOfSqrs);
+    const yRat = (dy * dy) / (sumOfSqrs);
+    const zRat = (dz * dz) / (sumOfSqrs);
     
     //vector - magnitude: same as current velocity -
     //         direction: scene centre from this boid
