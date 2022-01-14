@@ -86,8 +86,9 @@ const sketch = ({ context, width, height }) => {
   const velZero = new Vector(0,0,0);
   
   let stationaryCentrePoint = new Boid(params.centreOfScene, velZero, scene, -1);     // (pos, vel, scene, id)
-    
-  adjustFlockSize(flock, params.noOfBoids);
+      
+  placeFlockOnGround(flock);  
+  //adjustFlockSize(flock, params.noOfBoids);   // create flock to start
   
   return ({ context, width, height }) => {
     context.fillStyle = 'beige';
@@ -101,14 +102,16 @@ const sketch = ({ context, width, height }) => {
     
     flock.sort(compareZ);
     
-    stationaryCentrePoint.draw(context);
+    //stationaryCentrePoint.draw(context);
     
     params.centreOfScene = Boid.averageLoc(flock);
     let avVel = Boid.averageVel(flock);
     
+    getNearestXBoidsForFlock(flock); 
+    
     flock.forEach( boid => {
        boid.draw(context);
-       //boid.bounce();
+       boid.bounce();
        boid.update();
     });
     
@@ -125,20 +128,73 @@ const sketch = ({ context, width, height }) => {
 // class Flock - TODO - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 let birdsCreated = 0;
 
+function compNum(a, b) {
+  if ( a < b ){
+    return -1;
+  }
+  if ( a > b ){
+    return 1;
+  }
+  return 0;
+}
+
+function compBoidDistPair(a, b) {
+  if ( a.dist < b.dist ){
+    return -1;
+  }
+  if ( a.dist > b.dist ){
+    return 1;
+  }
+  return 0;
+}
+
+function placeFlockOnGround(flock) {
+  // place 'square' of birds on ground
+  const side = Math.ceil(Math.sqrt(params.noOfBoids));
+  const numberOfBoids = params.noOfBoids;
+  let id = 0;
+  
+  //cubeSize
+  const step = params.boidMaxRad;
+  const [gndX, gndZ] = [cubeSize/2 - (step * side/2), cubeSize/2 - (step * side/2)];
+
+  for (let x=0; x<side; x++) {        
+    for (let z=0; z<side; z++) {
+      let placeX = gndX + step * x;
+      let placeZ = gndZ + step * z;
+      //let pos = new Vector(placeX,0,placeZ); //(placeX,placeZ,cubeSize);
+      let pos = new Vector(placeX,placeZ,cubeSize);
+      let vel = new Vector(0,0,0);
+      id++;
+      stationaryBoid = new Boid(pos, vel, scene, id); // (pos, vel, scene, id)
+      flock.push(stationaryBoid);
+      cl(`pfog: ${id}`);
+      if (id === numberOfBoids) break;
+    }
+    if (id === numberOfBoids) break;
+  }
+  
+}
+
+function getNearestXBoidsForFlock(flock) {
+  flock.forEach( b => {
+    b.updateNearest(flock);
+  });
+}
+
 function adjustFlockSize(flock, numberOfBoids) {
   if (flock.length === numberOfBoids) return;
   while (flock.length < numberOfBoids) {
-    addBoidToFlock(flock);
+    addRandomBoidToFlock(flock);
   }
   while (flock.length > numberOfBoids) {
     removeBoidFromFlock(flock);
   }  
 }
 
-function addBoidToFlock(flock) {
+function addRandomBoidToFlock(flock) {
   let pos = new Vector( random.rangeFloor(1,scene.x), random.rangeFloor(1,scene.y), random.rangeFloor(1,scene.z));
-  let vel = new Vector( random.rangeFloor(params.velocityMin,params.velocityMax), random.rangeFloor(params.velocityMin,params.velocityMax), random.rangeFloor(params.velocityMin,params.velocityMax));    
-  birdsCreated += 1;
+  let vel = new Vector( random.rangeFloor(params.velocityMin,params.velocityMax), random.rangeFloor(params.velocityMin,params.velocityMax), random.rangeFloor(params.velocityMin,params.velocityMax));      
   flock.push(new Boid(pos, vel, scene, birdsCreated));
 }
 
@@ -167,12 +223,15 @@ function compareZ(boidA, boidB) {
 //
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 class Boid {
+  
   constructor(pos, vel, scene, id){
     this.pos = pos; //new Vector(x,y,z);
     this.vel = vel;   //new Vector(x,y,z);
     this.scene = scene;    
     this.rad = this.radiusFromPos();
     this.id = id;
+    this.nearest = [];
+    birdsCreated += 1;    // make class var?    
   }
   
   radiusFromPos(){
@@ -209,6 +268,46 @@ class Boid {
     this.rad = this.radiusFromPos();
 	}
 
+  //let testData = [12,4,77,54,88,32,62,27,1,25,66,98,8,45,35,62];
+  //let lowest7 = [];
+  //let max = 0;
+  //testData.forEach(no => {
+  //  if (lowest7.length < params.nearestNeighbourEffect) { // fill array first
+  //    if (no > max) max = no;
+  //    lowest7.push(no);
+  //    lowest7 = lowest7.sort(compNum);
+  //  } else if (no < max) {  // check for max b4 insert & sort
+  //    lowest7.push(no);
+  //    lowest7 = lowest7.sort(compNum);
+  //  }
+  //  if (lowest7.length > params.nearestNeighbourEffect) lowest7.pop();
+  //});
+  //
+  //cl(lowest7);  
+  
+  updateNearest(flock){
+    //this.nearest
+    //compBoidDistPair
+    //getDistance
+    let max = 0;
+    this.nearest = [];
+    flock.forEach( b => { 
+      let d = this.pos.getDistance(b.pos);
+      const pair = {dist: d, boid: b};
+      
+      if (this.nearest.length < params.nearestNeighbourEffect) { // fill array first
+        if (d > max) max = d;
+        this.nearest.push(pair);
+        this.nearest.sort(compBoidDistPair);
+      } else if (d < max) {  // check for max b4 insert & sort
+        this.nearest.push(pair);
+        this.nearest.sort(compBoidDistPair);
+      }
+      if (this.nearest.length > params.nearestNeighbourEffect) this.nearest.pop();      
+    });
+    //cl(this.nearest);
+  }
+  
   // average velocity of list of boids
   static averageVel (boids) {
     let sum = new Vector(0,0,0);
@@ -281,14 +380,7 @@ class Boid {
     //cl(this.vel);
   }  
 
-  // pass array of vectors return average
-  getAverageVector(listVect){
-    let aveVec = new Vector(0,0,0);
-    fo
-    
-  }
-  
-  getCentreOfFlock
+
   
   dbg(){
     console.log(this);    
