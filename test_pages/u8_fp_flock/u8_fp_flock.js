@@ -26,12 +26,30 @@ class Vector {
     return Math.sqrt(this.x * this.x + this.y * this.y + this.z * this.z);
   }
   
+  plus(v){    
+    return new Vector(this.x + v.x, this.y + v.y, this.z + v.z); 
+  }
+  
+  div(d) {
+    return new Vector(this.x/d, this.y/d, this.z/d); 
+  }
+
+  // average list of vectors  
+  static average (lVec) {
+    let sum = new Vector(0,0,0);
+    lVec.forEach( v => {
+       sum = sum.plus(v);
+    });    
+    return sum.div(lVec.length);
+  }
+  
   dbg(){
     console.log(this);    
   }
 }
 
-const scene = new Vector(1200, 1200, 1200);
+let cubeSize = 2400;
+const scene = new Vector(cubeSize, cubeSize, cubeSize);
 
 const settings = {
   dimensions: [ scene.x, scene.y ],
@@ -44,18 +62,20 @@ const params = {
   noOfBoids: 40,                    
   boidMaxRad: 40,
   boidMinRad: 2,
-  velocityMin: 0,
+  velocityMin: -3,
   velocityMax: 3,
   borderStroke: true,
   
   flockDensity: 0.3,   // 1: No space between birds, 0 = no birds  
-  rule1multiplier: 0.1,
+  rule1multiplier: 0.05,  
   nearestNeighbourEffect: 7,
   nNEffect: true,
   visualRangeEffect: 50,
   vREffect: false,
   
   centreOfScene: new Vector(scene.x/2, scene.y/2, scene.z/2),
+  
+  fontSize: cubeSize / 30,
 }
 
 
@@ -69,27 +89,35 @@ const sketch = ({ context, width, height }) => {
     
   adjustFlockSize(flock, params.noOfBoids);
   
-  //for (i=0; i<params.noOfBoids; i++ ) {
-  //  let pos = new Vector( random.rangeFloor(1,scene.x), random.rangeFloor(1,scene.y), random.rangeFloor(1,scene.z));
-  //  let vel = new Vector( random.rangeFloor(params.velocityMin,params.velocityMax), random.rangeFloor(params.velocityMin,params.velocityMax), random.rangeFloor(params.velocityMin,params.velocityMax));    
-  //  flock.push(new Boid(pos, vel, scene, i));
-  //}
-  
   return ({ context, width, height }) => {
     context.fillStyle = 'beige';
     context.fillRect(0, 0, width, height);
-
+    context.font = `${params.fontSize}px serif`;
+    context.textBaseline = 'middle'; // hanging
+    context.textAlign = 'left';    
+    context.fillStyle = 'black';    
+  
     adjustFlockSize(flock, params.noOfBoids);
     
     flock.sort(compareZ);
     
     stationaryCentrePoint.draw(context);
     
+    params.centreOfScene = Boid.averageLoc(flock);
+    let avVel = Boid.averageVel(flock);
+    
     flock.forEach( boid => {
        boid.draw(context);
        //boid.bounce();
        boid.update();
     });
+    
+    let [xPos, yPos] = [cubeSize * 0.66, cubeSize - (220 * 0.8)];
+    context.fillText(`CoF: ${Math.floor(params.centreOfScene.x)} - ${Math.floor(params.centreOfScene.y)} - ${Math.floor(params.centreOfScene.z)}`,  xPos, yPos);
+    context.fillText(`AvV: ${Math.floor(avVel.x)} - ${Math.floor(avVel.y)} - ${Math.floor(avVel.z)}`,  xPos, yPos + 35 * cubeSize/1200);
+    //context.fillText(`AvV: ${avVel.x} - ${avVel.y} - ${avVel.z}`,  10, yPos + 35 * cubeSize/1200);
+    context.fillText(`Cub: ${Math.floor(cubeSize)} - ${Math.floor(cubeSize)} - ${Math.floor(cubeSize)}`,  xPos, yPos + 70 * cubeSize/1200);    
+    
     
   };
 };
@@ -135,6 +163,9 @@ function compareZ(boidA, boidB) {
   return 0;
 }
 
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+//
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 class Boid {
   constructor(pos, vel, scene, id){
     this.pos = pos; //new Vector(x,y,z);
@@ -168,18 +199,6 @@ class Boid {
 		if (this.pos.y <= 0 || this.pos.y >= this.scene.y) this.vel.y *= -1;
     if (this.pos.z <= 0 || this.pos.z >= this.scene.z) this.vel.z *= -1;
 	}
-
-//  traverse(width, height) {
-//    if (this.pos.x <= 0)  this.pos.x = this.scene.x-1;
-//    if (this.pos.x >= this.scene.x) this.pos.x = 1;
-//    
-//		if (this.pos.y <= 0) this.pos.y = this.scene.y-1;
-//		if (this.pos.y >= this.scene.y) this.pos.y = 1;
-//
-//		if (this.pos.z <= 0) this.pos.z = this.scene.z-1;
-//		if (this.pos.z >= this.scene.z) this.pos.z = 1;
-//	}
-  
   
 	update() {
     //this.ruleOneGravitateToPoint0(params.centreOfScene);
@@ -189,6 +208,24 @@ class Boid {
     this.pos.z += this.vel.z;
     this.rad = this.radiusFromPos();
 	}
+
+  // average velocity of list of boids
+  static averageVel (boids) {
+    let sum = new Vector(0,0,0);
+    boids.forEach( b => {
+       sum = sum.plus(b.vel);
+    });    
+    return sum.div(boids.length);
+  }
+
+  // average positions (centre of group) of list of boids  
+  static averageLoc (boids) {
+    let sum = new Vector(0,0,0);
+    boids.forEach( b => {
+       sum = sum.plus(b.pos);
+    });    
+    return sum.div(boids.length);
+  }
   
   ruleOneGravitateToPoint0(point){
     const accel = 0.1;
@@ -226,15 +263,16 @@ class Boid {
 		const sy = Math.sign(dy);
     const sz = Math.sign(dz);
     
-    //const xRat = (dx * dx) / params.rule1multiplier * (dx * dx + dy * dy + dz * dz);
-    //const yRat = (dy * dy) / params.rule1multiplier * (dx * dx + dy * dy + dz * dz);
-    //const zRat = (dz * dz) / params.rule1multiplier * (dx * dx + dy * dy + dz * dz);
     const xRat = (dx * dx) / (dx * dx + dy * dy + dz * dz);
     const yRat = (dy * dy) / (dx * dx + dy * dy + dz * dz);
     const zRat = (dz * dz) / (dx * dx + dy * dy + dz * dz);
+    
+    //vector - magnitude: same as current velocity -
+    //         direction: scene centre from this boid
     //this.vel.x = Math.sqrt( velSquared * xRat) * sx;
     //this.vel.y = Math.sqrt( velSquared * yRat) * sy;
     //this.vel.z = Math.sqrt( velSquared * zRat) * sz;
+    
     this.vel.x += params.rule1multiplier * Math.sqrt( velSquared * xRat) * sx;
     this.vel.y += params.rule1multiplier * Math.sqrt( velSquared * yRat) * sy;
     this.vel.z += params.rule1multiplier * Math.sqrt( velSquared * zRat) * sz;    
@@ -243,6 +281,15 @@ class Boid {
     //cl(this.vel);
   }  
 
+  // pass array of vectors return average
+  getAverageVector(listVect){
+    let aveVec = new Vector(0,0,0);
+    fo
+    
+  }
+  
+  getCentreOfFlock
+  
   dbg(){
     console.log(this);    
   }
@@ -257,7 +304,7 @@ const createpane = () => {
   folder.addInput(params, 'noOfBoids', { min: 10, max: 500, step: 10 });
   folder.addInput(params, 'boidMinRad', { min: 1, max: 100, step: 1 });
   folder.addInput(params, 'boidMaxRad', { min: 1, max: 100, step: 1 }); 
-  folder.addInput(params, 'velocityMin', { min: 1, max: 100, step: 1 });
+  folder.addInput(params, 'velocityMin', { min: -20, max: 20, step: 1 });
   folder.addInput(params, 'velocityMax', { min: 1, max: 100, step: 1 });
   folder.addInput(params, 'borderStroke');
   
