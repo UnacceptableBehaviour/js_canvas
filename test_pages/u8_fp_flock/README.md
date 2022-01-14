@@ -34,9 +34,11 @@ Some experiments:
 | Rendering boids @ [u8_fp_flock.js](https://github.com/UnacceptableBehaviour/js_canvas/blob/f6d6ac88c0342b6f0cf6a9ead2f2c6677de5f2c9/test_pages/u8_fp_flock/u8_fp_flock.js) | Z-Order & outline @ [u8_fp_flock.js](https://github.com/UnacceptableBehaviour/js_canvas/blob/8cedf36999324846dae38e2e8ed00a02235e4f8f/test_pages/u8_fp_flock/u8_fp_flock.js) | Straight line +bounce @ [u8_fp_flock.js](https://github.com/UnacceptableBehaviour/js_canvas/blob/0257b3b42294a290537521a121e3fd2461d593d1/test_pages/u8_fp_flock/u8_fp_flock.js) | 
 | ![sk](https://github.com/UnacceptableBehaviour/js_canvas/blob/master/test_pages/u8_fp_flock/2022.01.13-13.55.54.png) | ![sk](https://github.com/UnacceptableBehaviour/js_canvas/blob/master/test_pages/u8_fp_flock/2022.01.13-19.25.39.png) | ![sk](https://github.com/UnacceptableBehaviour/js_canvas/blob/master/test_pages/u8_fp_flock/2022.01.14-14.20.53.png) |
 | Add Tweakpane @ [u8_fp_flock.js](https://github.com/UnacceptableBehaviour/js_canvas/blob/e60d98fb22722167d1204d26061cd756a071db45/test_pages/u8_fp_flock) | Rule1 cluster centre scene @ [u8_fp_flock.js](https://github.com/UnacceptableBehaviour/js_canvas/blob/6f7e87edc86729c82f9eecdce42aa5d9519e063b/test_pages/u8_fp_flock/u8_fp_flock.js) | Rule1 centre flock @ [u8_fp_flock.js](https://github.com/UnacceptableBehaviour/js_canvas/blob/9e483a53105c56c987572a81f6803ca642ea038b/test_pages/u8_fp_flock/u8_fp_flock.js) | 
+| ![sk](https://github.com/UnacceptableBehaviour/js_canvas/blob/master/test_pages/u8_fp_flock/2022.01.14-20.22.27.png) | ![sk]() | ![sk]() |
+| Slow lead draws flock @ [u8_fp_flock.js](https://github.com/UnacceptableBehaviour/js_canvas/blob/8179760692393c3c0f5b0dc1df036b41d868b029/test_pages/u8_fp_flock/u8_fp_flock.js) | Code @ [u8_fp_flock.js]() | Code @ [u8_fp_flock.js]() | 
 | ![sk]() | ![sk]() | ![sk]() |
-| Code @ [u8_fp_flock.js]() | Code @ [u8_fp_flock.js]() | Code @ [u8_fp_flock.js]() | 
-  
+| Code @ [u8_fp_flock.js]() | Code @ [u8_fp_flock.js]() | Code @ [u8_fp_flock.js]() |
+
 Notes on experiments.  
   
 
