@@ -74,13 +74,13 @@ const params = {
   visualRangeEffect: 50,
   vREffect: false,
   
-  minSafeDistance: 40,
+  minSafeDistance: 10,
   
   centreOfScene: new Vector(scene.x/2, scene.y/2, scene.z/2),
   
   leadBoidLoc: new Vector(scene.x/2, scene.y/2, scene.z/2),
   leadBoid: null,
-  freeFlightAmp: 2.5,
+  freeFlightAmp: 4,
   leadBoidConfinement: cubeSize / 4,   // no of pixels from the edge of scene that confinement cube starts
   
   fontSize: cubeSize / 30,
@@ -314,7 +314,7 @@ class Boid {
       this.pos.x += this.vel.x;
       this.pos.y += this.vel.y;
       this.pos.z += this.vel.z;
-      //this.enforceSafeDist();
+      this.enforceSafeDist();
       this.rad = this.radiusFromPos();
     }     
 	}
@@ -328,25 +328,28 @@ class Boid {
   }
   
   enforceSafeDist(){ // params.minSafeDistance
-    let nb = this.nearest[1]; // closest boid
-    
+    let nb = this.nearest[1].boid; // closest boid
+    //cl('enforceSafeDist - - S');
+    //cl(this.nearest);
+    //cl(this.nearest[1]);
+    //cl('enforceSafeDist - - E');
     const rx1 = this.pos.x - params.minSafeDistance; 
     const rx2 = this.pos.x + params.minSafeDistance;
-    if ((nb.pos.x > r1) && (nb.pos.x < r2)) {  // houston we have a problem
+    if ((nb.pos.x > rx1) && (nb.pos.x < rx2)) {  // houston we have a problem
       const adjust = this.pos.x - nb.pos.x;
       this.pos.x += adjust;
     }
     
     const ry1 = this.pos.y - params.minSafeDistance; 
     const ry2 = this.pos.y + params.minSafeDistance;
-    if ((nb.pos.y > r1) && (nb.pos.y < r2)) {  // houston we have a problem
+    if ((nb.pos.y > ry1) && (nb.pos.y < ry2)) {  // houston we have a problem
       const adjust = this.pos.y - nb.pos.y;
       this.pos.y += adjust;
     }
     
     const rz1 = this.pos.z - params.minSafeDistance; 
     const rz2 = this.pos.z + params.minSafeDistance;
-    if ((nb.pos.z > r1) && (nb.pos.z < r2)) {  // houston we have a problem
+    if ((nb.pos.z > rz1) && (nb.pos.z < rz2)) {  // houston we have a problem
       const adjust = this.pos.z - nb.pos.z;
       this.pos.z += adjust;
     }    

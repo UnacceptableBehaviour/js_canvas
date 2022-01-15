@@ -40,11 +40,11 @@ Give the whole thing a bit of motion! (3b)
 | Code @ [u8_fp_flock.js]() | Code @ [u8_fp_flock.js]() | Code @ [u8_fp_flock.js]() |
 
 
-7. 
-After
-Add min bird separation parameter.
-Constrain lead boid to inner cube 2/3 main cube.
-Limit top speed
+7. Constrain lead boid to inner cube, add tweak slider with callback to confine lead boid.  
+Limit top speed, add SpeedLimit ON/OFF check.  
+Add min bird separation parameter.  
+Needs a much more sophisticated collision avoidance algorithm.
+
 
 #### Notes on experiments.  
 
