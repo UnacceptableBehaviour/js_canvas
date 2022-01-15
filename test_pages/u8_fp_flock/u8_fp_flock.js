@@ -67,7 +67,7 @@ const params = {
   borderStroke: true,
   
   flockDensity: 0.3,   // 1: No space between birds, 0 = no birds  
-  rule1multiplier: 0.1,  
+  rule1multiplier: 0.05,  
   nearestNeighbourEffect: 7,  
   nNEffect: true,
   
@@ -80,7 +80,7 @@ const params = {
   
   leadBoidLoc: new Vector(scene.x/2, scene.y/2, scene.z/2),
   leadBoid: null,
-  freeFlightAmp: 0.5,
+  freeFlightAmp: 2.5,
   leadBoidConfinement: cubeSize / 4,   // no of pixels from the edge of scene that confinement cube starts
   
   fontSize: cubeSize / 30,
@@ -494,7 +494,7 @@ const createpane = () => {
   folder.addInput(params, 'nNEffect');
   //folder.addInput(params, 'visualRangeEffect', { min: 1, max: 500, step: 5 });
   //folder.addInput(params, 'vREffect');
-  folder.addInput(params, 'freeFlightAmp', { min: 0.01, max: 0.5, step: 0.05 });
+  folder.addInput(params, 'freeFlightAmp', { min: 0.01, max: 5, step: 0.05 });
   folder.addInput(params, 'minSafeDistance', { min: 0, max: 100, step: 5 });
   // add slider w/ callback
   //folder.addInput(params, 'leadBoidConfinement', { min: 0, max: (cubeSize/2 -50), step: 50 });  
