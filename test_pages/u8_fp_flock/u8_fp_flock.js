@@ -62,17 +62,19 @@ const params = {
   noOfBoids: 200,                    
   boidMaxRad: 40,
   boidMinRad: 2,
-  velocityMin: -3,
-  velocityMax: 3,
+  speedLimit: 15,
+  speedLimitOn: true,
   borderStroke: true,
   
   flockDensity: 0.3,   // 1: No space between birds, 0 = no birds  
-  rule1multiplier: 0.02,  
-  nearestNeighbourEffect: 7,
+  rule1multiplier: 0.1,  
+  nearestNeighbourEffect: 7,  
   nNEffect: true,
   
   visualRangeEffect: 50,
   vREffect: false,
+  
+  minSafeDistance: 40,
   
   centreOfScene: new Vector(scene.x/2, scene.y/2, scene.z/2),
   
@@ -209,7 +211,7 @@ function adjustFlockSize(flock, numberOfBoids) {
 
 function addRandomBoidToFlock(flock) {
   let pos = new Vector( random.rangeFloor(1,scene.x), random.rangeFloor(1,scene.y), random.rangeFloor(1,scene.z));
-  let vel = new Vector( random.rangeFloor(params.velocityMin,params.velocityMax), random.rangeFloor(params.velocityMin,params.velocityMax), random.rangeFloor(params.velocityMin,params.velocityMax));      
+  let vel = new Vector( random.rangeFloor(params.speedLimit *-1,params.speedLimit), random.rangeFloor(params.speedLimit *-1,params.speedLimit), random.rangeFloor(params.speedLimit *-1,params.speedLimit));      
   flock.push(new Boid(pos, vel, scene, birdsCreated));
 }
 
@@ -276,6 +278,8 @@ class Boid {
   
   makeIndependantBoid(){
     this.lead = true;
+    const shrink = params.leadBoidConfinement;
+    this.pos = new Vector( random.rangeFloor(shrink,scene.x-shrink), random.rangeFloor(shrink,scene.y-shrink), random.rangeFloor(shrink,scene.z-shrink));
     params.leadBoidLoc = this.pos;
     params.leadBoid = this;
   }
@@ -283,12 +287,12 @@ class Boid {
   bounce() {
     if (this.lead) {
       const shrink = params.leadBoidConfinement;
-      if (this.pos.x <= shrink || this.pos.x >= this.scene.x - shrink)  this.vel.x *= -1;
-      if (this.pos.y <= shrink || this.pos.y >= this.scene.y - shrink) this.vel.y *= -1;
-      if (this.pos.z <= shrink || this.pos.z >= this.scene.z - shrink) this.vel.z *= -1;      
+      if (this.pos.x <= shrink || this.pos.x >= this.scene.x - shrink) this.vel.x *= -1;  //{this.vel.x *= -1; this.pos.x += this.vel.x;}
+      if (this.pos.y <= shrink || this.pos.y >= this.scene.y - shrink) this.vel.y *= -1;  //{this.vel.y *= -1; this.pos.y += this.vel.y;}
+      if (this.pos.z <= shrink || this.pos.z >= this.scene.z - shrink) this.vel.z *= -1;  //{this.vel.z *= -1; this.pos.z += this.vel.z;}    
       
     } else {
-      if (this.pos.x <= 0 || this.pos.x >= this.scene.x)  this.vel.x *= -1;
+      if (this.pos.x <= 0 || this.pos.x >= this.scene.x) this.vel.x *= -1;
       if (this.pos.y <= 0 || this.pos.y >= this.scene.y) this.vel.y *= -1;
       if (this.pos.z <= 0 || this.pos.z >= this.scene.z) this.vel.z *= -1;      
     }    
@@ -310,9 +314,44 @@ class Boid {
       this.pos.x += this.vel.x;
       this.pos.y += this.vel.y;
       this.pos.z += this.vel.z;
+      //this.enforceSafeDist();
       this.rad = this.radiusFromPos();
     }     
 	}
+
+  speedLimit(){
+    if (params.speedLimitOn) {
+      if (this.vel.x > params.speedLimit) this.vel.x = params.speedLimit;
+      if (this.vel.y > params.speedLimit) this.vel.y = params.speedLimit;
+      if (this.vel.z > params.speedLimit) this.vel.z = params.speedLimit;
+    }    
+  }
+  
+  enforceSafeDist(){ // params.minSafeDistance
+    let nb = this.nearest[1]; // closest boid
+    
+    const rx1 = this.pos.x - params.minSafeDistance; 
+    const rx2 = this.pos.x + params.minSafeDistance;
+    if ((nb.pos.x > r1) && (nb.pos.x < r2)) {  // houston we have a problem
+      const adjust = this.pos.x - nb.pos.x;
+      this.pos.x += adjust;
+    }
+    
+    const ry1 = this.pos.y - params.minSafeDistance; 
+    const ry2 = this.pos.y + params.minSafeDistance;
+    if ((nb.pos.y > r1) && (nb.pos.y < r2)) {  // houston we have a problem
+      const adjust = this.pos.y - nb.pos.y;
+      this.pos.y += adjust;
+    }
+    
+    const rz1 = this.pos.z - params.minSafeDistance; 
+    const rz2 = this.pos.z + params.minSafeDistance;
+    if ((nb.pos.z > r1) && (nb.pos.z < r2)) {  // houston we have a problem
+      const adjust = this.pos.z - nb.pos.z;
+      this.pos.z += adjust;
+    }    
+    
+  }
 
   freeFlight(){
     const dx = random.range(params.freeFlightAmp * -1, params.freeFlightAmp);
@@ -322,6 +361,8 @@ class Boid {
     this.vel.x += dx;
     this.vel.y += dy;
     this.vel.z += dz;
+    
+    this.speedLimit();
   }
   
   updateNearest(flock){
@@ -367,22 +408,20 @@ class Boid {
     
     if (point.x - this.pos.x > 0) {
       this.vel.x += accel;
-      // clamp to velocityMin/Max
     } else {
       this.vel.x -= accel;
     }
     if (point.y - this.pos.y > 0) {
       this.vel.y += accel;
-      // clamp to velocityMin/Max
     } else {
       this.vel.y -= accel;
     }
     if (point.z - this.pos.z > 0) {
       this.vel.z += accel;
-      // clamp to velocityMin/Max
     } else {
       this.vel.z -= accel;
-    }    
+    }
+    this.speedLimit();
   }
   // point vel vector @ point - maintain magnitude
   ruleOneGravitateToPoint1(point){
@@ -416,6 +455,7 @@ class Boid {
     //cl(`> - - - dx:${dx} - dy:${dy} - dz:${dz}`);
     //cl(`velMag:${velMag} - velSquared:${velSquared} - xRat:${xRat} - yRat:${yRat} - zRat:${zRat}`);
     //cl(this.vel);
+    this.speedLimit();
   }  
 
   averageVelocityOfNearestNeighbours(){
@@ -443,17 +483,17 @@ const createpane = () => {
   //folder.addInput(params, 'noOfBoids', { min: 10, max: 500, step: 10 });
   folder.addInput(params, 'boidMinRad', { min: 1, max: 100, step: 1 });
   folder.addInput(params, 'boidMaxRad', { min: 1, max: 100, step: 1 }); 
-  folder.addInput(params, 'velocityMin', { min: -20, max: 20, step: 1 });
-  folder.addInput(params, 'velocityMax', { min: 1, max: 100, step: 1 });
+  folder.addInput(params, 'speedLimit', { min: 1, max: 100, step: 1 });
+  folder.addInput(params, 'speedLimitOn');
   folder.addInput(params, 'borderStroke');
   
   folder = pane.addFolder({ title: 'Flock '});
   folder.addInput(params, 'rule1multiplier', { min: 0.01, max: 0.2, step: 0.01 });
-  folder.addInput(params, 'flockDensity', { min: 0, max: 1, step: 0.05 });
-  folder.addInput(params, 'nearestNeighbourEffect', { min: 1, max: 20, step: 1 });
+  //folder.addInput(params, 'flockDensity', { min: 0, max: 1, step: 0.05 });
+  folder.addInput(params, 'nearestNeighbourEffect', { min: 2, max: 20, step: 1 });
   folder.addInput(params, 'nNEffect');
-  folder.addInput(params, 'visualRangeEffect', { min: 1, max: 500, step: 5 });
-  folder.addInput(params, 'vREffect');
+  //folder.addInput(params, 'visualRangeEffect', { min: 1, max: 500, step: 5 });
+  //folder.addInput(params, 'vREffect');
   folder.addInput(params, 'freeFlightAmp', { min: 0.01, max: 0.5, step: 0.05 });
   folder.addInput(params, 'minSafeDistance', { min: 0, max: 100, step: 5 });
   // add slider w/ callback
