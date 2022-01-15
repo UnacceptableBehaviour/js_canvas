@@ -59,7 +59,7 @@ const settings = {
 //const centreOfCage = 
 // PARAMETERS - #TWEAKABLE
 const params = {
-  noOfBoids: 40,                    
+  noOfBoids: 200,                    
   boidMaxRad: 40,
   boidMinRad: 2,
   velocityMin: -3,
@@ -67,13 +67,15 @@ const params = {
   borderStroke: true,
   
   flockDensity: 0.3,   // 1: No space between birds, 0 = no birds  
-  rule1multiplier: 0.05,  
+  rule1multiplier: 0.02,  
   nearestNeighbourEffect: 7,
   nNEffect: true,
   visualRangeEffect: 50,
   vREffect: false,
+  freeFlightAmp: 0.5,
   
   centreOfScene: new Vector(scene.x/2, scene.y/2, scene.z/2),
+  leadBoidLoc: new Vector(scene.x/2, scene.y/2, scene.z/2),
   
   fontSize: cubeSize / 30,
 }
@@ -164,7 +166,7 @@ function placeFlockOnGround(flock) {
   let id = 0;
   
   //cubeSize
-  const step = params.boidMaxRad;
+  const step = params.boidMaxRad *4;
   const [gndX, gndZ] = [cubeSize/2 - (step * side/2), cubeSize/2 - (step * side/2)];
 
   for (let x=0; x<side; x++) {        
@@ -270,7 +272,7 @@ class Boid {
   
   makeIndependantBoid(){
     this.lead = true;
-    this.vel = new Vector(0,-2,0);
+    params.leadBoidLoc = this.pos;
   }
   
   bounce() {
@@ -279,15 +281,19 @@ class Boid {
     if (this.pos.z <= 0 || this.pos.z >= this.scene.z) this.vel.z *= -1;
 	}
   
-	update() {
-    //this.ruleOneGravitateToPoint0(params.centreOfScene);
+	update() {    
     if (this.lead) {
+      this.freeFlight();
       this.pos.x += this.vel.x;
       this.pos.y += this.vel.y;
       this.pos.z += this.vel.z;
+      params.leadBoidLoc = this.pos;
       this.rad = this.radiusFromPos();            
     } else {
-      this.ruleOneGravitateToPoint1(params.centreOfScene);
+      this.averageVelocityOfNearestNeighbours()
+      //this.ruleOneGravitateToPoint0(params.centreOfScene);
+      //this.ruleOneGravitateToPoint1(params.centreOfScene);
+      this.ruleOneGravitateToPoint1(params.leadBoidLoc);
       this.pos.x += this.vel.x;
       this.pos.y += this.vel.y;
       this.pos.z += this.vel.z;
@@ -296,6 +302,15 @@ class Boid {
      
 	}
 
+  freeFlight(){
+    const dx = random.range(params.freeFlightAmp * -1, params.freeFlightAmp);
+    const dy = random.range(params.freeFlightAmp * -1, params.freeFlightAmp);
+    const dz = random.range(params.freeFlightAmp * -1, params.freeFlightAmp);
+    
+    this.vel.x += dx;
+    this.vel.y += dy;
+    this.vel.z += dz;
+  }
   
   updateNearest(flock){
     let max = 0;
@@ -391,6 +406,15 @@ class Boid {
     //cl(this.vel);
   }  
 
+  averageVelocityOfNearestNeighbours(){
+    let sum = new Vector(0,0,0);
+    this.nearest.shift(); // chuck first element - will always be this - this is the nearest to this!
+    
+    this.nearest.forEach( pair => {
+      sum = sum.plus(pair.boid.vel);
+    });    
+    this.vel = sum.div(this.nearest.length);
+  }
 
   
   dbg(){
@@ -404,7 +428,7 @@ const createpane = () => {
   let folder;
   
   folder = pane.addFolder({ title: 'Boids '});
-  folder.addInput(params, 'noOfBoids', { min: 10, max: 500, step: 10 });
+  //folder.addInput(params, 'noOfBoids', { min: 10, max: 500, step: 10 });
   folder.addInput(params, 'boidMinRad', { min: 1, max: 100, step: 1 });
   folder.addInput(params, 'boidMaxRad', { min: 1, max: 100, step: 1 }); 
   folder.addInput(params, 'velocityMin', { min: -20, max: 20, step: 1 });
@@ -418,6 +442,7 @@ const createpane = () => {
   folder.addInput(params, 'nNEffect');
   folder.addInput(params, 'visualRangeEffect', { min: 1, max: 500, step: 5 });
   folder.addInput(params, 'vREffect');
+  folder.addInput(params, 'freeFlightAmp', { min: 0.01, max: 0.5, step: 0.05 });
 }
 
 createpane();

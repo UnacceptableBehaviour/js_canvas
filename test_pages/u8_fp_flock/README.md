@@ -5,30 +5,30 @@ JS visualization exe using canvas sketch.
 1. 40 birds in a x * y * z cube.  
 Represent a bird with a circle. A dot if on far face, 40px circle if on near face.  
 Draw static line of birds, diagonally. From (0,50,100) to (100,50,0). Z=0 being front.  
-Get rendering working.  
-Add black stroke around the edge of circle so boids can be distinguished.  
-Initially add velocity and fly in straight line bouncing off birdcage walls.  
+Get rendering working. (1a)  
+Add black stroke around the edge of circle so boids can be distinguished. Render in z order furthest away first. (1b)  
+Initially add velocity and fly in straight line bouncing off birdcage walls. (1c)  
   
-2. Add tweak panel.  
+2. Add tweak panel. (2a)  
 ```
 > npm i tweakpane           # at terminal
                             # include package in code
-const tweakpane = require('tweakpane');
+const Tweakpane = require('tweakpane');
 ```
   
-3. Rule 1
+3. Rule 1 - Boids fly towards centre of mass of the flock. (2c)  
+ 
+4. Maintain list of nearest 7 boids - use brute force approach to start. (3a)  
+Adjust velocity to the average of the surrounding 6-8 birds. (3b) This is the rule that cause pods to break off.  
 
-x. Maintain list of nearest 7 boids - use bruteforce approach to start.
-
-X. Create a boids type & state: lead bird.  
+5. Create a boids type: lead bird. (3a)  
   
-X. Generate lead boids flight: Change direction randomly to start.
-New direction should be inside the forward hemisphere of current velocity.  
+6. Generate lead boids flight: Change direction randomly to start.  
+New direction should be inside the forward hemisphere of current velocity.
+Give the whole thing a bit of motion! (3b)  
   
-
-  
-Some experiments:  
-| 1 | 2 | 3 | 
+#### Screen shots from each stage . .  (ref top left = 1a, next row middle = 2b etc.):  
+| a) | b) | c) | 
 | - | - | - | 
 | ![sk](https://github.com/UnacceptableBehaviour/js_canvas/blob/master/test_pages/u8_fp_flock/2022.01.13-00.53.35.png) | ![sk](https://github.com/UnacceptableBehaviour/js_canvas/blob/master/test_pages/u8_fp_flock/2022.01.13-11.05.53.png) | ![sk](https://github.com/UnacceptableBehaviour/js_canvas/blob/master/test_pages/u8_fp_flock/2022.01.13-12.09.37.png) |
 | Rendering boids @ [u8_fp_flock.js](https://github.com/UnacceptableBehaviour/js_canvas/blob/f6d6ac88c0342b6f0cf6a9ead2f2c6677de5f2c9/test_pages/u8_fp_flock/u8_fp_flock.js) | Z-Order & outline @ [u8_fp_flock.js](https://github.com/UnacceptableBehaviour/js_canvas/blob/8cedf36999324846dae38e2e8ed00a02235e4f8f/test_pages/u8_fp_flock/u8_fp_flock.js) | Straight line +bounce @ [u8_fp_flock.js](https://github.com/UnacceptableBehaviour/js_canvas/blob/0257b3b42294a290537521a121e3fd2461d593d1/test_pages/u8_fp_flock/u8_fp_flock.js) | 
@@ -39,8 +39,15 @@ Some experiments:
 | ![sk]() | ![sk]() | ![sk]() |
 | Code @ [u8_fp_flock.js]() | Code @ [u8_fp_flock.js]() | Code @ [u8_fp_flock.js]() |
 
-Notes on experiments.  
-  
+
+7. 
+After
+Add min bird separation parameter.
+Constrain lead boid to inner cube 2/3 main cube.
+Limit top speed
+
+#### Notes on experiments.  
+
 
 
 
@@ -51,7 +58,6 @@ https://www.domestika.org/auth/login#course_lesson_28425
 
 #### Markdown syntax (.md)
 https://www.markdownguide.org/basic-syntax/
-
 
 #### Murmurations
 Visual w track: https://www.youtube.com/watch?v=YjDYE5CUb7Q  
