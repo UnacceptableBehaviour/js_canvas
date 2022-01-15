@@ -70,12 +70,16 @@ const params = {
   rule1multiplier: 0.02,  
   nearestNeighbourEffect: 7,
   nNEffect: true,
+  
   visualRangeEffect: 50,
   vREffect: false,
-  freeFlightAmp: 0.5,
   
   centreOfScene: new Vector(scene.x/2, scene.y/2, scene.z/2),
+  
   leadBoidLoc: new Vector(scene.x/2, scene.y/2, scene.z/2),
+  leadBoid: null,
+  freeFlightAmp: 0.5,
+  leadBoidConfinement: cubeSize / 4,   // no of pixels from the edge of scene that confinement cube starts
   
   fontSize: cubeSize / 30,
 }
@@ -273,12 +277,21 @@ class Boid {
   makeIndependantBoid(){
     this.lead = true;
     params.leadBoidLoc = this.pos;
+    params.leadBoid = this;
   }
   
   bounce() {
-		if (this.pos.x <= 0 || this.pos.x >= this.scene.x)  this.vel.x *= -1;
-		if (this.pos.y <= 0 || this.pos.y >= this.scene.y) this.vel.y *= -1;
-    if (this.pos.z <= 0 || this.pos.z >= this.scene.z) this.vel.z *= -1;
+    if (this.lead) {
+      const shrink = params.leadBoidConfinement;
+      if (this.pos.x <= shrink || this.pos.x >= this.scene.x - shrink)  this.vel.x *= -1;
+      if (this.pos.y <= shrink || this.pos.y >= this.scene.y - shrink) this.vel.y *= -1;
+      if (this.pos.z <= shrink || this.pos.z >= this.scene.z - shrink) this.vel.z *= -1;      
+      
+    } else {
+      if (this.pos.x <= 0 || this.pos.x >= this.scene.x)  this.vel.x *= -1;
+      if (this.pos.y <= 0 || this.pos.y >= this.scene.y) this.vel.y *= -1;
+      if (this.pos.z <= 0 || this.pos.z >= this.scene.z) this.vel.z *= -1;      
+    }    
 	}
   
 	update() {    
@@ -291,15 +304,14 @@ class Boid {
       this.rad = this.radiusFromPos();            
     } else {
       this.averageVelocityOfNearestNeighbours()
-      //this.ruleOneGravitateToPoint0(params.centreOfScene);
+      //this.ruleOneGravitateToPoint0(params.centreOfScene);      // TODO select w/ tweakpane
       //this.ruleOneGravitateToPoint1(params.centreOfScene);
       this.ruleOneGravitateToPoint1(params.leadBoidLoc);
       this.pos.x += this.vel.x;
       this.pos.y += this.vel.y;
       this.pos.z += this.vel.z;
       this.rad = this.radiusFromPos();
-    }
-     
+    }     
 	}
 
   freeFlight(){
@@ -443,6 +455,20 @@ const createpane = () => {
   folder.addInput(params, 'visualRangeEffect', { min: 1, max: 500, step: 5 });
   folder.addInput(params, 'vREffect');
   folder.addInput(params, 'freeFlightAmp', { min: 0.01, max: 0.5, step: 0.05 });
+  folder.addInput(params, 'minSafeDistance', { min: 0, max: 100, step: 5 });
+  // add slider w/ callback
+  //folder.addInput(params, 'leadBoidConfinement', { min: 0, max: (cubeSize/2 -50), step: 50 });  
+  const lBCinput = pane.addInput(params, 'leadBoidConfinement', { min: 0, max: (cubeSize/2 -50), step: 50 });
+  lBCinput.on('change', function(ev) {
+    const leadBoid = params.leadBoid;
+    const shrink = params.leadBoidConfinement;
+    if (leadBoid.pos.x <= shrink) leadBoid.pos.x = shrink + 1;
+    if (leadBoid.pos.x >= scene.x - shrink) leadBoid.pos.x = scene.x - shrink -1;
+    if (leadBoid.pos.y <= shrink) leadBoid.pos.y = shrink + 1;
+    if (leadBoid.pos.y >= scene.y - shrink) leadBoid.pos.y = scene.y - shrink -1;
+    if (leadBoid.pos.z <= shrink) leadBoid.pos.z = shrink + 1;
+    if (leadBoid.pos.z >= scene.z - shrink) leadBoid.pos.z = scene.z - shrink -1;
+  });
 }
 
 createpane();
