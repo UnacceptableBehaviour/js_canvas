@@ -1,16 +1,16 @@
 #ifndef _GENOME_H
 #define _GENOME_H
 
-class FABRIC;
-typedef void (FABRIC::*MFP)();  // declare type MFP (MemberFunctionPointer)
-                                // which points to members of FABRIC whose func signature
-                                // is void FABRIC::function(void)
+class FabricCell;
+typedef void (FabricCell::*MFP)();  // declare type MFP (MemberFunctionPointer)
+                                // which points to members of FabricCell whose func signature
+                                // is void FabricCell::function(void)
 class NODE
 {
 public:
    NODE* pNxt;
    NODE* pPrv;
-   //void  (FABRIC::*pGene)();  Declare pointer of type Member Function Pointer
+   //void  (FabricCell::*pGene)();  Declare pointer of type Member Function Pointer
    MFP pGene;
 };
 
@@ -47,5 +47,19 @@ public:
 };
 
 
+//TRACE( "\nAddress as:\t%p\n", env[0][0].walls[BR]);
+/*
+   // THE FOLLOWING ALL DO THE SAME
+   env[100][75].Insert1MsgPressure();
+      
+   FabricCell* pF; // object pointer 
+   pF = &env[75][75];
+   pF->Insert1MsgPressure();     // call function using object pointer
+
+   gene.pHead->pGene = &FabricCell::Insert1MsgPressure; // assign function to node
+
+   pF = &env[125][75];           // select ne object
+   (pF->*gene.pHead->pGene)();   // run function on new object
+*/  
 
 #endif

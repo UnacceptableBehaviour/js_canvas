@@ -12,91 +12,89 @@
 #include "StandardTypes.h"
 #include "Genome.h"
 
-#define P_500		500
-#define P_1K		1000
-#define P_10K		10000
-#define P_100K		100000
-#define P_500K		500000
-#define P_1M		1000000
-#define P_10M		10000000
-#define P_100M		100000000
-#define P_5M		5000000
-#define P_50M		50000000
-#define P_500M		500000000
-
-enum FabricDimension
-{
-   HEXAGONAL_FABRIC = 6,
-   SQUARE_FABRIC    = 4,
-   LIST_FABRIC      = 9999
+class MsgType {
+	static PRESSURE = 0;
+	static SONIC_HEDGEHOG = 1;
+	static ACTIVATOR_SENSE = 2;
+	static ACTIVATOR_ANTISENSE = 3;
+	static MESSAGE_ARRAY_SIZE = 4;
+	static NULL_MESSAGE = 5;
 };
 
-enum MsgType
-{
-	PRESSURE,
-	SONIC_HEDGEHOG,
-	ACTIVATOR_SENSE,
-	ACTIVATOR_ANTISENSE,
-
-	MESSAGE_ARRAY_SIZE,
-	NULL_MESSAGE
+// enum Walls
+class Walls {
+	static ME = 0;  // this cell
+	static L  = 1;	// left
+	static TL =	2;	// top left
+	static TR =	3;	// top right
+	static R  =	4;	// right
+	static BR	=	5;  // bottom right
+	static BL	=	6;  // bottom left
+   static MAX_FABRIC_WALLS = 7; // array size
 };
 
-enum HexWalls
-{
-	ME,
-	L,		// left
-	TL,		// top left
-	TR,		// top right
-	R,		// right
-	BR,		// bottom right
-	BL		// bottom left
+// struct
+class Message {
+   constructor (msg, units) {
+      this.units = units;
+      this.msg   = msg;      
+   }
 };
 
-enum SqrWalls
-{
-	SME,
-	SL,		// left
-	ST,		// top
-	SR,		// right
-	SB		// bottom
+const CELLSIZE_X         = 4;
+const CELLSIZE_Y         = 4;
+const FABRIC_PIX_X       = 800;
+const FABRIC_PIX_Y       = 600;
+const FABRIC_WIDTH       = FABRIC_PIX_X / CELLSIZE_X;
+const FABRIC_HEIGHT      = FABRIC_PIX_Y / CELLSIZE_Y;
+
+class FabricCell {
+   constructor(){
+      this.walls = [];
+      this.msgs  = [];
+      this.inMsgs  = [];
+      
+      for (let n=0; n<Walls.MAX_FABRIC_WALLS; n++) this.walls.push(0);
+      
+      for (let m=0; m<MsgType.MESSAGE_ARRAY_SIZE; m++) // initialise Message array : Current Outgoing
+      {
+         this.msgs.push(new Message(MsgType.NULL_MESSAGE, 0));
+      }
+   
+      for (let m=0; m<MsgType.MESSAGE_ARRAY_SIZE; m++) // initialise Message array : Cumulative Incoming
+      {
+         this.inMsgs.push(new Message(MsgType.NULL_MESSAGE, 0));
+      }      
+   }
+
+	diffuse(){};
+	regroup(){};
+	insertMessage(msg, units){};
+   
 };
 
+const env = new Array(FABRIC_HEIGHT).fill(new FabricCell()).map(() => new Array(FABRIC_WIDTH).fill(new FabricCell()));
 
-struct Message
-{ 
-	long    units;
-	MsgType msg;
-};
 
-#define CELLSIZE_X         (4)
-#define CELLSIZE_Y         (4)
-#define FABRIC_PIX_X       (800)
-#define FABRIC_PIX_Y       (600)
-#define FABRIC_WIDTH       (FABRIC_PIX_X / CELLSIZE_X)
-#define FABRIC_HEIGHT      (FABRIC_PIX_Y / CELLSIZE_Y)
-#define MAX_FABRIC_WALLS   (10)
-
-class FABRIC
-{
-public:
-	FABRIC*  walls[MAX_FABRIC_WALLS];
-	Message	msgs[MESSAGE_ARRAY_SIZE];
-	Message	inMsgs[MESSAGE_ARRAY_SIZE];
-
-   GENOME gFab;
-
-	FABRIC();
-	void Diffuse();
-	void Regroup();
-	bool InsertMessage(MsgType msg, long units);
-   void Insert1MsgPressure(void);
-
-};
+//class FabricCell
+//{
+//public:
+//	FabricCell*  walls[MAX_FABRIC_WALLS];
+//	Message	msgs[MESSAGE_ARRAY_SIZE];
+//	Message	inMsgs[MESSAGE_ARRAY_SIZE];
+//
+//   GENOME gFab;
+//
+//	FabricCell();
+//	void Diffuse();
+//	void Regroup();
+//	bool InsertMessage(MsgType msg, long units);
+//   void Insert1MsgPressure(void);
+//
+//};
 
 void InitFabric(Uint16 xLower, Uint16 yLower, Uint16 xHigher, Uint16 yHigher);
 
-extern FABRIC (*env)[FABRIC_HEIGHT];
-extern FabricDimension selectedDimension;
+extern FabricCell (*env)[FABRIC_HEIGHT];
 extern Uint8 FABRIC_WALLS;
 #endif
