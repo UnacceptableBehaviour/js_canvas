@@ -45,6 +45,7 @@ Limit top speed, add SpeedLimit ON/OFF check.
 Add min bird separation parameter.  
 Needs a much more sophisticated collision avoidance algorithm.
 
+Lead boid gets stuck on the contraining cube boundary FIX.
 
 #### Notes on experiments.  
 
