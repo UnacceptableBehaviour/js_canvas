@@ -1,9 +1,5 @@
 const canvasSketch = require('canvas-sketch');
 
-const settings = {
-  dimensions: [ 2048, 2048 ]
-};
-
 
 // helpers
 const cl = (str) => {
@@ -35,18 +31,21 @@ class Walls {
 class Message {
   constructor (msg, units) {
     this.units = units;
-    this.msg   = msg;      
+    this.msg   = msg;      // MsgType
   }
 };
 
+// params
 const CELLSIZE_X         = 4;
 const CELLSIZE_Y         = 4;
-const FABRIC_PIX_X       = 800;
-const FABRIC_PIX_Y       = 600;
+const FABRIC_PIX_X       = 1200;
+const FABRIC_PIX_Y       = 1800;
 const FABRIC_WIDTH       = FABRIC_PIX_X / CELLSIZE_X;
 const FABRIC_HEIGHT      = FABRIC_PIX_Y / CELLSIZE_Y;
 
 class FabricCell {
+  static DIFFUSE_IN = true; // or false!
+  
   constructor(id){
     this.cid = id;    
     this.id = '';
@@ -67,9 +66,64 @@ class FabricCell {
     }      
   }
   
-  diffuse(){};
-  regroup(){};
-  insertMessage(msg, units){};
+  diffuse(){
+    let  ifaces = 0;
+    let  postUnits = 0;
+    let  spare = 0;
+    
+    const FABRIC_WALLS = Walls.MAX_FABRIC_WALLS;
+    const FIRST_WALL = Walls.L;
+    
+    // cycle though msgTypes - diffuse each into surrounding cells
+    for(let forEachMsgType = 0; forEachMsgType < MsgType.MESSAGE_ARRAY_SIZE; forEachMsgType++){
+    
+       // diffuse particles into surrounding cell for each type of message
+       if (this.msgs[forEachMsgType].units > 0){
+
+          for (let n=FIRST_WALL; n<FABRIC_WALLS; n++) // TODO - add to object assign @ InitFabric - refactor DIFFUSE_IN
+             if(this.walls[n] != 0) ifaces++;
+    
+          if (FabricCell.DIFFUSE_IN) {
+            ifaces++; // add one for walls[0] ie ME
+          }
+    
+          // divide up units equally
+          postUnits = this.msgs[forEachMsgType].units / ifaces;
+          // gather leftover particles so they don't get lost
+          spare = this.msgs[forEachMsgType].units % ifaces;
+    
+          // post units to existing cell walls
+          for (let forEachCellWall = FIRST_WALL; forEachCellWall < FABRIC_WALLS; forEachCellWall++)
+          {
+             if(this.walls[forEachCellWall] != 0) 
+                this.walls[forEachCellWall].inMsgs[forEachMsgType].units = this.walls[forEachCellWall].inMsgs[forEachMsgType].units + postUnits;
+          }
+    
+          // add an equal amount of particles to this cell
+          // don't need to transfer message identifier since this cell is the progenitor
+          // and is the source of the identifier
+          if (FabricCell.DIFFUSE_IN) {
+            this.inMsgs[forEachMsgType].units += (postUnits + spare);
+          } else {
+            this.inMsgs[forEachMsgType].units += (spare);  
+          }
+          
+          ifaces = 0;
+       }
+    }  
+  };
+  
+  regroup(){    
+    for (let forEachMsgType = 0; forEachMsgType < MsgType.MESSAGE_ARRAY_SIZE; forEachMsgType++) {
+       this.msgs[forEachMsgType].units = this.inMsgs[forEachMsgType].units;     
+       this.inMsgs[forEachMsgType].units = 0;
+    }
+  };
+  
+  insertMessage(inMsg){          // TODO - pass Message(PRESSURE, 50000) 
+    this.msgs[inMsg.msg].units += inMsg.units;
+    this.msgs[inMsg.msg].msg = inMsg.msg;
+  };
    
 };
 
@@ -83,11 +137,9 @@ class FabricCell {
 *        See fabric_array_connections.jpeg for sketch
 *
 ************************************************************************/
-const DIFFUSE_IN = true; // or false!
-
 function initFabric(xLower, yLower, xHigher, yHigher)
 {
-  if (DIFFUSE_IN) {		
+  if (FabricCell.DIFFUSE_IN) {		
     cl("\nDIFFUSE IN\n");
   } else {
     cl("\nDIFFUSE OUT\n");
@@ -238,7 +290,14 @@ for (let y=0; y<FABRIC_HEIGHT; y++)
     env[x][y].id = `X${x}-Y${y}`;
   }
 }
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+
+const settings = {
+  dimensions: [ FABRIC_PIX_X, FABRIC_PIX_Y ]
+};
 
 //const params = {
 //	cols: 10,
