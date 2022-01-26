@@ -1,4 +1,6 @@
 const canvasSketch = require('canvas-sketch');
+const math = require('canvas-sketch-util/math');
+const random = require('canvas-sketch-util/random');
 
 
 // helpers
@@ -10,8 +12,8 @@ class MsgType {
 	static PRESSURE = 0;
 	static SONIC_HEDGEHOG = 1;
 	static ACTIVATOR_SENSE = 2;
-	static ACTIVATOR_ANTISENSE = 3;
-	static MESSAGE_ARRAY_SIZE = 4;
+	static MESSAGE_ARRAY_SIZE = 3;
+  //static ACTIVATOR_ANTISENSE = ;	
 	static NULL_MESSAGE = 5;
 };
 
@@ -290,13 +292,33 @@ for (let y=0; y<FABRIC_HEIGHT; y++)
     env[x][y].id = `X${x}-Y${y}`;
   }
 }
+
+
+function diffusionCycle(fabricEnv) {
+  for (let x=0; x<FABRIC_WIDTH; x++)
+  {
+    for (let y=0; y<FABRIC_HEIGHT; y++)
+    {
+      fabricEnv[x][y].diffuse();
+    }
+  }
+  for (let x=0; x<FABRIC_WIDTH; x++)
+  {
+    for (let y=0; y<FABRIC_HEIGHT; y++)
+    {
+      fabricEnv[x][y].regroup();
+    }
+  }
+}
+
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 
 const settings = {
-  dimensions: [ FABRIC_PIX_X, FABRIC_PIX_Y ]
+  dimensions: [ FABRIC_PIX_X, FABRIC_PIX_Y ],
+  animate: true
 };
 
 //const params = {
@@ -317,9 +339,51 @@ const sketch = () => {
   cl(`ME ${Walls.ME}`);
   cl(env);
   
+  // inject particles
+  // param
+  const INITIAL_INJECTIONS = 40;
+  for (let i=0; i<INITIAL_INJECTIONS; i++)
+  {
+    let x = Math.floor(random.range(0, FABRIC_WIDTH ));
+    let y = Math.floor(random.range(0, FABRIC_HEIGHT ));
+    let qty = Math.floor(random.range(0, 50000 ));  // param
+    let msg = Math.floor(random.range(0, MsgType.MESSAGE_ARRAY_SIZE )); 
+    let rndMsg = new Message(msg, qty);
+    //fabricEnv[x][y].insertMessage(rndMsg);  // TODO rename more meaningful
+    env[x][y].insertMessage(rndMsg);
+  }
+  
   return ({ context, width, height }) => {
+    const alpha = 1;
+    
     context.fillStyle = 'white';
     context.fillRect(0, 0, width, height);
+
+    
+    // draw
+    for (let x=0; x<FABRIC_WIDTH; x++)
+    {
+      for (let y=0; y<FABRIC_HEIGHT; y++)
+      {
+        context.save();
+        context.translate(x * CELLSIZE_X, y * CELLSIZE_Y);
+        //context.rotate(-angle);
+        //context.scale(random.range(0.1, 2), random.range(0.2, 0.5));
+  
+        context.beginPath();
+        
+        //composedFill = `rgba(%{env[x][y].msgs[0].units % 256}, 0,0,${alpha})`;
+        composedFill = `rgba(${env[x][y].msgs[0].units % 256}, ${env[x][y].msgs[1].units % 256},${env[x][y].msgs[2].units % 256},${alpha})`;
+        context.fillStyle = composedFill; //cBox[Math.floor(random.range(0, cBox.length - 1))];
+        context.rect(0, 0, CELLSIZE_X, CELLSIZE_Y);
+        context.fill();
+        context.restore();
+      }
+    }
+    
+    // run cycle 
+    diffusionCycle(env);
+    
   };
 };
 
