@@ -77,8 +77,10 @@ class FabricCell {
 *  FUNC: initFabric
 *
 *  DESC: assign co-located FabricCell objects to cell walls for 
-*        communication w/ eachother
-*
+*        communication w/ eachother.
+*        Simulated hexagonal lattice. 2D array with each element
+*        having acces from 2 above, 2 below and 1 from each side.
+*        See fabric_array_connections.jpeg for sketch
 *
 ************************************************************************/
 const DIFFUSE_IN = true; // or false!
@@ -210,16 +212,25 @@ function initFabric(xLower, yLower, xHigher, yHigher)
 }
 
 //const env = new Array(FABRIC_HEIGHT).fill(new FabricCell()).map(() => new Array(FABRIC_WIDTH).fill(new FabricCell()));
+
+//const env = new Array(FABRIC_WIDTH).fill(new FabricCell(count++)).map(() => new Array(FABRIC_HEIGHT).fill(new FabricCell(count++)));
+
 let count = 0;
-const env = new Array(FABRIC_WIDTH).fill(new FabricCell(count++)).map(() => new Array(FABRIC_HEIGHT).fill(new FabricCell(count++)));
-//const env2 = new Array(4).fill(new FabricCell()).map(() => new Array(3).fill(new FabricCell()));
-//let d = 0.75;
-//initFabric(0, 0, Math.floor(FABRIC_WIDTH * d), Math.floor(FABRIC_HEIGHT * d));
+let env = [];
+for (let x=0; x<FABRIC_WIDTH; x++)
+{
+  let col = [];
+  
+  for (let y=0; y<FABRIC_HEIGHT; y++)
+  {
+    col.push(new FabricCell(count++));
+  }
+  env.push(col);
+}
+
 initFabric(0, 0, FABRIC_WIDTH, FABRIC_HEIGHT);
-//initFabric(0, 0, FABRIC_HEIGHT, FABRIC_WIDTH);
-//initFabric(0, 0, 10, 10);
 
-
+// label for debug
 for (let y=0; y<FABRIC_HEIGHT; y++)						
 {
   for (let x=0; x<FABRIC_WIDTH; x++)
