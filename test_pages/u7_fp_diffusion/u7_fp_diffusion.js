@@ -40,10 +40,15 @@ class Message {
 // params
 const CELLSIZE_X         = 4;
 const CELLSIZE_Y         = 4;
-const FABRIC_PIX_X       = 1200;
-const FABRIC_PIX_Y       = 1800;
+const CANVAS_X_OFFSET    = CELLSIZE_X / 2;
+const FABRIC_PIX_X       = 2600;  //1200;slow!
+const FABRIC_PIX_Y       = 1200;  //1800;slow!
 const FABRIC_WIDTH       = FABRIC_PIX_X / CELLSIZE_X;
 const FABRIC_HEIGHT      = FABRIC_PIX_Y / CELLSIZE_Y;
+const INJECTION_MIN      = 20000; //150000
+const INJECTION_MAX      = 150000; //150000
+const INITIAL_INJECTIONS = 1200;
+
 
 class FabricCell {
   static DIFFUSE_IN = true; // or false!
@@ -185,7 +190,7 @@ function initFabric(xLower, yLower, xHigher, yHigher)
 	}
 	for (let y=yLower+1; y<yHigher; y++)						
 	{												
-		let offset = 1 * (y % 2);
+    let offset = y % 2;
 		// do cell at start of row
 		if (offset){  // do LEFT edge of cell fabric
 			env[xLower][y].walls[Walls.TL] = env[xLower][y-1];
@@ -339,14 +344,12 @@ const sketch = () => {
   cl(`ME ${Walls.ME}`);
   cl(env);
   
-  // inject particles
-  // param
-  const INITIAL_INJECTIONS = 40;
+  // inject particles  
   for (let i=0; i<INITIAL_INJECTIONS; i++)
   {
     let x = Math.floor(random.range(0, FABRIC_WIDTH ));
     let y = Math.floor(random.range(0, FABRIC_HEIGHT ));
-    let qty = Math.floor(random.range(0, 50000 ));  // param
+    let qty = Math.floor(random.range(INJECTION_MIN, INJECTION_MAX )); 
     let msg = Math.floor(random.range(0, MsgType.MESSAGE_ARRAY_SIZE )); 
     let rndMsg = new Message(msg, qty);
     //fabricEnv[x][y].insertMessage(rndMsg);  // TODO rename more meaningful
@@ -366,7 +369,8 @@ const sketch = () => {
       for (let y=0; y<FABRIC_HEIGHT; y++)
       {
         context.save();
-        context.translate(x * CELLSIZE_X, y * CELLSIZE_Y);
+        let x_offset = CANVAS_X_OFFSET * (y % 2);
+        context.translate(x * CELLSIZE_X + x_offset, y * CELLSIZE_Y);
         //context.rotate(-angle);
         //context.scale(random.range(0.1, 2), random.range(0.2, 0.5));
   
