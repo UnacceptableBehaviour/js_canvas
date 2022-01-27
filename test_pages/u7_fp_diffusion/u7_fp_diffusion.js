@@ -41,13 +41,13 @@ class Message {
 const CELLSIZE_X         = 4;
 const CELLSIZE_Y         = 4;
 const CANVAS_X_OFFSET    = CELLSIZE_X / 2;
-const FABRIC_PIX_X       = 2600;  //1200;slow!
-const FABRIC_PIX_Y       = 1200;  //1800;slow!
+const FABRIC_PIX_X       = 400;  //1200;slow!
+const FABRIC_PIX_Y       = 400;  //1800;slow!
 const FABRIC_WIDTH       = FABRIC_PIX_X / CELLSIZE_X;
 const FABRIC_HEIGHT      = FABRIC_PIX_Y / CELLSIZE_Y;
-const INJECTION_MIN      = 20000; //150000
-const INJECTION_MAX      = 150000; //150000
-const INITIAL_INJECTIONS = 1200;
+const INJECTION_MIN      = 10000; //20000
+const INJECTION_MAX      = 10005; //500000
+const INITIAL_INJECTIONS = 1; //1200;
 
 
 class FabricCell {
@@ -347,8 +347,10 @@ const sketch = () => {
   // inject particles  
   for (let i=0; i<INITIAL_INJECTIONS; i++)
   {
-    let x = Math.floor(random.range(0, FABRIC_WIDTH ));
-    let y = Math.floor(random.range(0, FABRIC_HEIGHT ));
+    //let x = Math.floor(random.range(0, FABRIC_WIDTH ));
+    //let y = Math.floor(random.range(0, FABRIC_HEIGHT ));
+    let x = Math.floor(FABRIC_WIDTH/2);
+    let y = Math.floor(FABRIC_HEIGHT/2);    
     let qty = Math.floor(random.range(INJECTION_MIN, INJECTION_MAX )); 
     let msg = Math.floor(random.range(0, MsgType.MESSAGE_ARRAY_SIZE )); 
     let rndMsg = new Message(msg, qty);
