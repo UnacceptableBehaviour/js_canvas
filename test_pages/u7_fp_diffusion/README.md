@@ -1,15 +1,17 @@
 # End of Course Project 1 - Diffusion Rainbow  
+![Diffusion Rainbow](https://github.com/UnacceptableBehaviour/js_canvas/blob/master/test_pages/u7_fp_diffusion/imgs/2022.01.26-16.25.15.png)
+  
 This very loosely based on how diffusion works.
 If we draw an imaginary barrier, and on one side the gas is much more dense than the other:
 
-[diffusion axiom](https://github.com/UnacceptableBehaviour/js_canvas/blob/master/test_pages/u7_fp_diffusion/imgs/20220127_195932.jpeg)
+![diffusion axiom](https://github.com/UnacceptableBehaviour/js_canvas/blob/master/test_pages/u7_fp_diffusion/imgs/20220127_195932.jpeg)
 
 Given that the particles are moving randomly (why is irrelevant for purpose of animation!) 
 It stands to reason that if there are more particles on one side moving randomly then its more likely
 that a higher quantity of particles will cross the line from this side. This work in every direction
 since the movement is random.
   
-Possible made more complicated than necessary! More in depth explanation [The diffusion equation | Week 12 | MIT 18.S191 Fall 2020 | Grant Sanderson](https://www.youtube.com/watch?v=a3V0BJLIo_c)
+More in depth explanation (Possibly made more complicated than necessary!) [The diffusion equation | Week 12 | MIT 18.S191 Fall 2020 | Grant Sanderson](https://www.youtube.com/watch?v=a3V0BJLIo_c)
 Highly recommend [3Brown 1Blue](https://www.youtube.com/channel/UCYO_jab_esuFRV4b17AJtAw) GREAT content!    
   
 So if we paint a dot on the canvas representing say 40000 particles in that space, the next step would be to distribute them equally in every direction in the next frame.
@@ -20,7 +22,7 @@ A square matrix creates an aliasing effect and curves dont happen :/
 To get around this a hexagonal matrix is used with each point connecting to six points around it.
 Each point is allocated a FabriCell object which is walled in by 6 neighbours. Each off which is referenced in the walls array.
 
-[fabricCell connectome](https://github.com/UnacceptableBehaviour/js_canvas/blob/master/test_pages/u7_fp_diffusion/imgs/fabric_array_connections.jpeg)  
+![fabricCell connectome](https://github.com/UnacceptableBehaviour/js_canvas/blob/master/test_pages/u7_fp_diffusion/imgs/fabric_array_connections.jpeg)  
   
 ### Understanding the FabricCell connectome diagram above:
 Each cell is painted with 4 pixels (2x2).
@@ -38,13 +40,13 @@ class FabricCell {
 
 // enum Walls                                   //   Cell Wall Reference
 class Walls {                                   //   
-	static ME = 0;  // this cell                  //         TL    TR   
-	static L  = 1;	// left                       //          2    3
-	static TL =	2;	// top left                   
-	static TR =	3;	// top right                  //       L    ME    R
-	static R  =	4;	// right                      //       1    0     4
-	static BR	=	5;  // bottom right               	
-	static BL	=	6;  // bottom left                //          6    5
+  static ME = 0;  // this cell                  //         TL    TR   
+  static L  = 1;  // left                       //          2    3
+  static TL = 2;  // top left                   
+  static TR = 3;  // top right                  //       L    ME    R
+  static R  = 4;  // right                      //       1    0     4
+  static BR = 5;  // bottom right                 
+  static BL = 6;  // bottom left                //          6    5
   static MAX_FABRIC_WALLS = 7; // array size    //         BL    BR
 };
 ```
@@ -77,8 +79,8 @@ https://github.com/UnacceptableBehaviour/js_canvas/blob/1fda1252d9e3502cf44fbbf4
   
 Notes on experiments.  
   
-### Diffusion Rainbow
-![Diffusion Rainbow](https://github.com/UnacceptableBehaviour/js_canvas/blob/master/test_pages/u7_fp_diffusion/imgs/2022.01.26-16.25.15.png)  
+### More Diffusion Rainbow
+
 
 
 # Resources
