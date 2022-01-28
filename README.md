@@ -16,14 +16,51 @@ For each lesson in the course theres an **IMAGE** of the final page / canvas, **
 | Code @ [sketch-04.js](https://github.com/UnacceptableBehaviour/js_canvas/blob/786d5cbb875ec367ea4c766a493bdc08a5bef751/test_pages/u5_noise/sketch-04.js) | [README.md](https://github.com/UnacceptableBehaviour/js_canvas/blob/master/test_pages/u5_noise/README.md) | 
 | ![sk](https://github.com/UnacceptableBehaviour/js_canvas/blob/master/test_pages/u6_text_fill/2022.01.12-20.08.04.png) | Fonts, measure text, reading image data, basic image processing, JS asynch/await, event listeners |
 | Code @ [sketch-05.js](https://github.com/UnacceptableBehaviour/js_canvas/blob/9597c3b8d717ad8bb9a5bafb4cd04bf7bbcc772c/test_pages/u6_text_fill/sketch-05.js) | [README.md](https://github.com/UnacceptableBehaviour/js_canvas/blob/master/test_pages/u6_text_fill/README.md) | 
-| ![sk]() | desc |
-| Code @ [sketch-XX.js]() | [README.md]() | 
-| ![sk]() | desc |
-| Code @ [sketch-XX.js]() | [README.md]() | 
+| ![sk](https://github.com/UnacceptableBehaviour/js_canvas/blob/master/test_pages/u7_fp_diffusion/imgs/diff_arch_rdMe.png) | Diffusion Rainbow, JS classes, C++ port to JS, animation, tweakpain, achieved with simple context.rect only!  |
+| Code @ [u7_fp_diffusion.js](https://github.com/UnacceptableBehaviour/js_canvas/blob/master/test_pages/u7_fp_diffusion/u7_fp_diffusion.js) | [README.md](https://github.com/UnacceptableBehaviour/js_canvas/blob/master/test_pages/u7_fp_diffusion/README.md) | 
+| ![sk](https://github.com/UnacceptableBehaviour/js_canvas/blob/master/test_pages/u8_fp_flock/2022.01.14-14.20.53.png) | Flock of birds simulation, needs a bit of work still, going in the right direction, animation, tweakpain, circles w/ borders |
+| Code @ [u8_fp_flock.js](https://github.com/UnacceptableBehaviour/js_canvas/blob/master/test_pages/u8_fp_flock/u8_fp_flock.js) | [README.md](https://github.com/UnacceptableBehaviour/js_canvas/blob/master/test_pages/u8_fp_flock/README.md) | 
 | ![sk]() | desc |
 | Code @ [sketch-XX.js]() | [README.md]() | 
 
-## Revison - running an example from above
+### Running an example from above
+First make sure you have node.js installed. If not install from [here](https://nodejs.org/en/download/)
+  
+```
+> node --version           # see below for how to upgrade
+v16.13.2
+> git clone https://github.com/UnacceptableBehaviour/js_canvas
+> cd js_canvas
+> npm i canvas-sketch      # i or install
+> canvas-sketch --open test_pages/u8_fp_flock/u8_fp_flock.js
+ → Installing dependencies:  
+    canvas-sketch, canvas-sketch-util,tweakpane  
+
+added 54 package, and audited 55 packages in 3s
+
+11 packages are looking for funding
+  run `npm fund` for details
+
+found 0 vulnerabilities
+[0005] info  Server running at http://192.168.1.13:9966/ (connect)
+[0005] info  LiveReload running
+[0006] 1225ms     1.1MB (browserify)
+[0013] 6ms           0B GET    200 / (generated)
+
+# to update node to latest on osx: (for windos [here](https://phoenixnap.com/kb/update-node-js-version#ftoc-heading-6))
+> npm cache clean -f
+> sudo npm install -g n
+> sudo n stable
+```
+
+### Recording an animation
+```
+> sudo npm install @ffmpeg-installer/ffmpeg --global      # install video encoder - enables --stream flag in CLI
+> canvas-sketch test_pages/u8_fp_flock/u8_fp_flock.js --open --output=anim   --stream   
+#      ^cmd                                ^project name              ^o/p folder   ^allow direct capture to video
+# CTRL + SHIFT + S to start recording, and same to stop
+# mp4 file will be in the anim folder
+```
 
   
 
