@@ -23,7 +23,7 @@ To get around this a hexagonal matrix is used with each point connecting to six 
   
 Each point is allocated a FabricCell object which is walled in by 6 neighbours.
   
-Each off which is referenced in the walls array.
+Each of which is referenced in the walls array.  
   
 ![fabricCell connectome](https://github.com/UnacceptableBehaviour/js_canvas/blob/master/test_pages/u7_fp_diffusion/imgs/fabric_array_connections.jpeg)  
   
