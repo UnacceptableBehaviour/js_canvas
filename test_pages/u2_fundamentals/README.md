@@ -18,7 +18,7 @@ Running canvas-sketch:
 Settings can be used to create A4 size canvas & ppi setting for printing. Handy!
   
 This generates a lot of node packages - debatable whethter or not to include them in repo.  
-But they do create a lot of noise when doing a diff!
+But they do create a lot of noise when doing a diff!  
 Add note on specifying file(s) to ignore for git diff. TODO  
   
 To IGNORE files following a 'path_name_directory' in any path.  
