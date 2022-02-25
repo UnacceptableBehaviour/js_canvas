@@ -3,7 +3,7 @@ Contents notes:
 Introduction to Perlin Noise, Simplex Noise, direction artifacts, 3d simplex noise, animation based on that
 noise.  
 Adding a control panel (to allow control of different variables in realtime) called 
-[Tweakpane](https://github.com/cocopon/tweakpane).
+[tweakpane](https://github.com/cocopon/tweakpane).
   
 Install tweakpane & run:  
 ```
