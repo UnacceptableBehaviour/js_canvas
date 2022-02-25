@@ -1,7 +1,7 @@
 const canvasSketch = require('canvas-sketch');
 const math = require('canvas-sketch-util/math');
 const random = require('canvas-sketch-util/random');
-
+const Tweakpane = require('tweakpane');
 
 // helpers
 const cl = (str) => {
@@ -38,16 +38,66 @@ class Message {
 };
 
 // params
-const CELLSIZE_X         = 4;
-const CELLSIZE_Y         = 4;
+const CELLSIZE_X         = 2;
+const CELLSIZE_Y         = 2;
 const CANVAS_X_OFFSET    = CELLSIZE_X / 2;
-const FABRIC_PIX_X       = 400;  //1200;slow!
-const FABRIC_PIX_Y       = 400;  //1800;slow!
+const FABRIC_PIX_X       = 1200; //400;  //1200;slow!
+const FABRIC_PIX_Y       = 1200; //400;  //1800;slow!
 const FABRIC_WIDTH       = FABRIC_PIX_X / CELLSIZE_X;
 const FABRIC_HEIGHT      = FABRIC_PIX_Y / CELLSIZE_Y;
-const INJECTION_MIN      = 10000; //20000
-const INJECTION_MAX      = 10005; //500000
-const INITIAL_INJECTIONS = 1; //1200;
+const INJECTION_MIN      = 0;
+const INJECTION_MAX      = 500000;
+const INITIAL_INJECTIONS = 1200; //100; //1200;
+
+const params = {
+  initPoints: INITIAL_INJECTIONS,
+  injectionMin: INJECTION_MIN,
+  injectionMax: INJECTION_MAX,
+};
+
+const createpane = () => {
+  const pane = new Tweakpane.Pane();  
+  let folder;
+  
+  folder = pane.addFolder({ title: 'Diffusion Rainbow '});
+  folder.addInput(params, 'initPoints', { min: 1, max: 1000, step: 1 });  
+  folder.addInput(params, 'injectionMin', { min: INJECTION_MIN, max: INJECTION_MAX, step: 1000 });
+  folder.addInput(params, 'injectionMax', { min: INJECTION_MIN, max: INJECTION_MAX, step: 1000 });
+  btnRestart = folder.addButton({
+    title: 'RESTART',
+    label: '',
+    });
+  btnRestart.on('click', () => { cl('RESTART CLICKED'); canvasSketch(sketch, settings);                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  } );
+  
+  //folder.addInput(params, 'boidMaxRad', { min: 1, max: 100, step: 1 }); 
+  //folder.addInput(params, 'speedLimit', { min: 1, max: 100, step: 1 });
+  //folder.addInput(params, 'speedLimitOn');
+  //folder.addInput(params, 'borderStroke');
+  //
+  //folder = pane.addFolder({ title: 'Flock '});
+  //folder.addInput(params, 'rule1multiplier', { min: 0.01, max: 0.2, step: 0.01 });
+  ////folder.addInput(params, 'flockDensity', { min: 0, max: 1, step: 0.05 });
+  //folder.addInput(params, 'nearestNeighbourEffect', { min: 2, max: 20, step: 1 });
+  //folder.addInput(params, 'nNEffect');
+  ////folder.addInput(params, 'visualRangeEffect', { min: 1, max: 500, step: 5 });
+  ////folder.addInput(params, 'vREffect');
+  //folder.addInput(params, 'freeFlightAmp', { min: 0.01, max: 5, step: 0.05 });
+  //folder.addInput(params, 'minSafeDistance', { min: 0, max: 100, step: 5 });
+  //// add slider w/ callback
+  ////folder.addInput(params, 'leadBoidConfinement', { min: 0, max: (cubeSize/2 -50), step: 50 });  
+  //const lBCinput = pane.addInput(params, 'leadBoidConfinement', { min: 0, max: (cubeSize/2 -50), step: 50 });
+  //lBCinput.on('change', function(ev) {
+  //  const leadBoid = params.leadBoid;
+  //  const shrink = params.leadBoidConfinement;
+  //  if (leadBoid.pos.x <= shrink) leadBoid.pos.x = shrink + 1;
+  //  if (leadBoid.pos.x >= scene.x - shrink) leadBoid.pos.x = scene.x - shrink -1;
+  //  if (leadBoid.pos.y <= shrink) leadBoid.pos.y = shrink + 1;
+  //  if (leadBoid.pos.y >= scene.y - shrink) leadBoid.pos.y = scene.y - shrink -1;
+  //  if (leadBoid.pos.z <= shrink) leadBoid.pos.z = shrink + 1;
+  //  if (leadBoid.pos.z >= scene.z - shrink) leadBoid.pos.z = scene.z - shrink -1;
+  //});
+}
+
 
 
 class FabricCell {
@@ -326,17 +376,7 @@ const settings = {
   animate: true
 };
 
-//const params = {
-//  cols: 10,
-//  rows: 10,
-//  scaleMin: 1,
-//  scaleMax: 30,
-//  freq: 0.001,
-//  amp: 0.2,
-//  frame: 0,
-//  //animate: true,
-//
-//};
+
 
 
 const sketch = () => {
@@ -347,11 +387,11 @@ const sketch = () => {
   // inject particles  
   for (let i=0; i<INITIAL_INJECTIONS; i++)
   {
-    //let x = Math.floor(random.range(0, FABRIC_WIDTH ));
-    //let y = Math.floor(random.range(0, FABRIC_HEIGHT ));
-    let x = Math.floor(FABRIC_WIDTH/2);
-    let y = Math.floor(FABRIC_HEIGHT/2);    
-    let qty = Math.floor(random.range(INJECTION_MIN, INJECTION_MAX )); 
+    let x = Math.floor(random.range(0, FABRIC_WIDTH ));
+    let y = Math.floor(random.range(0, FABRIC_HEIGHT ));
+    //let x = Math.floor(FABRIC_WIDTH/2);
+    //let y = Math.floor(FABRIC_HEIGHT/2);    
+    let qty = Math.floor(random.range(params.injectionMin, params.injectionMax)); 
     let msg = Math.floor(random.range(0, MsgType.MESSAGE_ARRAY_SIZE )); 
     let rndMsg = new Message(msg, qty);
     //fabricEnv[x][y].insertMessage(rndMsg);  // TODO rename more meaningful
@@ -393,4 +433,7 @@ const sketch = () => {
   };
 };
 
+
+
+createpane();
 canvasSketch(sketch, settings);
