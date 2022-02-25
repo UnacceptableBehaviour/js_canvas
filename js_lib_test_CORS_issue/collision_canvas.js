@@ -93,7 +93,9 @@ class Canvas {
 
 class Ball {
   constructor(config) {
-    Object.assign(this,
+    // Object.assign(target, ...sources) - target = this, default in the middle - source 1, passing in config overwrites defaults - source 2
+    // a lot of caveats here: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/assign
+    Object.assign(this,     
       {
         id: Math.floor(Math.random() * 1000000),
         type: 'circle',
@@ -158,9 +160,9 @@ class Ball {
 
     const newX = Math.max(Math.min(this.position.x + this.velocity.x, upperLimit.x), lowerLimit.x);
     const newY = Math.max(Math.min(this.position.y + this.velocity.y, upperLimit.y), lowerLimit.y);
-
-    return new Ball({
-      ...this,
+                       // Object.assign doesnt deep copy so the velocity vector Ref will point to the on from the old object - I think??
+    return new Ball({  // ... is spread operator - https://dev.to/sagar/three-dots---in-javascript-26ci
+      ...this,         // unpacks the properties from this, overwrites positions with new positions
       position: new Vector(newX, newY),
     });
   }
@@ -206,9 +208,9 @@ const runAnimation = animation => {
       }
     }
     lastTime = time;
-    requestAnimationFrame(frame);
+    requestAnimationFrame(frame);     // re-insert frame callback in animation Q
   };
-  requestAnimationFrame(frame);
+  requestAnimationFrame(frame);       // start animation
 };
 
 const random = (max = 9, min = 0) => {
@@ -217,7 +219,36 @@ const random = (max = 9, min = 0) => {
 
 const colors = ['red', 'green', 'blue', 'purple', 'orange'];
 
-const collidingBalls = ({ width = 400, height = 400, parent = document.body, count = 50 } = {}) => {
+//const collidingBalls = ({ width = 400, height = 400, parent = document.body, count = 50 } = {}) => {
+//  const display = new Canvas(parent, width, height);
+//  const balls = [];
+//  for (let i = 0; i < count; i++) {
+//    balls.push(new Ball({
+//      radius: random(8, 3) + Math.random(),
+//      color: colors[random(colors.length - 1)],
+//      position: new Vector(random(width - 10, 10), random(height - 10, 10)),
+//      velocity: new Vector(random(3, -3), random(3, -3)),
+//    }));
+//  }
+//  let state = new State(display, balls);
+//  runAnimation(time => {
+//    state = state.update(time);
+//    display.sync(state);
+//  });
+//};
+//
+////console.log('collidingBalls(); - - - S');
+////document.addEventListener('DOMContentLoaded', (event) => {
+////    collidingBalls();
+////});
+////console.log('collidingBalls(); - - - E');
+//
+//
+//export function collidingBalls(); < NO WORK
+//export collidingBalls; < NO WORK
+
+// https://developer.mozilla.org/en-US/docs/web/javascript/reference/statements/export
+export function collidingBalls({ width = 400, height = 400, parent = document.body, count = 50 } = {}){
   const display = new Canvas(parent, width, height);
   const balls = [];
   for (let i = 0; i < count; i++) {
@@ -234,9 +265,3 @@ const collidingBalls = ({ width = 400, height = 400, parent = document.body, cou
     display.sync(state);
   });
 };
-
-console.log('collidingBalls(); - - - S');
-document.addEventListener('DOMContentLoaded', (event) => {
-    collidingBalls();
-});
-console.log('collidingBalls(); - - - E');
