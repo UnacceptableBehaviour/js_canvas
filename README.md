@@ -85,8 +85,7 @@ https://eloquentjavascript.net/
   
 **canvas-sketch** (npm package)  
 https://github.com/mattdesl/canvas-sketch  
-From README.md:  
-canvas-sketch is a loose collection of tools, modules and resources for creating generative art in JavaScript and the browser.  
+From README.md: canvas-sketch is a loose collection of tools, modules and resources for creating generative art in JavaScript and the browser.  
 [canvas-sketch documentation](https://github.com/mattdesl/canvas-sketch/blob/master/docs/README.md)  
   
 **Canvas Sketch Utils**  
