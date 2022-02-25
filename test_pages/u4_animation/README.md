@@ -5,7 +5,6 @@ command | description
 JS classes | language
 Sketch | lines, animation
 canvas-sketch-util | [canvas-sketch-util](https://github.com/mattdesl/canvas-sketch-util)
-- |- 
     
   
 Some experiments:
@@ -18,7 +17,7 @@ Some experiments:
     
 **To run:**
 ```
-> cd /test_pages/u4_animation
+> cd ./test_pages/u4_animation
 > canvas-sketch sketch-03 --open
 ```
   
