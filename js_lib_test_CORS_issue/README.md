@@ -1,5 +1,5 @@
 # JS Visualisation Tests 
-This a great post about how to use vanilla canvas - clean code and well explained steps to creating it.
+This a great post about how to use vanilla canvas - clean code and well explained steps to creating it.  
 [Canvas - javascript & html - Josh Bradley](https://joshbradley.me/object-collisions-with-canvas/) - [code](https://gist.github.com/joshuabradley012/bd2bc96bbe1909ca8555a792d6a36e04)
 
   
