@@ -2,11 +2,11 @@
 Course notes from [Creative Coding: Making Visuals with JavaScript](https://www.domestika.org/auth/login#course_lesson_28425) a
 course which I recommend 100%. A great introduction to a modern programming language [javascript](https://eloquentjavascript.net/) and creative art.
   
-For each lesson in the course theres an **IMAGE** of the final page / canvas, **DESCRIPTION**, **CODE** and **README**
-The last 3 but one: Diffusion Rainbow, Flock of Boids & Shortest Path Moving Target are experiments with the framework.
-With the last one being a markup of some code written by [Josh Bradley](https://joshbradley.me/object-collisions-with-canvas/)
-with comments added to remind me how it works when I come back to it! Plus turned it into a module.
-
+For each lesson in the course theres an **IMAGE** of the final page / canvas, **DESCRIPTION**, **CODE** and **README**  
+The last 3 but one: **Diffusion Rainbow**, **Flock of Boids** & **Shortest Path Moving Target** are experiments with the framework.  
+The last one being a markup of some code written by [Josh Bradley](https://joshbradley.me/object-collisions-with-canvas/) 
+with comments added to remind me how it works when I come back to it! Plus turned it into a module.  
+  
 | Notes | Info | 
 | - | - | 
 | ![sk](https://github.com/UnacceptableBehaviour/js_canvas/blob/master/test_pages/u2_fundamentals/sketches/output/01/2022.01.06-20.50.29.png) | Fundamentals: setting up node & canvas-sketch and drawing to canvas - plus javascripts basics |
