@@ -25,7 +25,7 @@ with comments added to remind me how it works when I come back to it! Plus turne
 | ^ Code @ [u8_fp_flock.js](https://github.com/UnacceptableBehaviour/js_canvas/blob/master/test_pages/u8_fp_flock/u8_fp_flock.js) | [README.md](https://github.com/UnacceptableBehaviour/js_canvas/blob/master/test_pages/u8_fp_flock/README.md) | 
 | ![sk]() | desc |
 | ^ Code @ [u9_fp_random_target.js](https://github.com/UnacceptableBehaviour/js_canvas/blob/master/test_pages/u9_fp_random_target/u9_fp_random_target.js) | [README.md](https://github.com/UnacceptableBehaviour/js_canvas/blob/master/test_pages/u9_fp_random_target/README.md) |
-| ![sk](https://github.com/UnacceptableBehaviour/js_canvas/blob/master/js_lib_test_CORS_issue/collision_canvas.png) | This a great post about how to use vanilla canvas - clean code and well explained steps to creating it. |
+| ![sk](https://github.com/UnacceptableBehaviour/js_canvas/blob/master/js_lib_test_CORS_issue/collision_canvas.png) | This a great post about how to use vanilla canvas - clean code and well explained steps to creating it. [Canvas - javascript & html - Josh Bradley](https://joshbradley.me/object-collisions-with-canvas/) - [code](https://gist.github.com/joshuabradley012/bd2bc96bbe1909ca8555a792d6a36e04)|
 | ^ Code @ [collision_canvas.js](https://github.com/UnacceptableBehaviour/js_canvas/blob/master/js_lib_test_CORS_issue/collision_canvas.js) | [README.md](https://github.com/UnacceptableBehaviour/js_canvas/blob/master/js_lib_test_CORS_issue/README.md) | 
 
 
