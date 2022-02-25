@@ -72,41 +72,41 @@ found 0 vulnerabilities
 
 
 # Resources
-##### Domestika - Creative Coding: Making Visuals with JavaScript
+**Domestika - Creative Coding: Making Visuals with JavaScript**    
 https://www.domestika.org/auth/login#course_lesson_28425  
-[Creative Coding: Making Visuals with JavaScript](https://www.domestika.org/auth/login#course_lesson_28425)
+[Creative Coding: Making Visuals with JavaScript](https://www.domestika.org/auth/login#course_lesson_28425)  
   
-#### Great Post about vanilla Canvas (without canvas sketch module)
-This a great post about how to use vanilla canvas - clean code and well explained steps to creating it.
+**Great Post about vanilla Canvas (without canvas sketch module)**  
+This a great post about how to use vanilla canvas - clean code and well explained steps to creating it.  
 [Canvas - javascript & html - Josh Bradley](https://joshbradley.me/object-collisions-with-canvas/) - [code](https://gist.github.com/joshuabradley012/bd2bc96bbe1909ca8555a792d6a36e04)  
   
-##### Eloquent Javascript - Online book
-https://eloquentjavascript.net/
+**Eloquent Javascript - Online book**    
+https://eloquentjavascript.net/  
   
-#### canvas-sketch (npm package)
+**canvas-sketch** (npm package)  
 https://github.com/mattdesl/canvas-sketch  
 From README.md:  
 canvas-sketch is a loose collection of tools, modules and resources for creating generative art in JavaScript and the browser.  
 [canvas-sketch documentation](https://github.com/mattdesl/canvas-sketch/blob/master/docs/README.md)  
-
-#### Canvas Sketch Utils
-math, random, color, geometry ,penplot, shader
-https://github.com/mattdesl/canvas-sketch-util
-
-#### Exporting Animations from canvas-sketch
-https://github.com/mattdesl/canvas-sketch/blob/master/docs/exporting-artwork.md#exporting-animations
-
-#### Tweakpane - npm package - Hiroki Kokubun
-https://github.com/cocopon/tweakpane
-UI Gadget that allows you to live tweak model parameters on screen.
   
-#### W3 Canvas Reference
-https://www.w3schools.com/tags/ref_canvas.asp
-
-#### Node Reference
-https://nodejs.dev/learn/where-does-npm-install-the-packages
-
-##### Markdown syntax (.md)
+**Canvas Sketch Utils**  
+math, random, color, geometry ,penplot, shader  
+https://github.com/mattdesl/canvas-sketch-util  
+  
+**Exporting Animations from canvas-sketch**  
+https://github.com/mattdesl/canvas-sketch/blob/master/docs/exporting-artwork.md#exporting-animations  
+  
+**Tweakpane - npm package - Hiroki Kokubun**  
+https://github.com/cocopon/tweakpane  
+UI Gadget that allows you to live tweak model parameters on screen.  
+  
+**W3 Canvas Reference**  
+https://www.w3schools.com/tags/ref_canvas.asp  
+  
+**Node Reference**  
+https://nodejs.dev/learn/where-does-npm-install-the-packages  
+  
+**Markdown syntax (.md)**  
 https://www.markdownguide.org/basic-syntax/  
 
 
