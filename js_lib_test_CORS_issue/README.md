@@ -1,5 +1,7 @@
-# JS Visualisation Tests Template
-Basic template to create JS visiulasation tests - copy '_template' direcory & go.  
+# JS Visualisation Tests 
+This a great post about how to use vanilla canvas - clean code and well explained steps to creating it.
+[Canvas - javascript & html - Josh Bradley](https://joshbradley.me/object-collisions-with-canvas/) - [code](https://gist.github.com/joshuabradley012/bd2bc96bbe1909ca8555a792d6a36e04)
+
   
 ## Markup examples quick ref edit in each template:
   
@@ -45,9 +47,7 @@ factorial time		| O(n!)						| Brute force travelling salesman
 
 
 # Resources
-#### Domestika - Creative Coding: Making Visuals with JavaScript
-https://www.domestika.org/auth/login#course_lesson_28425  
-[Creative Coding: Making Visuals with JavaScript](https://www.domestika.org/auth/login#course_lesson_28425)
-
 #### Markdown syntax (.md)
 https://www.markdownguide.org/basic-syntax/  
+#### W3 Canvas Reference
+https://www.w3schools.com/tags/ref_canvas.asp
