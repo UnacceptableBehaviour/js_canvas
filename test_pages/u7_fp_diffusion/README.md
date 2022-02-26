@@ -1,5 +1,5 @@
 # End of Course Project 1 - Diffusion Rainbow  
-<img src="https://github.com/UnacceptableBehaviour/js_canvas/blob/master/test_pages/u7_fp_diffusion/imgs/2022.01.26-16.25.15.png" width="100">
+<img src="https://github.com/UnacceptableBehaviour/js_canvas/blob/master/test_pages/u7_fp_diffusion/imgs/2022.01.26-16.25.15.png" width="100%">
   
 This very loosely based on how diffusion works.  
 Say we have 2 pixels/cells filled with gas of different densities, and on one side the gas is much more dense than the other:  
