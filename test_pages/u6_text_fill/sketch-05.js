@@ -110,7 +110,7 @@ const settings = {
   dimensions: [ 1080, 1080 ]
 };
 
-let opTxt = '𝚿';//random.pick(['𝛑', '𝛅', '𝛀', '𝚿', '𝛅', '𝛜', '𝛛', '𝛍', '𝛟']);
+let opTxt = random.pick(['𝛑', '𝛅', '𝛀', '𝚿', '𝛅', '𝛜', '𝛛', '𝛍', '𝛟']);
 let fontSize = 1200;
 let fontFamily = 'serif';
 

@@ -1,4 +1,4 @@
-# U6 - Sketch - Fonts - aligning - Bit reading 
+# U6 - Sketch - Fonts - Aligning Text - Bit Reading from Images
 Contents notes:  
 Canvas fonts, fillText - [W3Schools](https://www.w3schools.com/tags/canvas_font.asp)  
 Alignment - [W3Schools](https://www.w3schools.com/tags/canvas_textbaseline.asp)  
@@ -13,6 +13,7 @@ Run:
 ```
 > cd ./test_pages/u6_text_fill
 > canvas-sketch sketch-05 --open    # fire up code in a new browser window / tab
+# Hit REFRESH in the browser to see a different symbol each time!
 ```
   
 Some experiments:
