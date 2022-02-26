@@ -1,5 +1,5 @@
 # End of Course Project 1 - Diffusion Rainbow  
-![Diffusion Rainbow](https://github.com/UnacceptableBehaviour/js_canvas/blob/master/test_pages/u7_fp_diffusion/imgs/2022.01.26-16.25.15.png)
+![Diffusion Rainbow](https://github.com/UnacceptableBehaviour/js_canvas/blob/master/test_pages/u7_fp_diffusion/imgs/2022.01.26-16.25.15.png | width=100)
   
 This very loosely based on how diffusion works.  
 Say we have 2 pixels/cells filled with gas of different densities, and on one side the gas is much more dense than the other:  
@@ -73,11 +73,11 @@ Some experiments:
 | A | B | C | 
 | - | - | - | 
 | ![sk](https://github.com/UnacceptableBehaviour/js_canvas/blob/master/test_pages/u7_fp_diffusion/imgs/1200x1200_2x2_iMax500k_00.png) | ![sk](https://github.com/UnacceptableBehaviour/js_canvas/blob/master/test_pages/u7_fp_diffusion/imgs/1200x1200_2x2_iMax500k_01.png) | ![sk](https://github.com/UnacceptableBehaviour/js_canvas/blob/master/test_pages/u7_fp_diffusion/imgs/1200x1200_2x2_iMax500k_02.png) |
-| 1200x1200 00 [u7_fp_diffusion.js](https://github.com/UnacceptableBehaviour/js_canvas/blob/92776c7dd3e2a30d5afaf72f0ab7438bf9051324/test_pages/u7_fp_diffusion/u7_fp_diffusion.js) | 1200x1200 2x2 iMax 500k 01 | 1200x1200 2x2 iMax 500k 02 | 
+| 1200x1200 - 00 [u7_fp_diffusion.js](https://github.com/UnacceptableBehaviour/js_canvas/blob/92776c7dd3e2a30d5afaf72f0ab7438bf9051324/test_pages/u7_fp_diffusion/u7_fp_diffusion.js) | 1200x1200 2x2 iMax 500k 01 | 1200x1200 2x2 iMax 500k 02 | 
 | ![sk](https://github.com/UnacceptableBehaviour/js_canvas/blob/master/test_pages/u7_fp_diffusion/imgs/1200x1200_2x2_iMax500k_03.png) | ![sk](https://github.com/UnacceptableBehaviour/js_canvas/blob/master/test_pages/u7_fp_diffusion/imgs/1200x1200_2x2_iMax500k_04.png) | ![sk](https://github.com/UnacceptableBehaviour/js_canvas/blob/master/test_pages/u7_fp_diffusion/imgs/1200x1200_2x2_iMax500k_05.png) |
-| 1200x1200 2x2 iMax 500k 03 | 1200x1200 2x2 iMax 500k 04 | 1200x1200 2x2 iMax 500k 05 | 
+| 1200x1200 2x2 iMax 500k - 03 | 1200x1200 2x2 iMax 500k - 04 | 1200x1200 2x2 iMax 500k - 05 | 
 | ![sk](https://github.com/UnacceptableBehaviour/js_canvas/blob/master/test_pages/u7_fp_diffusion/imgs/1200x1200_2x2_iMax500k_05.png) | ![sk](https://github.com/UnacceptableBehaviour/js_canvas/blob/master/test_pages/u7_fp_diffusion/imgs/1200x1200_2x2_iMax500k_07.png) | ![sk](https://github.com/UnacceptableBehaviour/js_canvas/blob/master/test_pages/u7_fp_diffusion/imgs/1200x1200_2x2_iMax500k_08.png) |
-| 1200x1200 2x2 iMax 500k 06 | 1200x1200 2x2 iMax 500k 07 | 1200x1200 2x2 iMax 500k 08 | 
+| 1200x1200 2x2 iMax 500k - 06 | 1200x1200 2x2 iMax 500k - 07 | 1200x1200 2x2 iMax 500k - 08 | 
 | ![sk]() | ![sk]() | ![sk]() |
 | Code @ [u7_fp_diffusion.js]() | Code @ [u7_fp_diffusion.js]() | Code @ [u7_fp_diffusion.js]() |
 | ![sk]() | ![sk]() | ![sk]() |
