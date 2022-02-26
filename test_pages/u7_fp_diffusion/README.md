@@ -16,17 +16,19 @@ Highly recommend [3Brown 1Blue](https://www.youtube.com/channel/UCYO_jab_esuFRV4
 So if we paint a dot on the canvas representing say 40000 particles in that space, the next step would be to
 distribute them equally in every direction in the next frame. 10K up, left, right & down. Then next step 2.5k from
 each pixel to its surrounding pixels etc etc. Not forgetting that particles cross in both directions!
-see Some experiments Line 1A (see table below).
+see below. (Note the jagged edge on the left, there shoul be one on the right to but it was cropped.)
   
 ![sk](https://github.com/UnacceptableBehaviour/js_canvas/blob/master/test_pages/u7_fp_diffusion/imgs/2022.01.27-20.32.05.png)  
 Diffusion from a single point - Code @ [u7_fp_diffusion.js](https://github.com/UnacceptableBehaviour/js_canvas/blob/bd248eeecf5ca825f3d2555b439fa13862c85c50/test_pages/u7_fp_diffusion/u7_fp_diffusion.js)  
   
 A square matrix creates an aliasing effect and you do no get any curves :/  
-To get around this a hexagonal matrix is used with each point connecting to six points around it.  
+To get around this a hexagonal matrix is used with each point connecting to six points around it.
+This is done by shifting every other row over by hlf a cell.  
   
-Each point is allocated a FabricCell object which is walled in by 6 neighbours.  
+Each cell/point is allocated a FabricCell object which is walled in by 6 neighbours.  
   
-Each of which is referenced in the walls array.  
+Each of which is referenced in the this.walls[] array. Following is theTLHC of the above image
+broken down into FabricCell objects represented by squares.  
   
 ![fabricCell connectome](https://github.com/UnacceptableBehaviour/js_canvas/blob/master/test_pages/u7_fp_diffusion/imgs/fabric_array_connections.jpeg)  
   
