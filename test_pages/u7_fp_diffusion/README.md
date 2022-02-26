@@ -72,13 +72,16 @@ ready for next cycle.
 Some experiments:  
 | A | B | C | 
 | - | - | - | 
+| ![sk](https://github.com/UnacceptableBehaviour/js_canvas/blob/master/test_pages/u7_fp_diffusion/imgs/1200x1200_2x2_iMax500k_00.png) | ![sk](https://github.com/UnacceptableBehaviour/js_canvas/blob/master/test_pages/u7_fp_diffusion/imgs/1200x1200_2x2_iMax500k_01.png) | ![sk](https://github.com/UnacceptableBehaviour/js_canvas/blob/master/test_pages/u7_fp_diffusion/imgs/1200x1200_2x2_iMax500k_02.png) |
+| 1200x1200 2x2 iMax 500k [u7_fp_diffusion.js](https://github.com/UnacceptableBehaviour/js_canvas/blob/92776c7dd3e2a30d5afaf72f0ab7438bf9051324/test_pages/u7_fp_diffusion/u7_fp_diffusion.js) | 1200x1200 2x2 iMax 500k 01 | 1200x1200 2x2 iMax 500k 02 | 
+| ![sk](https://github.com/UnacceptableBehaviour/js_canvas/blob/master/test_pages/u7_fp_diffusion/imgs/1200x1200_2x2_iMax500k_03.png) | ![sk](https://github.com/UnacceptableBehaviour/js_canvas/blob/master/test_pages/u7_fp_diffusion/imgs/1200x1200_2x2_iMax500k_04.png) | ![sk](https://github.com/UnacceptableBehaviour/js_canvas/blob/master/test_pages/u7_fp_diffusion/imgs/1200x1200_2x2_iMax500k_05.png) |
+| 1200x1200 2x2 iMax 500k 03 | 1200x1200 2x2 iMax 500k 04 | 1200x1200 2x2 iMax 500k 05 | 
+| ![sk](https://github.com/UnacceptableBehaviour/js_canvas/blob/master/test_pages/u7_fp_diffusion/imgs/1200x1200_2x2_iMax500k_05.png) | ![sk](https://github.com/UnacceptableBehaviour/js_canvas/blob/master/test_pages/u7_fp_diffusion/imgs/1200x1200_2x2_iMax500k_07.png) | ![sk](https://github.com/UnacceptableBehaviour/js_canvas/blob/master/test_pages/u7_fp_diffusion/imgs/1200x1200_2x2_iMax500k_08.png) |
+| 1200x1200 2x2 iMax 500k 06 | 1200x1200 2x2 iMax 500k 07 | 1200x1200 2x2 iMax 500k 08 | 
+| ![sk]() | ![sk]() | ![sk]() |
+| Code @ [u7_fp_diffusion.js]() | Code @ [u7_fp_diffusion.js]() | Code @ [u7_fp_diffusion.js]() |
 | ![sk]() | ![sk]() | ![sk]() |
 | Code @ [u7_fp_diffusion.js]() | Code @ [u7_fp_diffusion.js]() | Code @ [u7_fp_diffusion.js]() | 
-| ![sk]() | ![sk]() | ![sk]() |
-| Code @ [u7_fp_diffusion.js]() | Code @ [u7_fp_diffusion.js]() | Code @ [u7_fp_diffusion.js]() | 
-| ![sk]() | ![sk]() | ![sk]() |
-| Code @ [u7_fp_diffusion.js]() | Code @ [u7_fp_diffusion.js]() | Code @ [u7_fp_diffusion.js]() | 
-
 
 still
 https://github.com/UnacceptableBehaviour/js_canvas/blob/master/test_pages/u7_fp_diffusion/imgs/Screenshot%202022-01-26%20at%2014.26.38.png
