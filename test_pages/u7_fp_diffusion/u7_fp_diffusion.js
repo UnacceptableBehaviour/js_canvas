@@ -72,7 +72,7 @@ const createpane = () => {
     cl('RESTART CLICKED');
     resetFabric(env);
     injectParticles(env);
-  );
+  });
   
   //folder.addInput(params, 'boidMaxRad', { min: 1, max: 100, step: 1 }); 
   //folder.addInput(params, 'speedLimit', { min: 1, max: 100, step: 1 });
@@ -387,7 +387,7 @@ function resetFabric(fabricEnv) {
 }
 
 function injectParticles(fabricEnv){
-  for (let i=0; i<INITIAL_INJECTIONS; i++)
+  for (let i=0; i<params.initPoints; i++)
   {
     let x = Math.floor(random.range(0, FABRIC_WIDTH ));
     let y = Math.floor(random.range(0, FABRIC_HEIGHT ));
