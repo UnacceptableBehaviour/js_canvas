@@ -38,17 +38,18 @@ class Message {
 };
 
 // params
-const CELLSIZE_X         = 2;
-const CELLSIZE_Y         = 2;
+const CELLSIZE_X         = 4;
+const CELLSIZE_Y         = 4;
 const CANVAS_X_OFFSET    = CELLSIZE_X / 2;
-const FABRIC_PIX_X       = 1200; //400;  //1200;slow!
-const FABRIC_PIX_Y       = 1200; //400;  //1800;slow!
+const FABRIC_PIX_X       = 400;  //1200;slow!
+const FABRIC_PIX_Y       = 400;  //1800;slow!
 const FABRIC_WIDTH       = FABRIC_PIX_X / CELLSIZE_X;
 const FABRIC_HEIGHT      = FABRIC_PIX_Y / CELLSIZE_Y;
 const INJECTION_MIN      = 0;
 const INJECTION_MAX      = 500000;
-const INITIAL_INJECTIONS = 1200; //100; //1200;
+const INITIAL_INJECTIONS = 80; //100; //1200;
 
+let env = [];
 const params = {
   initPoints: INITIAL_INJECTIONS,
   injectionMin: INJECTION_MIN,
@@ -67,7 +68,11 @@ const createpane = () => {
     title: 'RESTART',
     label: '',
     });
-  btnRestart.on('click', () => { cl('RESTART CLICKED'); canvasSketch(sketch, settings);                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  } );
+  btnRestart.on('click', () => {
+    cl('RESTART CLICKED');
+    resetFabric(env);
+    injectParticles(env);
+  );
   
   //folder.addInput(params, 'boidMaxRad', { min: 1, max: 100, step: 1 }); 
   //folder.addInput(params, 'speedLimit', { min: 1, max: 100, step: 1 });
@@ -181,7 +186,13 @@ class FabricCell {
     this.msgs[inMsg.msg].units += inMsg.units;
     this.msgs[inMsg.msg].msg = inMsg.msg;
   };
-   
+  
+  resetCellMsgs(){    
+    for (let forEachMsgType = 0; forEachMsgType < MsgType.MESSAGE_ARRAY_SIZE; forEachMsgType++) {
+       this.msgs[forEachMsgType].units = 0;     
+       this.inMsgs[forEachMsgType].units = 0;
+    }
+  }
 };
 
 /************************************************************************
@@ -325,7 +336,6 @@ function initFabric(xLower, yLower, xHigher, yHigher)
 //const env = new Array(FABRIC_WIDTH).fill(new FabricCell(count++)).map(() => new Array(FABRIC_HEIGHT).fill(new FabricCell(count++)));
 
 let count = 0;
-let env = [];
 for (let x=0; x<FABRIC_WIDTH; x++)
 {
   let col = [];
@@ -366,6 +376,31 @@ function diffusionCycle(fabricEnv) {
   }
 }
 
+function resetFabric(fabricEnv) {
+  for (let x=0; x<FABRIC_WIDTH; x++)
+  {
+    for (let y=0; y<FABRIC_HEIGHT; y++)
+    {
+      fabricEnv[x][y].resetCellMsgs();
+    }
+  }
+}
+
+function injectParticles(fabricEnv){
+  for (let i=0; i<INITIAL_INJECTIONS; i++)
+  {
+    let x = Math.floor(random.range(0, FABRIC_WIDTH ));
+    let y = Math.floor(random.range(0, FABRIC_HEIGHT ));
+    //let x = Math.floor(FABRIC_WIDTH/2);
+    //let y = Math.floor(FABRIC_HEIGHT/2);    
+    let qty = Math.floor(random.range(params.injectionMin, params.injectionMax)); 
+    let msg = Math.floor(random.range(0, MsgType.MESSAGE_ARRAY_SIZE )); 
+    let rndMsg = new Message(msg, qty);
+    //fabricEnv[x][y].insertMessage(rndMsg);  // TODO rename more meaningful
+    fabricEnv[x][y].insertMessage(rndMsg);
+  }
+}
+
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -384,19 +419,7 @@ const sketch = () => {
   cl(`ME ${Walls.ME}`);
   cl(env);
   
-  // inject particles  
-  for (let i=0; i<INITIAL_INJECTIONS; i++)
-  {
-    let x = Math.floor(random.range(0, FABRIC_WIDTH ));
-    let y = Math.floor(random.range(0, FABRIC_HEIGHT ));
-    //let x = Math.floor(FABRIC_WIDTH/2);
-    //let y = Math.floor(FABRIC_HEIGHT/2);    
-    let qty = Math.floor(random.range(params.injectionMin, params.injectionMax)); 
-    let msg = Math.floor(random.range(0, MsgType.MESSAGE_ARRAY_SIZE )); 
-    let rndMsg = new Message(msg, qty);
-    //fabricEnv[x][y].insertMessage(rndMsg);  // TODO rename more meaningful
-    env[x][y].insertMessage(rndMsg);
-  }
+  injectParticles(env);
   
   return ({ context, width, height }) => {
     const alpha = 1;
@@ -432,8 +455,6 @@ const sketch = () => {
     
   };
 };
-
-
 
 createpane();
 canvasSketch(sketch, settings);
