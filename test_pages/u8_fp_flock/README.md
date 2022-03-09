@@ -1,4 +1,4 @@
-# Final Project - Flock of boids
+# End of Course Project 2 - Flock of boids
 JS visualization exe using canvas sketch.  
   
 ## Steps  
@@ -53,17 +53,17 @@ Lead boid gets stuck on the contraining cube boundary FIX.
 
 
 # Resources
-#### Domestika - Creative Coding: Making Visuals with JavaScript
+**Domestika - Creative Coding: Making Visuals with JavaScript**  
 https://www.domestika.org/auth/login#course_lesson_28425  
 [Creative Coding: Making Visuals with JavaScript](https://www.domestika.org/auth/login#course_lesson_28425)
-
-#### Markdown syntax (.md)
-https://www.markdownguide.org/basic-syntax/
-
-#### Murmurations
+  
+**Markdown syntax (.md)**  
+https://www.markdownguide.org/basic-syntax/  
+  
+**Murmurations**  
 Visual w track: https://www.youtube.com/watch?v=YjDYE5CUb7Q  
-    
-Boids Algorithm: https://www.youtube.com/watch?v=4LWmRuB-uNU  
+  
+**Boids Algorithm:** https://www.youtube.com/watch?v=4LWmRuB-uNU  
 1. Fly towards centre of mass.  
 2. Avoid other birds.  
 3. Match Velocity of Nearest neighbours.  
