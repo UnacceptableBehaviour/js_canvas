@@ -38,28 +38,36 @@ class Message {
 };
 
 // params
-const CELLSIZE_X         = 8;
-const CELLSIZE_Y         = 8;
-const CANVAS_X_OFFSET    = CELLSIZE_X / 2;
-const FABRIC_PIX_X       = 400;  //1200;slow!
-const FABRIC_PIX_Y       = 400;  //1800;slow!
-const FABRIC_WIDTH       = FABRIC_PIX_X / CELLSIZE_X;
-const FABRIC_HEIGHT      = FABRIC_PIX_Y / CELLSIZE_Y;
+const CELLSIZE_XY        = 8;
+const CANVAS_PIX_X       = 1200;  // TODO - allow canvas size adjust
+const CANVAS_PIX_Y       = 1200;  
+const FABRIC_WIDTH       = CANVAS_PIX_X / CELLSIZE_XY;
+const FABRIC_HEIGHT      = CANVAS_PIX_Y / CELLSIZE_XY;
 const INJECTION_MIN      = 0;
 const INJECTION_MAX      = 500000;
-const INITIAL_INJECTIONS = 80; //100; //1200;
+const INITIAL_INJECTIONS = 80;
 
 let fabric;
+let manager;
 const params = {
   initPoints: INITIAL_INJECTIONS,
   injectionMin: INJECTION_MIN,
   injectionMax: INJECTION_MAX,
+  fabricWidth:  FABRIC_WIDTH,
+  fabricHeight: FABRIC_HEIGHT,
+  cellSizeXY:   CELLSIZE_XY,
 };
 
 const createpane = () => {
   const pane = new Tweakpane.Pane();  
   let folder;
   
+  folder = pane.addFolder({ title: 'Diffusion Rainbow Dimensions'});
+
+  folder.addInput(params, 'fabricWidth', { min: 40, max: 600, step: 20 }); 
+  folder.addInput(params, 'fabricHeight', { min: 40, max: 600, step: 20 });  
+  folder.addInput(params, 'cellSizeXY', { min: 2, max: 30, step: 2 }); 
+
   folder = pane.addFolder({ title: 'Diffusion Rainbow '});
   folder.addInput(params, 'initPoints', { min: 1, max: 1000, step: 1 });  
   folder.addInput(params, 'injectionMin', { min: INJECTION_MIN, max: INJECTION_MAX, step: 1000 });
@@ -70,37 +78,24 @@ const createpane = () => {
     });
   btnRestart.on('click', () => {
     cl('RESTART CLICKED');
-    fabric.resetFabric();
+    //fabric.resetFabric(); // no dimension changes - basic reset
+        
+    fabric = new FabricState(params.fabricWidth, params.fabricHeight, params.cellSizeXY);
     fabric.injectParticles();
+    //manager.render()
+
+    //// Uncaught Error: Sorry, the { animate } option is not yet supported with update() //
+    //let canvasWidthPx = params.fabricWidth * params.cellSizeXY;                         //
+    //let canvasHeightPx = params.fabricHeight * params.cellSizeXY;                       //
+    //manager.loadAndRun(sketch, {                                                        //
+    //  dimensions: [ canvasWidthPx, canvasHeightPx ],                                    //
+    //  animate: true                                                                     //
+    //});                                                                                 //
+    //// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - /
+    
+
   });
   
-  //folder.addInput(params, 'boidMaxRad', { min: 1, max: 100, step: 1 }); 
-  //folder.addInput(params, 'speedLimit', { min: 1, max: 100, step: 1 });
-  //folder.addInput(params, 'speedLimitOn');
-  //folder.addInput(params, 'borderStroke');
-  //
-  //folder = pane.addFolder({ title: 'Flock '});
-  //folder.addInput(params, 'rule1multiplier', { min: 0.01, max: 0.2, step: 0.01 });
-  ////folder.addInput(params, 'flockDensity', { min: 0, max: 1, step: 0.05 });
-  //folder.addInput(params, 'nearestNeighbourEffect', { min: 2, max: 20, step: 1 });
-  //folder.addInput(params, 'nNEffect');
-  ////folder.addInput(params, 'visualRangeEffect', { min: 1, max: 500, step: 5 });
-  ////folder.addInput(params, 'vREffect');
-  //folder.addInput(params, 'freeFlightAmp', { min: 0.01, max: 5, step: 0.05 });
-  //folder.addInput(params, 'minSafeDistance', { min: 0, max: 100, step: 5 });
-  //// add slider w/ callback
-  ////folder.addInput(params, 'leadBoidConfinement', { min: 0, max: (cubeSize/2 -50), step: 50 });  
-  //const lBCinput = pane.addInput(params, 'leadBoidConfinement', { min: 0, max: (cubeSize/2 -50), step: 50 });
-  //lBCinput.on('change', function(ev) {
-  //  const leadBoid = params.leadBoid;
-  //  const shrink = params.leadBoidConfinement;
-  //  if (leadBoid.pos.x <= shrink) leadBoid.pos.x = shrink + 1;
-  //  if (leadBoid.pos.x >= scene.x - shrink) leadBoid.pos.x = scene.x - shrink -1;
-  //  if (leadBoid.pos.y <= shrink) leadBoid.pos.y = shrink + 1;
-  //  if (leadBoid.pos.y >= scene.y - shrink) leadBoid.pos.y = scene.y - shrink -1;
-  //  if (leadBoid.pos.z <= shrink) leadBoid.pos.z = shrink + 1;
-  //  if (leadBoid.pos.z >= scene.z - shrink) leadBoid.pos.z = scene.z - shrink -1;
-  //});
 }
 
 
@@ -196,14 +191,15 @@ class FabricCell {
 };
 
 class FabricState {
-  constructor(width, height, cellW, cellH) {
+  constructor(width, height, cellWH) {
     this.fabricEnv = [];
     this.width = width;
     this.height = height;
-    this.cellW = cellW;
-    this.cellH = cellH;
-    this.ctxWidth = width * cellW;
-    this.ctxHeight = height * cellH;
+    this.cellW = cellWH;
+    this.cellH = cellWH;
+    this.ctxWidth = width * cellWH;
+    this.ctxHeight = height * cellWH;
+    this.canvasXOffset = cellWH / 2;
     
     let count = 0;
     for (let x=0; x<this.width; x++)
@@ -364,16 +360,16 @@ class FabricState {
   }
 
   diffusionCycle() {
-    for (let x=0; x<FABRIC_WIDTH; x++)
+    for (let x=0; x<this.width; x++)
     {
-      for (let y=0; y<FABRIC_HEIGHT; y++)
+      for (let y=0; y<this.height; y++)
       {
         this.fabricEnv[x][y].diffuse();
       }
     }
-    for (let x=0; x<FABRIC_WIDTH; x++)
+    for (let x=0; x<this.width; x++)
     {
-      for (let y=0; y<FABRIC_HEIGHT; y++)
+      for (let y=0; y<this.height; y++)
       {
         this.fabricEnv[x][y].regroup();
       }
@@ -381,9 +377,9 @@ class FabricState {
   }  
 
   resetFabric() {
-    for (let x=0; x<FABRIC_WIDTH; x++)
+    for (let x=0; x<this.width; x++)
     {
-      for (let y=0; y<FABRIC_HEIGHT; y++)
+      for (let y=0; y<this.height; y++)
       {
         this.fabricEnv[x][y].resetCellMsgs();
       }
@@ -393,10 +389,10 @@ class FabricState {
   injectParticles(){
     for (let i=0; i<params.initPoints; i++)
     {
-      let x = Math.floor(random.range(0, FABRIC_WIDTH ));
-      let y = Math.floor(random.range(0, FABRIC_HEIGHT ));
-      //let x = Math.floor(FABRIC_WIDTH/2);
-      //let y = Math.floor(FABRIC_HEIGHT/2);    
+      let x = Math.floor(random.range(0, this.width ));
+      let y = Math.floor(random.range(0, this.height ));
+      //let x = Math.floor(this.width/2);
+      //let y = Math.floor(this.height/2);    
       let qty = Math.floor(random.range(params.injectionMin, params.injectionMax)); 
       let msg = Math.floor(random.range(0, MsgType.MESSAGE_ARRAY_SIZE )); 
       let rndMsg = new Message(msg, qty);
@@ -418,8 +414,8 @@ class FabricState {
       for (let y=0; y<this.height; y++)
       {
         context.save();
-        let x_offset = CANVAS_X_OFFSET * (y % 2);
-        context.translate(x * this.cellW + x_offset, y * this.cellH);
+        let xOffset = this.canvasXOffset * (y % 2);
+        context.translate(x * this.cellW + xOffset, y * this.cellH);
   
         context.beginPath();
         
@@ -440,7 +436,7 @@ class FabricState {
 
 
 const settings = {
-  dimensions: [ FABRIC_PIX_X, FABRIC_PIX_Y ],
+  dimensions: [ CANVAS_PIX_X, CANVAS_PIX_Y ],
   animate: true
 };
 
@@ -450,7 +446,7 @@ const sketch = () => {
   cl(`ME ${Walls.ME}`);
   cl(this.fabricEnv);
   
-  fabric = new FabricState(FABRIC_WIDTH, FABRIC_HEIGHT, CELLSIZE_X, CELLSIZE_Y);
+  fabric = new FabricState(params.fabricWidth, params.fabricHeight, params.cellSizeXY);
   
   fabric.injectParticles();
   
@@ -465,4 +461,17 @@ const sketch = () => {
 };
 
 createpane();
-canvasSketch(sketch, settings);
+// canvasSketch(sketch, settings);
+
+const start = async () => {
+  manager = await canvasSketch(sketch, settings);   // returns new SketchManager();
+};
+
+start();  // fire it up!
+
+// Used async to be able to do the following
+manager.loadAndRun(sketch, {                                                        //
+  dimensions: [ canvasWidthPx, canvasHeightPx ],                                    //
+  animate: true                                                                     //
+});   
+// Uncaught Error: Sorry, the { animate } option is not yet supported with update() :/
