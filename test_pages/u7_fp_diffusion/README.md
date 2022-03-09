@@ -81,7 +81,7 @@ Some experiments:
 
   
 ### More Diffusion Rainbow  
-todo  
+To see short **animation** navigate [here](https://github.com/UnacceptableBehaviour/js_canvas/blob/master/test_pages/u7_fp_diffusion/anim/2022.01.26-22.45.44.mp4) and click DOWNLOAD for mp4.    
   
 # Resources
 **Domestika - Creative Coding: Making Visuals with JavaScript**  
