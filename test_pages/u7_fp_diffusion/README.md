@@ -78,28 +78,18 @@ Some experiments:
 | 1200x1200 2x2 iMax 500k - 03 | 1200x1200 2x2 iMax 500k - 04 | 1200x1200 2x2 iMax 500k - 05 | 
 | ![sk](https://github.com/UnacceptableBehaviour/js_canvas/blob/master/test_pages/u7_fp_diffusion/imgs/1200x1200_2x2_iMax500k_05.png) | ![sk](https://github.com/UnacceptableBehaviour/js_canvas/blob/master/test_pages/u7_fp_diffusion/imgs/1200x1200_2x2_iMax500k_07.png) | ![sk](https://github.com/UnacceptableBehaviour/js_canvas/blob/master/test_pages/u7_fp_diffusion/imgs/1200x1200_2x2_iMax500k_08.png) |
 | 1200x1200 2x2 iMax 500k - 06 | 1200x1200 2x2 iMax 500k - 07 | 1200x1200 2x2 iMax 500k - 08 | 
-| ![sk]() | ![sk]() | ![sk]() |
-| Code @ [u7_fp_diffusion.js]() | Code @ [u7_fp_diffusion.js]() | Code @ [u7_fp_diffusion.js]() |
-| ![sk]() | ![sk]() | ![sk]() |
-| Code @ [u7_fp_diffusion.js]() | Code @ [u7_fp_diffusion.js]() | Code @ [u7_fp_diffusion.js]() | 
 
-still
-https://github.com/UnacceptableBehaviour/js_canvas/blob/master/test_pages/u7_fp_diffusion/imgs/Screenshot%202022-01-26%20at%2014.26.38.png
-anim
-https://github.com/UnacceptableBehaviour/js_canvas/blob/master/test_pages/u7_fp_diffusion/anim/2022.01.26-22.45.44.mp4
-code
-https://github.com/UnacceptableBehaviour/js_canvas/blob/1fda1252d9e3502cf44fbbf4d672c2509d7c6ab4/test_pages/u7_fp_diffusion/u7_fp_diffusion.js
   
-Notes on experiments.  
+### More Diffusion Rainbow  
+todo  
   
-### More Diffusion Rainbow
-
-
-
 # Resources
-#### Domestika - Creative Coding: Making Visuals with JavaScript
+**Domestika - Creative Coding: Making Visuals with JavaScript**  
 https://www.domestika.org/auth/login#course_lesson_28425  
-[Creative Coding: Making Visuals with JavaScript](https://www.domestika.org/auth/login#course_lesson_28425)
-
-#### Markdown syntax (.md)
+[Creative Coding: Making Visuals with JavaScript](https://www.domestika.org/auth/login#course_lesson_28425)  
+  
+**Markdown syntax (.md)**  
 https://www.markdownguide.org/basic-syntax/  
+
+**Animation**  
+[Download](https://github.com/UnacceptableBehaviour/js_canvas/blob/master/test_pages/u7_fp_diffusion/anim/2022.01.26-22.45.44.mp4)
