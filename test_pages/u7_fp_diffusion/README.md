@@ -92,4 +92,5 @@ https://www.domestika.org/auth/login#course_lesson_28425
 https://www.markdownguide.org/basic-syntax/  
 
 **Animation**  
-[Download](https://github.com/UnacceptableBehaviour/js_canvas/blob/master/test_pages/u7_fp_diffusion/anim/2022.01.26-22.45.44.mp4)
+Navigate [here](https://github.com/UnacceptableBehaviour/js_canvas/blob/master/test_pages/u7_fp_diffusion/anim/2022.01.26-22.45.44.mp4) and click DOWNLOAD for mp4.  
+  
