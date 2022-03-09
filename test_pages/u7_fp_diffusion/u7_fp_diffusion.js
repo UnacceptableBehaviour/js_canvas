@@ -38,7 +38,7 @@ class Message {
 };
 
 // params
-const CELLSIZE_XY        = 8;
+const CELLSIZE_XY        = 12;
 const CANVAS_PIX_X       = 1200;  // TODO - allow canvas size adjust
 const CANVAS_PIX_Y       = 1200;  
 const FABRIC_WIDTH       = CANVAS_PIX_X / CELLSIZE_XY;
@@ -69,7 +69,7 @@ const createpane = () => {
   folder.addInput(params, 'cellSizeXY', { min: 2, max: 30, step: 2 }); 
 
   folder = pane.addFolder({ title: 'Diffusion Rainbow '});
-  folder.addInput(params, 'initPoints', { min: 1, max: 1000, step: 1 });  
+  folder.addInput(params, 'initPoints', { min: 1, max: 200, step: 1 });  
   folder.addInput(params, 'injectionMin', { min: INJECTION_MIN, max: INJECTION_MAX, step: 1000 });
   folder.addInput(params, 'injectionMax', { min: INJECTION_MIN, max: INJECTION_MAX, step: 1000 });
   btnRestart = folder.addButton({
@@ -406,7 +406,8 @@ class FabricState {
 
     // clear canvas    
     context.fillStyle = 'white';
-    context.fillRect(0, 0, this.ctxWidth, this.ctxHeight);
+    //context.fillRect(0, 0, this.ctxWidth, this.ctxHeight);
+    context.fillRect(0, 0, context.canvas.width, context.canvas.height);
     
     // draw
     for (let x=0; x<this.width; x++)
@@ -470,8 +471,8 @@ const start = async () => {
 start();  // fire it up!
 
 // Used async to be able to do the following
-manager.loadAndRun(sketch, {                                                        //
-  dimensions: [ canvasWidthPx, canvasHeightPx ],                                    //
-  animate: true                                                                     //
-});   
+//manager.loadAndRun(sketch, {                                                        //
+//  dimensions: [ canvasWidthPx, canvasHeightPx ],                                    //
+//  animate: true                                                                     //
+//});   
 // Uncaught Error: Sorry, the { animate } option is not yet supported with update() :/
