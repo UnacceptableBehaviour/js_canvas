@@ -38,8 +38,8 @@ class Message {
 };
 
 // params
-const CELLSIZE_X         = 4;
-const CELLSIZE_Y         = 4;
+const CELLSIZE_X         = 8;
+const CELLSIZE_Y         = 8;
 const CANVAS_X_OFFSET    = CELLSIZE_X / 2;
 const FABRIC_PIX_X       = 400;  //1200;slow!
 const FABRIC_PIX_Y       = 400;  //1800;slow!
@@ -49,7 +49,7 @@ const INJECTION_MIN      = 0;
 const INJECTION_MAX      = 500000;
 const INITIAL_INJECTIONS = 80; //100; //1200;
 
-let env = [];
+let fabric;
 const params = {
   initPoints: INITIAL_INJECTIONS,
   injectionMin: INJECTION_MIN,
@@ -70,8 +70,8 @@ const createpane = () => {
     });
   btnRestart.on('click', () => {
     cl('RESTART CLICKED');
-    resetFabric(env);
-    injectParticles(env);
+    fabric.resetFabric();
+    fabric.injectParticles();
   });
   
   //folder.addInput(params, 'boidMaxRad', { min: 1, max: 100, step: 1 }); 
@@ -195,215 +195,248 @@ class FabricCell {
   }
 };
 
-/************************************************************************
-*  FUNC: initFabric
-*
-*  DESC: assign co-located FabricCell objects to cell walls for 
-*        communication w/ eachother.
-*        Simulated hexagonal lattice. 2D array with each element
-*        having acces from 2 above, 2 below and 1 from each side.
-*        See fabric_array_connections.jpeg for sketch
-*
-************************************************************************/
-function initFabric(xLower, yLower, xHigher, yHigher)
-{
-  if (FabricCell.DIFFUSE_IN) {    
-    cl("\nDIFFUSE IN\n");
-  } else {
-    cl("\nDIFFUSE OUT\n");
+class FabricState {
+  constructor(width, height, cellW, cellH) {
+    this.fabricEnv = [];
+    this.width = width;
+    this.height = height;
+    this.cellW = cellW;
+    this.cellH = cellH;
+    this.ctxWidth = width * cellW;
+    this.ctxHeight = height * cellH;
+    
+    let count = 0;
+    for (let x=0; x<this.width; x++)
+    {
+      let col = [];
+      
+      for (let y=0; y<this.height; y++)
+      {
+        col.push(new FabricCell(count++));
+      }
+      this.fabricEnv.push(col);
+    }
+    
+    // label for debug
+    for (let y=0; y<this.height; y++)            
+    {
+      for (let x=0; x<this.width; x++)
+      {
+        this.fabricEnv[x][y].id = `X${x}-Y${y}`;
+      }
+    }    
+    
+    this.initFabric();
   }
 
-  // HEXAGONAL_FABRIC:
-                                              //   Cell Wall Reference
-  // int x,y;                                  //   
-  // assign each cell it a pointer to itself.  //         TL    TR   
-  for (let y=yLower; y<yHigher; y++)          //          2    3
-  {                        
-    for (let x=xLower; x<xHigher; x++)         //       L    ME    R
-    {                                          //       1    0     4
-      env[x][y].walls[Walls.ME] = env[x][y];    
-    }                                         //          6    5
-  }                                           //         BL    BR
+  /************************************************************************
+  *  FUNC: initFabric
+  *
+  *  DESC: assign co-located FabricCell objects to cell walls for 
+  *        communication w/ eachother.
+  *        Simulated hexagonal lattice. 2D array with each element
+  *        having acces from 2 above, 2 below and 1 from each side.
+  *        See fabric_array_connections.jpeg for sketch
+  *
+  ************************************************************************/
+  initFabric() {
+    if (FabricCell.DIFFUSE_IN) {    
+      cl("\nDIFFUSE IN\n");
+    } else {
+      cl("\nDIFFUSE OUT\n");
+    }
   
-  // assign cell 1 & 4 pointers (cells to L & R on the same line)
-  for (let y=yLower; y<yHigher; y++)            
-  {
-    env[xLower][y].walls[Walls.L] = 0;  // first in the row
-    env[xLower][y].walls[Walls.R] = env[xLower+1][y];
-    for (let x=xLower+1; x<xHigher-1; x++)
+    // HEXAGONAL_FABRIC:
+                                                //   Cell Wall Reference
+    // int x,y;                                  //   
+    // assign each cell it a pointer to itself.  //         TL    TR   
+    for (let y=0; y<this.height; y++)          //          2    3
+    {                        
+      for (let x=0; x<this.width; x++)         //       L    ME    R
+      {                                          //       1    0     4
+        this.fabricEnv[x][y].walls[Walls.ME] = this.fabricEnv[x][y];    
+      }                                         //          6    5
+    }                                           //         BL    BR
+    
+    // assign cell 1 & 4 pointers (cells to L & R on the same line)
+    for (let y=0; y<this.height; y++)            
     {
-      env[x][y].walls[Walls.L] = env[x-1][y];  // put pointer to cell to the left in walls[L]
-      env[x][y].walls[Walls.R] = env[x+1][y];
+      this.fabricEnv[0][y].walls[Walls.L] = 0;  // first in the row
+      this.fabricEnv[0][y].walls[Walls.R] = this.fabricEnv[0+1][y];
+      for (let x=0+1; x<this.width-1; x++)
+      {
+        this.fabricEnv[x][y].walls[Walls.L] = this.fabricEnv[x-1][y];  // put pointer to cell to the left in walls[L]
+        this.fabricEnv[x][y].walls[Walls.R] = this.fabricEnv[x+1][y];
+      }
+      this.fabricEnv[this.width-1][y].walls[Walls.L] = this.fabricEnv[this.width-2][y];  
+      this.fabricEnv[this.width-1][y].walls[Walls.R] = 0;
     }
-    env[xHigher-1][y].walls[Walls.L] = env[xHigher-2][y];  
-    env[xHigher-1][y].walls[Walls.R] = 0;
-  }
-  
-  
-  // assign TL TR cell walls
-  // row y=0 easy clear all TL an TR pointers
-  // row y=1 offset = 1 so first cell has TL & TR walls - last cell only TL
-  // row y=2 offset = 0 so first cell only has TR wall  - last both TL & TR
-  // row y=3 offset = 1 so first cell has TL & TR walls etc etc
-  for (let x=xLower; x<xHigher; x++) { // row y=0
-    env[x][yLower].walls[Walls.TL] = 0; 
-    env[x][yLower].walls[Walls.TR] = 0;
-  }
-  for (let y=yLower+1; y<yHigher; y++)            
-  {                        
-    let offset = y % 2;
-    // do cell at start of row
-    if (offset){  // do LEFT edge of cell fabric
-      env[xLower][y].walls[Walls.TL] = env[xLower][y-1];
-      env[xLower][y].walls[Walls.TR] = env[xLower+1][y-1];
+    
+    
+    // assign TL TR cell walls
+    // row y=0 easy clear all TL an TR pointers
+    // row y=1 offset = 1 so first cell has TL & TR walls - last cell only TL
+    // row y=2 offset = 0 so first cell only has TR wall  - last both TL & TR
+    // row y=3 offset = 1 so first cell has TL & TR walls etc etc
+    for (let x=0; x<this.width; x++) { // row y=0
+      this.fabricEnv[x][0].walls[Walls.TL] = 0; 
+      this.fabricEnv[x][0].walls[Walls.TR] = 0;
     }
-    else {
-      // causing unhandled access violation x=199,y=38
-      env[xLower][y].walls[Walls.TL] = 0;
-      env[xLower][y].walls[Walls.TR] = env[xLower][y-1];
-    }
-    // do rest of cells except for last one
-    let x;
-    for (x=xLower+1; x<xHigher-1; x++)          
-    {
-      if (offset) {
-        env[x][y].walls[Walls.TL] = env[x][y-1];
-        env[x][y].walls[Walls.TR] = env[x+1][y-1];
+    for (let y=0+1; y<this.height; y++)            
+    {                        
+      let offset = y % 2;
+      // do cell at start of row
+      if (offset){  // do LEFT edge of cell fabric
+        this.fabricEnv[0][y].walls[Walls.TL] = this.fabricEnv[0][y-1];
+        this.fabricEnv[0][y].walls[Walls.TR] = this.fabricEnv[0+1][y-1];
       }
       else {
-        env[x][y].walls[Walls.TL] = env[x-1][y-1];
-        env[x][y].walls[Walls.TR] = env[x][y-1];
+        // causing unhandled access violation x=199,y=38
+        this.fabricEnv[0][y].walls[Walls.TL] = 0;
+        this.fabricEnv[0][y].walls[Walls.TR] = this.fabricEnv[0][y-1];
       }
-    }              
-    // do last cell in row
-    if (offset){  // do RIGHT edge of cell fabric (LAST FabricCell)
-      env[xHigher-1][y].walls[Walls.TL] = env[x][y-1];
-      env[xHigher-1][y].walls[Walls.TR] = 0;
-    }
-    else {
-      env[xHigher-1][y].walls[Walls.TL] = env[x-1][y-1];
-      env[xHigher-1][y].walls[Walls.TR] = env[x][y-1];
-    }
-  }
-  
-  // assign BL BR cell walls
-  for (let y=yLower; y<yHigher-1; y++)            
-  {                        
-    let offset = 1 * (y % 2);
-    // do cell at start of row
-    if (offset){  // do LEFT edge of cell fabric
-      env[xLower][y].walls[Walls.BL] = env[xLower][y+1];
-      env[xLower][y].walls[Walls.BR] = env[xLower+1][y+1];
-    }
-    else {
-      env[xLower][y].walls[Walls.BL] = 0;
-      env[xLower][y].walls[Walls.BR] = env[xLower][y+1];
-    }
-    // do rest of cells except for last one
-    let x;
-    for (x=xLower+1; x<xHigher-1; x++)          
-    {
-      if (offset) {
-        env[x][y].walls[Walls.BL] = env[x][y+1];
-        env[x][y].walls[Walls.BR] = env[x+1][y+1];
+      // do rest of cells except for last one
+      let x;
+      for (x=0+1; x<this.width-1; x++)          
+      {
+        if (offset) {
+          this.fabricEnv[x][y].walls[Walls.TL] = this.fabricEnv[x][y-1];
+          this.fabricEnv[x][y].walls[Walls.TR] = this.fabricEnv[x+1][y-1];
+        }
+        else {
+          this.fabricEnv[x][y].walls[Walls.TL] = this.fabricEnv[x-1][y-1];
+          this.fabricEnv[x][y].walls[Walls.TR] = this.fabricEnv[x][y-1];
+        }
+      }              
+      // do last cell in row
+      if (offset){  // do RIGHT edge of cell fabric (LAST FabricCell)
+        this.fabricEnv[this.width-1][y].walls[Walls.TL] = this.fabricEnv[x][y-1];
+        this.fabricEnv[this.width-1][y].walls[Walls.TR] = 0;
       }
       else {
-        env[x][y].walls[Walls.BL] = env[x-1][y+1];
-        env[x][y].walls[Walls.BR] = env[x][y+1];
+        this.fabricEnv[this.width-1][y].walls[Walls.TL] = this.fabricEnv[x-1][y-1];
+        this.fabricEnv[this.width-1][y].walls[Walls.TR] = this.fabricEnv[x][y-1];
       }
-    }              
-    // x still in scope and = 199            < - - - - - - - - -  < <
-    // do last cell in row
-    if (offset){  // do RIGHT edge of cell fabric (LAST FabricCell)
-      env[xHigher-1][y].walls[Walls.BL] = env[x][y+1];
-      env[xHigher-1][y].walls[Walls.BR] = 0;
     }
-    else {
-      env[xHigher-1][y].walls[Walls.BL] = env[x-1][y+1];
-      env[xHigher-1][y].walls[Walls.BR] = env[x][y+1];
+    
+    // assign BL BR cell walls
+    for (let y=0; y<this.height-1; y++)            
+    {                        
+      let offset = 1 * (y % 2);
+      // do cell at start of row
+      if (offset){  // do LEFT edge of cell fabric
+        this.fabricEnv[0][y].walls[Walls.BL] = this.fabricEnv[0][y+1];
+        this.fabricEnv[0][y].walls[Walls.BR] = this.fabricEnv[0+1][y+1];
+      }
+      else {
+        this.fabricEnv[0][y].walls[Walls.BL] = 0;
+        this.fabricEnv[0][y].walls[Walls.BR] = this.fabricEnv[0][y+1];
+      }
+      // do rest of cells except for last one
+      let x;
+      for (x=0+1; x<this.width-1; x++)          
+      {
+        if (offset) {
+          this.fabricEnv[x][y].walls[Walls.BL] = this.fabricEnv[x][y+1];
+          this.fabricEnv[x][y].walls[Walls.BR] = this.fabricEnv[x+1][y+1];
+        }
+        else {
+          this.fabricEnv[x][y].walls[Walls.BL] = this.fabricEnv[x-1][y+1];
+          this.fabricEnv[x][y].walls[Walls.BR] = this.fabricEnv[x][y+1];
+        }
+      }              
+      // x still in scope and = 199            < - - - - - - - - -  < <
+      // do last cell in row
+      if (offset){  // do RIGHT edge of cell fabric (LAST FabricCell)
+        this.fabricEnv[this.width-1][y].walls[Walls.BL] = this.fabricEnv[x][y+1];
+        this.fabricEnv[this.width-1][y].walls[Walls.BR] = 0;
+      }
+      else {
+        this.fabricEnv[this.width-1][y].walls[Walls.BL] = this.fabricEnv[x-1][y+1];
+        this.fabricEnv[this.width-1][y].walls[Walls.BR] = this.fabricEnv[x][y+1];
+      }
+    }
+    // do bottom row
+    for (let x=0; x<this.width-1; x++) { // row y=149
+      this.fabricEnv[x][this.height-1].walls[Walls.BL] = 0; 
+      this.fabricEnv[x][this.height-1].walls[Walls.BR] = 0;
+    }     
+  }
+
+  diffusionCycle() {
+    for (let x=0; x<FABRIC_WIDTH; x++)
+    {
+      for (let y=0; y<FABRIC_HEIGHT; y++)
+      {
+        this.fabricEnv[x][y].diffuse();
+      }
+    }
+    for (let x=0; x<FABRIC_WIDTH; x++)
+    {
+      for (let y=0; y<FABRIC_HEIGHT; y++)
+      {
+        this.fabricEnv[x][y].regroup();
+      }
+    }
+  }  
+
+  resetFabric() {
+    for (let x=0; x<FABRIC_WIDTH; x++)
+    {
+      for (let y=0; y<FABRIC_HEIGHT; y++)
+      {
+        this.fabricEnv[x][y].resetCellMsgs();
+      }
     }
   }
-  // do bottom row
-  for (let x=xLower; x<xHigher-1; x++) { // row y=149
-    env[x][yHigher-1].walls[Walls.BL] = 0; 
-    env[x][yHigher-1].walls[Walls.BR] = 0;
-  }
-   
-}
-
-//const env = new Array(FABRIC_HEIGHT).fill(new FabricCell()).map(() => new Array(FABRIC_WIDTH).fill(new FabricCell()));
-
-//const env = new Array(FABRIC_WIDTH).fill(new FabricCell(count++)).map(() => new Array(FABRIC_HEIGHT).fill(new FabricCell(count++)));
-
-let count = 0;
-for (let x=0; x<FABRIC_WIDTH; x++)
-{
-  let col = [];
   
-  for (let y=0; y<FABRIC_HEIGHT; y++)
-  {
-    col.push(new FabricCell(count++));
-  }
-  env.push(col);
-}
-
-initFabric(0, 0, FABRIC_WIDTH, FABRIC_HEIGHT);
-
-// label for debug
-for (let y=0; y<FABRIC_HEIGHT; y++)            
-{
-  for (let x=0; x<FABRIC_WIDTH; x++)
-  {
-    env[x][y].id = `X${x}-Y${y}`;
-  }
-}
-
-
-function diffusionCycle(fabricEnv) {
-  for (let x=0; x<FABRIC_WIDTH; x++)
-  {
-    for (let y=0; y<FABRIC_HEIGHT; y++)
+  injectParticles(){
+    for (let i=0; i<params.initPoints; i++)
     {
-      fabricEnv[x][y].diffuse();
+      let x = Math.floor(random.range(0, FABRIC_WIDTH ));
+      let y = Math.floor(random.range(0, FABRIC_HEIGHT ));
+      //let x = Math.floor(FABRIC_WIDTH/2);
+      //let y = Math.floor(FABRIC_HEIGHT/2);    
+      let qty = Math.floor(random.range(params.injectionMin, params.injectionMax)); 
+      let msg = Math.floor(random.range(0, MsgType.MESSAGE_ARRAY_SIZE )); 
+      let rndMsg = new Message(msg, qty);
+      //this.fabricEnv[x][y].insertMessage(rndMsg);  // TODO rename more meaningful
+      this.fabricEnv[x][y].insertMessage(rndMsg);
     }
   }
-  for (let x=0; x<FABRIC_WIDTH; x++)
-  {
-    for (let y=0; y<FABRIC_HEIGHT; y++)
+  
+  draw(context){
+    const alpha = 1;
+
+    // clear canvas    
+    context.fillStyle = 'white';
+    context.fillRect(0, 0, this.ctxWidth, this.ctxHeight);
+    
+    // draw
+    for (let x=0; x<this.width; x++)
     {
-      fabricEnv[x][y].regroup();
-    }
+      for (let y=0; y<this.height; y++)
+      {
+        context.save();
+        let x_offset = CANVAS_X_OFFSET * (y % 2);
+        context.translate(x * this.cellW + x_offset, y * this.cellH);
+  
+        context.beginPath();
+        
+        let compositeFill = `rgba(${this.fabricEnv[x][y].msgs[0].units % 256}, ${this.fabricEnv[x][y].msgs[1].units % 256},${this.fabricEnv[x][y].msgs[2].units % 256},${alpha})`;
+        context.fillStyle = compositeFill;
+        context.rect(0, 0, this.cellW, this.cellH);
+        context.fill();
+        context.restore();
+      }
+    }    
   }
 }
-
-function resetFabric(fabricEnv) {
-  for (let x=0; x<FABRIC_WIDTH; x++)
-  {
-    for (let y=0; y<FABRIC_HEIGHT; y++)
-    {
-      fabricEnv[x][y].resetCellMsgs();
-    }
-  }
-}
-
-function injectParticles(fabricEnv){
-  for (let i=0; i<params.initPoints; i++)
-  {
-    let x = Math.floor(random.range(0, FABRIC_WIDTH ));
-    let y = Math.floor(random.range(0, FABRIC_HEIGHT ));
-    //let x = Math.floor(FABRIC_WIDTH/2);
-    //let y = Math.floor(FABRIC_HEIGHT/2);    
-    let qty = Math.floor(random.range(params.injectionMin, params.injectionMax)); 
-    let msg = Math.floor(random.range(0, MsgType.MESSAGE_ARRAY_SIZE )); 
-    let rndMsg = new Message(msg, qty);
-    //fabricEnv[x][y].insertMessage(rndMsg);  // TODO rename more meaningful
-    fabricEnv[x][y].insertMessage(rndMsg);
-  }
-}
-
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+
 
 
 const settings = {
@@ -412,46 +445,21 @@ const settings = {
 };
 
 
-
-
 const sketch = () => {
   
   cl(`ME ${Walls.ME}`);
-  cl(env);
+  cl(this.fabricEnv);
   
-  injectParticles(env);
+  fabric = new FabricState(FABRIC_WIDTH, FABRIC_HEIGHT, CELLSIZE_X, CELLSIZE_Y);
+  
+  fabric.injectParticles();
   
   return ({ context, width, height }) => {
-    const alpha = 1;
-    
-    context.fillStyle = 'white';
-    context.fillRect(0, 0, width, height);
 
-    
-    // draw
-    for (let x=0; x<FABRIC_WIDTH; x++)
-    {
-      for (let y=0; y<FABRIC_HEIGHT; y++)
-      {
-        context.save();
-        let x_offset = CANVAS_X_OFFSET * (y % 2);
-        context.translate(x * CELLSIZE_X + x_offset, y * CELLSIZE_Y);
-        //context.rotate(-angle);
-        //context.scale(random.range(0.1, 2), random.range(0.2, 0.5));
-  
-        context.beginPath();
-        
-        //composedFill = `rgba(%{env[x][y].msgs[0].units % 256}, 0,0,${alpha})`;
-        composedFill = `rgba(${env[x][y].msgs[0].units % 256}, ${env[x][y].msgs[1].units % 256},${env[x][y].msgs[2].units % 256},${alpha})`;
-        context.fillStyle = composedFill; //cBox[Math.floor(random.range(0, cBox.length - 1))];
-        context.rect(0, 0, CELLSIZE_X, CELLSIZE_Y);
-        context.fill();
-        context.restore();
-      }
-    }
+    fabric.draw(context);
     
     // run cycle 
-    diffusionCycle(env);
+    fabric.diffusionCycle();
     
   };
 };
