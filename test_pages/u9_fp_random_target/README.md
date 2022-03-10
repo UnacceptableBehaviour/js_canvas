@@ -98,34 +98,22 @@ File: u9_fp_random_target/lib/algos_sftest/package.json
 }
 ```  
   
-
-
+### 2. Add tweakpane get a feal for sensible parameter settings  
+Number of nodes, distance at which to connect to make a network thats not too over-connected.
+See 1st 6 images below. Blue and red node are route start & finish nodes
 
 **Some experiments:**  
 | 1 | 2 | 3 | 
 | - | - | - | 
-| ![sk]() | ![sk]() | ![sk]() |
-| Code @ [sketch-04.js]() | Code @ [sketch-04.js]() | Code @ [sketch-04.js]() | 
-| ![sk]() | ![sk]() | ![sk]() |
-| Code @ [sketch-04.js]() | Code @ [sketch-04.js]() | Code @ [sketch-04.js]() | 
+| ![sk](https://github.com/UnacceptableBehaviour/js_canvas/blob/master/test_pages/u9_fp_random_target/images/2022.03.10-17.10.44.png) | ![sk](https://github.com/UnacceptableBehaviour/js_canvas/blob/master/test_pages/u9_fp_random_target/images/2022.03.10-19.37.25.png) | ![sk](https://github.com/UnacceptableBehaviour/js_canvas/blob/master/test_pages/u9_fp_random_target/images/2022.03.10-19.38.12.png) |
+| Code @ [u9_fp_random_target.js](https://github.com/UnacceptableBehaviour/js_canvas/blob/fc610f4ddc7dde1d54572d3e60bac26bbdf1ff84/test_pages/u9_fp_random_target/u9_fp_random_target.js) | testing line types | testing # of nodes | 
+| ![sk](https://github.com/UnacceptableBehaviour/js_canvas/blob/master/test_pages/u9_fp_random_target/images/2022.03.10-19.38.26.png) | ![sk](https://github.com/UnacceptableBehaviour/js_canvas/blob/master/test_pages/u9_fp_random_target/images/2022.03.10-19.38.32.png) | ![sk](https://github.com/UnacceptableBehaviour/js_canvas/blob/master/test_pages/u9_fp_random_target/images/2022.03.10-19.38.40.png) |
+| testing connection types | testing connection types | testing connection types | 
 | ![sk]() | ![sk]() | ![sk]() |
 | Code @ [sketch-04.js]() | Code @ [sketch-04.js]() | Code @ [sketch-04.js]() | 
   
 Notes on experiments.  
   
-### Links
-To URL:
-[create_TOC_for_md.py](https://github.com/UnacceptableBehaviour/movie_picker/blob/master/create_TOC_for_md.py) 
-  
-To image:  
-![Amoeba Dance](https://github.com/UnacceptableBehaviour/js_canvas/blob/master/test_pages/_template/amoeba-dance.png)  
-[Image credit to Memo Akten](http://www.memo.tv/works/amoeba-dance/)  
-  
-### Code
-```
-> cd into directory: /path/js_canvas/test_pages/copy_of_template
-> open index.html
-```
 
 
 
