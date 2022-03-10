@@ -66,11 +66,9 @@ const sketch = ({ context, width, height }) => {
 				const dist = agent.pos.getDistance(other.pos);
 				
 				if (dist > cLim) continue;
-				
-        // maps one range to another based on the value of a variable
-        // var is dist. map 0 to 
-				
+								
         if (params.useConnectionLimitForWidth) {
+          // maps one range to another based on the value of a variable
           context.lineWidth = math.mapRange(dist, 0, cLim, cLim/10, 1);
         } else {
           context.lineWidth = 2;  
@@ -83,24 +81,12 @@ const sketch = ({ context, width, height }) => {
 			}
 		}
     
-    // for (loop equally effective no? - and easier to read!
-    //agents.every( (agent, index) => {
-    //  if (index >= params.numAgents) {
-    //    return false;
-    //  } else {
-    //    agent.update();
-    //    agent.draw(context);
-    //    agent.bounce(width, height);
-    //    //agent.traverse(width, height);        
-    //    return true;
-    //  }
-    //});
     for (let i = 0; i < params.numAgents; i++) {
 			const agent = agents[i];
       agent.update();
       agent.draw(context);
-      agent.bounce(width, height);
-      //agent.traverse(width, height);        
+      //agent.bounce(width, height);
+      agent.traverse(width, height);        
     }
     
   };
@@ -182,30 +168,3 @@ canvasSketch(sketch, settings);
 
 cl('IMPORTED MODULE: algos_sftest');
 algos.algoInfo();
-
-
-  //for (let i = 0; i < params.numAgents; i++) {
-  //  const x = random.range(0, width);
-  //  const y = random.range(0, height);
-  //
-  //  agents.push(new Agent(x, y));
-  //}
-
-
-
-
-
-//context.beginPath();
-//// show origin
-//context.fillStyle = 'red';
-//context.arc(0, 0, 5, 0, 2*Math.PI);
-//context.fill();
-    
-    
-// call on every frame update - - - - - < <
-// simple RAF callack request
-//const animate = () => {
-//	console.log('domestika');
-//	requestAnimationFrame(animate);
-//};
-// animate();
