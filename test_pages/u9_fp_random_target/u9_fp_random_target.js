@@ -13,46 +13,55 @@ const cl = (str) => {
   console.log(str);
 };
 
-// call on every frame update - - - - - < <
-const animate = () => {
-	console.log('domestika');
-	requestAnimationFrame(animate);
+class AgentType {
+  static COMMON_NODE = 'black';
+  static FROM_NODE = 'blue';
+  static TO_NODE = 'red';
 };
-// animate();
 
-// canvas
-// { context, width, height } - missing
+
+const params = {
+  numAgents: 40,
+  fromAgent: 10,
+  toAgent: 11,
+  connectionLimit: 300,
+};
+
 const sketch = ({ context, width, height }) => {
   
   const agents = [];
 
-  for (let i = 0; i < 40; i++) {
+  for (let i = 0; i < params.numAgents; i++) {
     const x = random.range(0, width);
     const y = random.range(0, height);
 
     agents.push(new Agent(x, y));
   }
+  agents[params.fromAgent].typeColor = AgentType.FROM_NODE;
+  agents[params.fromAgent].rad = 15;
+  agents[params.toAgent].typeColor = AgentType.TO_NODE;
+  agents[params.toAgent].rad = 10;
   
-  // TODO look at canvasSketch(sketch, settings); code to see how this variable make it here!
-  // js_canvas/test_pages/u4_animation/node_modules/canvas-sketch/lib/canvas-sketch.js
   return ({ context, width, height }) => {
     context.fillStyle = 'beige';
     context.fillRect(0, 0, width, height);
-
+    
+    const cLim = params.connectionLimit;
+    
     for (let i = 0; i < agents.length; i++) {
 			const agent = agents[i];
 
 			for (let j = i + 1; j < agents.length; j++) {
 				const other = agents[j];
-
 				const dist = agent.pos.getDistance(other.pos);
 				
-        const connectionLimit = 300;
-				if (dist > connectionLimit) continue;
+				if (dist > cLim) continue;
 				
         // maps one range to another based on the value of a variable
         // var is dist. map 0 to 
-				context.lineWidth = math.mapRange(dist, 0, connectionLimit, connectionLimit/10, 1);
+				
+        context.lineWidth = 2;
+        //context.lineWidth = math.mapRange(dist, 0, cLim, cLim/10, 1);
 
 				context.beginPath();
 				context.moveTo(agent.pos.x, agent.pos.y);
@@ -60,7 +69,6 @@ const sketch = ({ context, width, height }) => {
 				context.stroke();
 			}
 		}
-    
     
     agents.forEach( agent => {
       agent.update();
@@ -97,6 +105,7 @@ class Agent {
     this.vel = new Vector(random.range(-4, 4), random.range(-4, 4)); 
     //this.rad = random.rangeFloor(5, 21);
     this.rad = 5;
+    this.typeColor = AgentType.COMMON_NODE;
   }
   
   draw(context){
@@ -109,8 +118,10 @@ class Agent {
     // was this before translate intorduced
     // context.arc(this.pos.x, this.pos.y, this.rad, 0, Math.PI*2); // arc(x,y,r,sAngle,eAngle,counterclockwise);    
     context.arc(0,0, this.rad, 0, Math.PI*2);    
-    context.fillStyle = 'black';
+    context.strokstyle = 'black';
     context.stroke();
+    context.fillStyle = this.typeColor;
+    context.fill();
 
     context.restore()
   }
@@ -146,7 +157,16 @@ class Agent {
     //context.arc(0, 0, 5, 0, 2*Math.PI);
     //context.fill();
     
-// canvasSketch(sketch, settings);
+canvasSketch(sketch, settings);
 cl('IMPORTED MODULE: algos_sftest');
 algos.algoInfo();
 
+
+
+// call on every frame update - - - - - < <
+// simple RAF callack request
+//const animate = () => {
+//	console.log('domestika');
+//	requestAnimationFrame(animate);
+//};
+// animate();

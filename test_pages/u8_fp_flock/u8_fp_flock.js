@@ -84,7 +84,7 @@ const params = {
   leadBoidConfinement: cubeSize / 4,   // no of pixels from the edge of scene that confinement cube starts
   
   fontSize: cubeSize / 30,
-}
+};
 
 
 // SKETCH - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

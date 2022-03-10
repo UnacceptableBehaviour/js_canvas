@@ -1,11 +1,11 @@
 # End of Course Project 3 - Random Target, Shortest Path
-#### Aim
+### Aim
 Based on the code form [class 3](https://github.com/UnacceptableBehaviour/js_canvas/blob/master/test_pages/u4_animation/README.md) as a starting point.  
 Select two nodes in the graph and calculate the shortest path between the nodes.  
 Highlight the path.  
 Create a algorithms library module to provide the functionality.   
   
-#### 1. Create Node module for algorithms  
+### 1. Create Node module for algorithms  
 Aim to make this into a git subsystem later. TODO and link to gist.
 ```
 > cd js_canvas/test_pages/u9_fp_random_target
@@ -96,8 +96,11 @@ File: u9_fp_random_target/lib/algos_sftest/package.json
     "canvas-sketch-util": "^1.10.0"
   }
 }
-```
+```  
   
+
+
+
 **Some experiments:**  
 | 1 | 2 | 3 | 
 | - | - | - | 
