@@ -59,14 +59,14 @@ const sketch = ({ context, width, height }) => {
     const cLim = params.connectionLimit;
     
     for (let i = 0; i < params.numAgents; i++) {
-			const agent = agents[i];
+      const agent = agents[i];
 
-			for (let j = i + 1; j < params.numAgents; j++) {
-				const other = agents[j];
-				const dist = agent.pos.getDistance(other.pos);
-				
-				if (dist > cLim) continue;
-								
+      for (let j = i + 1; j < params.numAgents; j++) {
+        const other = agents[j];
+        const dist = agent.pos.getDistance(other.pos);
+        
+        if (dist > cLim) continue;
+                
         if (params.useConnectionLimitForWidth) {
           // maps one range to another based on the value of a variable
           context.lineWidth = math.mapRange(dist, 0, cLim, cLim/10, 1);
@@ -74,15 +74,15 @@ const sketch = ({ context, width, height }) => {
           context.lineWidth = 2;  
         }
 
-				context.beginPath();
-				context.moveTo(agent.pos.x, agent.pos.y);
-				context.lineTo(other.pos.x, other.pos.y);
-				context.stroke();
-			}
-		}
+        context.beginPath();
+        context.moveTo(agent.pos.x, agent.pos.y);
+        context.lineTo(other.pos.x, other.pos.y);
+        context.stroke();
+      }
+    }
     
     for (let i = 0; i < params.numAgents; i++) {
-			const agent = agents[i];
+      const agent = agents[i];
       agent.update();
       agent.draw(context);
       //agent.bounce(width, height);
@@ -100,10 +100,10 @@ class Vector {
   }
   
   getDistance(v) {
-		const dx = this.x - v.x;
-		const dy = this.y - v.y;
-		return Math.sqrt(dx * dx + dy * dy);
-	}
+    const dx = this.x - v.x;
+    const dy = this.y - v.y;
+    return Math.sqrt(dx * dx + dy * dy);
+  }
   
   dbg(){
     console.log(this);    
@@ -139,23 +139,23 @@ class Agent {
   }
   
   bounce(width, height) {
-		if (this.pos.x <= 0 || this.pos.x >= width)  this.vel.x *= -1;
-		if (this.pos.y <= 0 || this.pos.y >= height) this.vel.y *= -1;
-	}
+    if (this.pos.x <= 0 || this.pos.x >= width)  this.vel.x *= -1;
+    if (this.pos.y <= 0 || this.pos.y >= height) this.vel.y *= -1;
+  }
 
   traverse(width, height) {
     if (this.pos.x <= 0)  this.pos.x = width-1;
     if (this.pos.x >= width) this.pos.x = 1;
     
-		if (this.pos.y <= 0) this.pos.y = height-1;
-		if (this.pos.y >= height) this.pos.y = 1;
-	}
+    if (this.pos.y <= 0) this.pos.y = height-1;
+    if (this.pos.y >= height) this.pos.y = 1;
+  }
   
   
-	update() {
-		this.pos.x += this.vel.x;
-		this.pos.y += this.vel.y;
-	}
+  update() {
+    this.pos.x += this.vel.x;
+    this.pos.y += this.vel.y;
+  }
   
   dbg(){
     console.log(this);    
