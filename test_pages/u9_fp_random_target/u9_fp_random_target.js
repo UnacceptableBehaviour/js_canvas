@@ -1,6 +1,7 @@
 const canvasSketch = require('canvas-sketch');
 const random = require('canvas-sketch-util/random');
 const math = require('canvas-sketch-util/math');
+const algos = require('algos_sftest');
 
 const settings = {
   dimensions: [ 1048, 1048 ],
@@ -10,7 +11,7 @@ const settings = {
 // helpers
 const cl = (str) => {
   console.log(str);
-}
+};
 
 // call on every frame update - - - - - < <
 const animate = () => {
@@ -145,4 +146,7 @@ class Agent {
     //context.arc(0, 0, 5, 0, 2*Math.PI);
     //context.fill();
     
-canvasSketch(sketch, settings);
+// canvasSketch(sketch, settings);
+cl('IMPORTED MODULE: algos_sftest');
+algos.algoInfo();
+

@@ -10,6 +10,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "algos": "^1.0.8",
+    "algos_sftest": "^1.0.0",
     "canvas-sketch": "^0.7.4",
     "canvas-sketch-util": "^1.10.0"
   }
