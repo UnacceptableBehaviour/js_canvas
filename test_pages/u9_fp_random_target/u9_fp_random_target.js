@@ -1,6 +1,8 @@
 const canvasSketch = require('canvas-sketch');
 const random = require('canvas-sketch-util/random');
 const math = require('canvas-sketch-util/math');
+const Tweakpane = require('tweakpane');
+
 const algos = require('algos_sftest');
 
 const settings = {
@@ -17,26 +19,34 @@ class AgentType {
   static COMMON_NODE = 'black';
   static FROM_NODE = 'blue';
   static TO_NODE = 'red';
-};
+}
 
 
 const params = {
   numAgents: 40,
-  fromAgent: 10,
-  toAgent: 11,
-  connectionLimit: 300,
+  maxAgents: 200,
+  fromAgent: 0,
+  toAgent: 1,
+  connectionLimit: 350,
+  useConnectionLimitForWidth: false,
 };
+
+const createpane = () => {
+  const pane = new Tweakpane.Pane();  
+  let folder;
+  
+  folder = pane.addFolder({ title: 'Graph Params'});
+
+  folder.addInput(params, 'numAgents', { min: 2, max: params.maxAgents, step: 2 }); 
+  folder.addInput(params, 'connectionLimit', { min: 2, max: 350, step: 2 });  
+  folder.addInput(params, 'useConnectionLimitForWidth');
+};
+
 
 const sketch = ({ context, width, height }) => {
   
-  const agents = [];
+  const agents = Array.from({length: params.maxAgents}, (e) => new Agent(random.rangeFloor(0, width), random.rangeFloor(0, height)) );
 
-  for (let i = 0; i < params.numAgents; i++) {
-    const x = random.range(0, width);
-    const y = random.range(0, height);
-
-    agents.push(new Agent(x, y));
-  }
   agents[params.fromAgent].typeColor = AgentType.FROM_NODE;
   agents[params.fromAgent].rad = 15;
   agents[params.toAgent].typeColor = AgentType.TO_NODE;
@@ -48,10 +58,10 @@ const sketch = ({ context, width, height }) => {
     
     const cLim = params.connectionLimit;
     
-    for (let i = 0; i < agents.length; i++) {
+    for (let i = 0; i < params.numAgents; i++) {
 			const agent = agents[i];
 
-			for (let j = i + 1; j < agents.length; j++) {
+			for (let j = i + 1; j < params.numAgents; j++) {
 				const other = agents[j];
 				const dist = agent.pos.getDistance(other.pos);
 				
@@ -60,8 +70,11 @@ const sketch = ({ context, width, height }) => {
         // maps one range to another based on the value of a variable
         // var is dist. map 0 to 
 				
-        context.lineWidth = 2;
-        //context.lineWidth = math.mapRange(dist, 0, cLim, cLim/10, 1);
+        if (params.useConnectionLimitForWidth) {
+          context.lineWidth = math.mapRange(dist, 0, cLim, cLim/10, 1);
+        } else {
+          context.lineWidth = 2;  
+        }
 
 				context.beginPath();
 				context.moveTo(agent.pos.x, agent.pos.y);
@@ -70,12 +83,25 @@ const sketch = ({ context, width, height }) => {
 			}
 		}
     
-    agents.forEach( agent => {
+    // for (loop equally effective no? - and easier to read!
+    //agents.every( (agent, index) => {
+    //  if (index >= params.numAgents) {
+    //    return false;
+    //  } else {
+    //    agent.update();
+    //    agent.draw(context);
+    //    agent.bounce(width, height);
+    //    //agent.traverse(width, height);        
+    //    return true;
+    //  }
+    //});
+    for (let i = 0; i < params.numAgents; i++) {
+			const agent = agents[i];
       agent.update();
       agent.draw(context);
       agent.bounce(width, height);
-      //agent.traverse(width, height);
-    });
+      //agent.traverse(width, height);        
+    }
     
   };
 };
@@ -110,7 +136,7 @@ class Agent {
   
   draw(context){
     // isolate drawing behaviour by saving & restoring context
-    context.save()
+    context.save();
     
     context.translate(this.pos.x, this.pos.y);  // move the origin / move canvas under plotter pen - see if it helps to think of it like this!?    
     context.lineWidth = 4;    
@@ -123,7 +149,7 @@ class Agent {
     context.fillStyle = this.typeColor;
     context.fill();
 
-    context.restore()
+    context.restore();
   }
   
   bounce(width, height) {
@@ -151,18 +177,31 @@ class Agent {
 
 }
 
-    //context.beginPath();
-    //// show origin
-    //context.fillStyle = 'red';
-    //context.arc(0, 0, 5, 0, 2*Math.PI);
-    //context.fill();
-    
+createpane();    
 canvasSketch(sketch, settings);
+
 cl('IMPORTED MODULE: algos_sftest');
 algos.algoInfo();
 
 
+  //for (let i = 0; i < params.numAgents; i++) {
+  //  const x = random.range(0, width);
+  //  const y = random.range(0, height);
+  //
+  //  agents.push(new Agent(x, y));
+  //}
 
+
+
+
+
+//context.beginPath();
+//// show origin
+//context.fillStyle = 'red';
+//context.arc(0, 0, 5, 0, 2*Math.PI);
+//context.fill();
+    
+    
 // call on every frame update - - - - - < <
 // simple RAF callack request
 //const animate = () => {
