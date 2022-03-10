@@ -1,11 +1,11 @@
 # End of Course Project 3 - Random Target, Shortest Path
 **Aim**  
-Based on the code form [class 3](https://github.com/UnacceptableBehaviour/js_canvas/blob/master/test_pages/u4_animation/README.md) as a starting point.
-Select two nodes in the graph and calculate the shortest path between the nodes.
-Highlight the path.
-Create a algorithms library module to provide the functionality.  
+Based on the code form [class 3](https://github.com/UnacceptableBehaviour/js_canvas/blob/master/test_pages/u4_animation/README.md) as a starting point.  
+Select two nodes in the graph and calculate the shortest path between the nodes.  
+Highlight the path.  
+Create a algorithms library module to provide the functionality.   
   
-**Create Node module for algorithms**
+**Create Node module for algorithms**  
 Aim to make this into a git subsystem later. TODO and link to gist.
 ```
 > cd js_canvas/test_pages/u9_fp_random_target
@@ -15,7 +15,7 @@ Aim to make this into a git subsystem later. TODO and link to gist.
 > npm init -y			# create module package.json file -y say yes to all
 ```
   
-Add algos_sftest test code:
+Add **algos_sftest** test code:
 ```
 > nano index.js
 
@@ -29,6 +29,7 @@ const cl = (str) => {
 function algoInfo() {
   cl('[algos] Hello!');
 };
+
 // use export built in to export interface - shortcut for module.export
 exports.algoInfo = algoInfo;
 
@@ -37,6 +38,7 @@ cl('FROM MODULE: algos_sftest');
 Include it in app file (u9_fp_random_target.js) to test.
 ```
 File: u9_fp_random_target/u9_fp_random_target.js
+
 const algos = require('algos_sftest');
 cl('IMPORTED MODULE: algos_sftest');
 algos.algoInfo();
@@ -44,6 +46,7 @@ algos.algoInfo();
   
 Create link to this package:
 ```
+> cd u9_fp_random_target/lib/algos_sftest/    # module directory
 > sudo npm link			# make link in /usr/local/lib/node_modules
 added 1 package, and audited 3 packages in 1s
 found 0 vulnerabilities
@@ -88,7 +91,7 @@ File: u9_fp_random_target/lib/algos_sftest/package.json
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "algos_sftest": "^1.0.0",		
+    "algos_sftest": "^1.0.0",		     < Add line left of arrow
     "canvas-sketch": "^0.7.4",
     "canvas-sketch-util": "^1.10.0"
   }
