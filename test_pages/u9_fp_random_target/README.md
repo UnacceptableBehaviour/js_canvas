@@ -98,7 +98,7 @@ File: u9_fp_random_target/lib/algos_sftest/package.json
 }
 ```  
   
-### 2. Add tweakpane get a feal for sensible parameter settings  
+### 2. Add tweakpane get a feel for sensible parameter settings  
 Number of nodes, distance at which to connect to make a network thats not too over-connected.
 See 1st 6 images below. Blue and red node are route start & finish nodes
 
@@ -112,7 +112,11 @@ See 1st 6 images below. Blue and red node are route start & finish nodes
 | ![sk]() | ![sk]() | ![sk]() |
 | Code @ [sketch-04.js]() | Code @ [sketch-04.js]() | Code @ [sketch-04.js]() | 
   
-Notes on experiments.  
+### X. Next steps
+Create a graph from the nodes & link in the current frame.
+Think about the API to the Algo library
+Components needed for Dijkstra.
+
   
 
 
