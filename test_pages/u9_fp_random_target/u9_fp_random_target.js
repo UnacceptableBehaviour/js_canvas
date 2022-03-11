@@ -85,8 +85,11 @@ const sketch = ({ context, width, height }) => {
       const agent = agents[i];
       agent.update();
       agent.draw(context);
-      //agent.bounce(width, height);
-      agent.traverse(width, height);        
+      if (agent.typeColor === AgentType.COMMON_NODE) {
+        agent.bounce(width, height);
+      } else {
+        agent.traverse(width, height);
+      }
     }
     
   };
