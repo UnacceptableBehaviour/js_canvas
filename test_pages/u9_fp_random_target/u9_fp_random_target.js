@@ -7,7 +7,7 @@ const algos = require('algos_sftest');
 
 const settings = {
   dimensions: [ 1048, 1048 ],
-  animate: true
+  //animate: true
 };
 
 // helpers
@@ -58,6 +58,8 @@ const sketch = ({ context, width, height }) => {
     
     const cLim = params.connectionLimit;
     
+    let g = new algos.Graph();
+    
     for (let i = 0; i < params.numAgents; i++) {
       const agent = agents[i];
 
@@ -66,6 +68,8 @@ const sketch = ({ context, width, height }) => {
         const dist = agent.pos.getDistance(other.pos);
         
         if (dist > cLim) continue;
+        
+        g.addEdge(agent.node, other.node, dist);
                 
         if (params.useConnectionLimitForWidth) {
           // maps one range to another based on the value of a variable
@@ -81,6 +85,11 @@ const sketch = ({ context, width, height }) => {
       }
     }
     
+    //cl('call - algos.dijkstra - - - - - - - - S');
+    //// note depenting on parameters there may not be a connecting path
+    //let shortestPath = algos.dijkstra(agents[params.fromAgent], agents[params.toAgent], g);
+    //cl('call - algos.dijkstra - - - - - - - - E');
+    
     for (let i = 0; i < params.numAgents; i++) {
       const agent = agents[i];
       agent.update();
@@ -92,6 +101,10 @@ const sketch = ({ context, width, height }) => {
       }
     }
     
+    cl('call - algos.dijkstra - - - - - - - - S');
+    // note depenting on parameters there may not be a connecting path
+    let shortestPath = algos.dijkstra(agents[params.fromAgent].node, agents[params.toAgent].node, g);
+    cl('call - algos.dijkstra - - - - - - - - E');    
   };
 };
 
@@ -117,10 +130,11 @@ class Vector {
 class Agent {
   constructor(x, y, radius){
     this.pos = new Vector(x,y);
-    this.vel = new Vector(random.range(-4, 4), random.range(-4, 4)); 
+    this.vel = new Vector(random.rangeFloor(-4, 4), random.rangeFloor(-4, 4)); 
     //this.rad = random.rangeFloor(5, 21);
     this.rad = 5;
     this.typeColor = AgentType.COMMON_NODE;
+    this.node = new algos.RouteNode(x, y, this);
   }
   
   draw(context){
