@@ -7,7 +7,7 @@ const algos = require('algos_sftest');
 
 const settings = {
   dimensions: [ 1048, 1048 ],
-  //animate: true
+  animate: true
 };
 
 // helpers
@@ -23,12 +23,13 @@ class AgentType {
 
 
 const params = {
-  numAgents: 40,
+  numAgents: 20,
   maxAgents: 200,
   fromAgent: 0,
   toAgent: 1,
   connectionLimit: 350,
   useConnectionLimitForWidth: false,
+  bounceOffWalls: true,
 };
 
 const createpane = () => {
@@ -40,6 +41,7 @@ const createpane = () => {
   folder.addInput(params, 'numAgents', { min: 2, max: params.maxAgents, step: 2 }); 
   folder.addInput(params, 'connectionLimit', { min: 2, max: 350, step: 2 });  
   folder.addInput(params, 'useConnectionLimitForWidth');
+  folder.addInput(params, 'bounceOffWalls');
 };
 
 
@@ -58,7 +60,14 @@ const sketch = ({ context, width, height }) => {
     
     const cLim = params.connectionLimit;
     
-    let g = new algos.Graph();
+    
+    let g = new algos.Graph();                            // clean graph for frame
+    for (let i = 0; i < params.numAgents; i++) {          
+      agents[i].node.clearAdjacencyList();
+      agents[i].node.distFromStartNode = Infinity;
+    }
+    agents[params.fromAgent].node.distFromStartNode = 0;
+    
     
     for (let i = 0; i < params.numAgents; i++) {
       const agent = agents[i];
@@ -84,27 +93,37 @@ const sketch = ({ context, width, height }) => {
         context.stroke();
       }
     }
+
     
     //cl('call - algos.dijkstra - - - - - - - - S');
-    //// note depenting on parameters there may not be a connecting path
-    //let shortestPath = algos.dijkstra(agents[params.fromAgent], agents[params.toAgent], g);
+    // note depending on parameters there may not be a connecting path
+    let shortestPath = algos.dijkstra(agents[params.fromAgent].node, agents[params.toAgent].node, g);
+    // draw it
+    for (let n=0; n<shortestPath.length-1; n++) {
+      context.beginPath();
+      context.lineWidth = 6;
+      context.strokeStyle = '#FF33FE';
+      context.moveTo(shortestPath[n].x, shortestPath[n].y);
+      context.lineTo(shortestPath[n+1].x, shortestPath[n+1].y);
+      context.stroke();
+    }
     //cl('call - algos.dijkstra - - - - - - - - E');
-    
+
+
     for (let i = 0; i < params.numAgents; i++) {
       const agent = agents[i];
-      agent.update();
       agent.draw(context);
+      agent.update();
       if (agent.typeColor === AgentType.COMMON_NODE) {
         agent.bounce(width, height);
       } else {
-        agent.traverse(width, height);
+        if (params.bounceOffWalls) {
+          agent.bounce(width, height);
+        } else {
+          agent.traverse(width, height);
+        }        
       }
-    }
-    
-    cl('call - algos.dijkstra - - - - - - - - S');
-    // note depenting on parameters there may not be a connecting path
-    let shortestPath = algos.dijkstra(agents[params.fromAgent].node, agents[params.toAgent].node, g);
-    cl('call - algos.dijkstra - - - - - - - - E');    
+    }        
   };
 };
 
@@ -147,7 +166,7 @@ class Agent {
     // was this before translate intorduced
     // context.arc(this.pos.x, this.pos.y, this.rad, 0, Math.PI*2); // arc(x,y,r,sAngle,eAngle,counterclockwise);    
     context.arc(0,0, this.rad, 0, Math.PI*2);    
-    context.strokstyle = 'black';
+    context.strokeStyle = 'black';
     context.stroke();
     context.fillStyle = this.typeColor;
     context.fill();
@@ -166,12 +185,15 @@ class Agent {
     
     if (this.pos.y <= 0) this.pos.y = height-1;
     if (this.pos.y >= height) this.pos.y = 1;
+    
+    this.node.updatePos(this.pos.x, this.pos.y);
   }
   
   
   update() {
     this.pos.x += this.vel.x;
-    this.pos.y += this.vel.y;
+    this.pos.y += this.vel.y;    
+    this.node.updatePos(this.pos.x, this.pos.y);
   }
   
   dbg(){

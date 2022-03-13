@@ -79,6 +79,10 @@ class RouteNode{
     this.x = x;
     this.y = y;
   }
+
+  clearAdjacencyList(){
+    this.adj = [];
+  }
   
   distanceFrom(node){
 		let dx = Math.abs(this.x-node.x);
@@ -105,12 +109,11 @@ class Graph{
     this.allNodes = [];
   }
 
-  addEdge(u, v, distance=undefined){
-    // tracking takes time and we don't need it
-    if (!(u in this.allNodes)) {
+  addEdge(u, v, distance=undefined){    
+    if (!(this.allNodes.includes(u))) {
       this.allNodes.push(u);
     }
-    if (!(v in this.allNodes)) {
+    if (!(this.allNodes.includes(v))) {
       this.allNodes.push(v);
     }
 
@@ -124,11 +127,14 @@ class Graph{
     return node.adj;
   }
   
-  resetAllNodesToInfinity(){
-    //for (let node in this.allNodes) {
-    //  this.allNodes[node].distFromStartNode = Infinity;
-    //}
-  }
+  //resetAllNodesToInfinity(){
+  //  //for (let node in this.allNodes) {     // TODO - look into linter comment
+  //  //  node.distFromStartNode = Infinity;
+  //  //}
+  //  for (let i=0; i<this.allNodes.length; i++) {
+  //    this.allNodes[node].distFromStartNode = Infinity;
+  //  }    
+  //}
   
   prt(){
     cl('Graph - dbg print:   - - S');
@@ -143,51 +149,44 @@ exports.Graph = Graph;
 function dijkstra(S, T, gDbg=null) {
   let path = [];
   let visited = {};
-  cl(`start ${S.id}-${T.id}`);
-  cl(S);
-  cl(T);
-  cl('- - EOS')
   let q = new PriorityQ(RouteNode.compAsc);
   S.distFromStartNode = 0;      
   q.push(S);
   visited[S.id] = S.distFromStartNode; // why are we storing distance here?
   
-  //cl(T);
-  //cl('while (!(T.id in visited)){');
-  let wCount = 0;
+  let noRoute = false;
   while (!(T.id in visited)) {
     let qNode = q.pop();
-    cl(`qNode = q.pop(); - ${wCount++}`);
-    cl(qNode);
-    cl('for');
-    for (const n of qNode.adj) {
-      let distQAdjacent; let adjNode; let pathWeight;
-      [adjNode, distQAdjacent] = n;    // n = [distance, node]
-      cl(distQAdjacent);
-      cl(adjNode);
-      cl('-*-');
-      pathWeight = qNode.distFromStartNode + distQAdjacent;
-      
-      if (pathWeight < adjNode.distFromStartNode) { // update adjNode with new path
-        adjNode.distFromStartNode = pathWeight;
-        adjNode.pi = qNode;
-        q.push(adjNode);
-        cl(` - - - - ASSIGN - - ID > T.id:${T.id} - adjNode.id:${adjNode.id}`)
+    try {
+      for (const n of qNode.adj) {
+        let distQAdjacent; let adjNode; let pathWeight;
+        [adjNode, distQAdjacent] = n;    // n = [distance, node]
+        pathWeight = qNode.distFromStartNode + distQAdjacent;
+        
+        if (pathWeight < adjNode.distFromStartNode) { // update adjNode with new path
+          adjNode.distFromStartNode = pathWeight;
+          adjNode.pi = qNode;
+          q.push(adjNode);
+        }      
+        visited[adjNode.id] = adjNode.distFromStartNode;  // why are we storing distance here?
       }      
-      visited[adjNode.id] = adjNode.distFromStartNode;  // why are we storing distance here?
+    } catch(e) {        //cl(e);
+      noRoute = true;
+      break;
     }
   }
+   
+  if (!noRoute) {
+    path.push(T);     // got T - reconstruct path
     
-  // got T - reconstruct path
-  path.push(T);
+    let parent = T.pi;
+    while (!(path.includes(S))) {
+      path.push(parent);
+      parent = parent.pi;
+    }
+  } 
   
-  cl(path);
-  
-  let parent = T.pi;           // << reading .pi = undefined 
-  while (!(S in path)) {
-    path.push(parent);
-    parent = parent.pi;
-  }
+  //cl(`djtr rt len:${path.length}`);
   return(path);
 }
 exports.dijkstra = dijkstra;
