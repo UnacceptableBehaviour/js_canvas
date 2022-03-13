@@ -109,13 +109,14 @@ See 1st 6 images below. Blue and red node are route start & finish nodes
 | Code @ [u9_fp_random_target.js](https://github.com/UnacceptableBehaviour/js_canvas/blob/fc610f4ddc7dde1d54572d3e60bac26bbdf1ff84/test_pages/u9_fp_random_target/u9_fp_random_target.js) | testing line types | testing # of nodes | 
 | ![sk](https://github.com/UnacceptableBehaviour/js_canvas/blob/master/test_pages/u9_fp_random_target/images/2022.03.10-19.38.26.png) | ![sk](https://github.com/UnacceptableBehaviour/js_canvas/blob/master/test_pages/u9_fp_random_target/images/2022.03.10-19.38.32.png) | ![sk](https://github.com/UnacceptableBehaviour/js_canvas/blob/master/test_pages/u9_fp_random_target/images/2022.03.10-19.38.40.png) |
 | testing connection types | testing connection types | testing connection types | 
-| ![sk]() | ![sk]() | ![sk]() |
-| Code @ [sketch-04.js]() | Code @ [sketch-04.js]() | Code @ [sketch-04.js]() | 
+| ![sk](https://github.com/UnacceptableBehaviour/js_canvas/blob/master/test_pages/u9_fp_random_target/images/2022.03.13-19.55.17.png) | ![sk](https://github.com/UnacceptableBehaviour/js_canvas/blob/master/test_pages/u9_fp_random_target/images/2022.03.13-19.31.46.png) | ![sk](https://github.com/UnacceptableBehaviour/js_canvas/blob/master/test_pages/u9_fp_random_target/images/2022.03.13-19.32.50.png) |
+| Code @ [u9_fp_random_target.js]() | More nodes | More nodes | 
   
 ### X. Next steps
 Create a graph from the nodes & link in the current frame.
 Think about the API to the Algo library
 Components needed for Dijkstra.
+
 
   
 
