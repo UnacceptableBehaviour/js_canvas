@@ -112,6 +112,8 @@ See 1st 6 images below. Blue and red node are route start & finish nodes
 | ![sk](https://github.com/UnacceptableBehaviour/js_canvas/blob/master/test_pages/u9_fp_random_target/images/2022.03.13-19.55.17.png) | ![sk](https://github.com/UnacceptableBehaviour/js_canvas/blob/master/test_pages/u9_fp_random_target/images/2022.03.13-19.31.46.png) | ![sk](https://github.com/UnacceptableBehaviour/js_canvas/blob/master/test_pages/u9_fp_random_target/images/2022.03.13-19.32.50.png) |
 | Code @ [u9_fp_random_target.js]() | More nodes | More nodes | 
   
+To see short animation navigate [here](https://github.com/UnacceptableBehaviour/js_canvas/blob/master/test_pages/u9_fp_random_target/anim/2022.03.15-19.28.22.mov) and click DOWNLOAD for mp4.
+  
 ### X. Next steps
 Create a graph from the nodes & link in the current frame.
 Think about the API to the Algo library
