@@ -194,9 +194,6 @@ exports.dijkstra = dijkstra;
 
 
 
-
-
-
 cl('FROM MODULE: algos_sftest - Tests - - - - - - S');
 // MAKE INTO more thorough unit tests - TODO
 cl('> - - RouteNode - - -');

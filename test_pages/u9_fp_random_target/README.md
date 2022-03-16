@@ -102,6 +102,64 @@ File: u9_fp_random_target/lib/algos_sftest/package.json
 Number of nodes, distance at which to connect to make a network thats not too over-connected.
 See 1st 6 images below. Blue and red node are route start & finish nodes
 
+### 3. Next steps
+Create a graph from the nodes & link in the current frame.  
+Think about the API to the Algo library.  
+Components needed to implement Dijkstra:  
+Prioriy Q (min Heap), Graph, Node (be able to sort by distance), and of course Dijkstra function.
+  
+### 4. Add enough functionality into module to find shortest path between two nodes.
+
+**Basics to understand Dijkstra algorithm.**  
+Dijkstra revision [L16 6.006](https://github.com/UnacceptableBehaviour/algorithms#l16---dijkstra) - Relaxation p648 CLRS
+  
+**DFS vs BFS**  
+With DFS the search uses a **stack** to store new nodes as the graph is searched, this also lends itself to using recursion since it has an implicit stack in the call stack.  
+  
+With BFS a queue structure is used to store an process nodes, this is what is used by Dijkstra  
+  
+Dijkstra is a greedy algorithm (it makes the locally optimal choice at each stage).  
+  
+The first step is to process all the nodes adjacent to the **start node** and queue them up in order of shortest distance first. (Shortest distance is the optimal - greedy - next choice).  
+
+The algorithm then repeats this step with each element in the Q:   
+It pulls a node off the Q, goes through each adjacent node, calculates the distance of the adjacent node from the start and  places that adjacent node back in the Q according to its distance from the start.  
+  
+Note if an early node (processing wise) is a long distance away from the start, a multistep route with a smaller distance will be processed first because it will appear earlier in the queue. This ensures the shortest route requirement.  
+  
+The algorithm also maintains a set of **visited_nodes** to detect when the target node has been found.  
+  
+**Relaxation - fundamental concept:**  
+d[v] length current SP from source (blue) to v   
+-	(d[v] updates for each node as algorithm runs - set to ∞ to start)  
+-	except for S which is 0 these all start at infinity until they are deduced  
+  
+𝛿(s,v) length of *a* shortest path between s & v  
+  
+∏[v] predecessor of v in the SP from s to v (used to reconstruct the SP)  
+	∏[S] = NIL  
+  
+w(u,v) distance from u to v  
+  
+  
+Relaxation operation:  
+```
+RELAX(u, v, w)
+	if d[v] > d[u] + w(u, v) 		if dist from S to u + dist from u to v is < dist from S to v
+		then d[v] = d[u] + w(u, v) 	then update v with new shortest path
+			∏[v] = u			and update its predecessor with u
+```
+**It is basically saying:** if we have found a shorter route to v via u, update the details in v to reflect this.
+  
+Keep going until T is in the **visited_nodes**.  
+  
+| Abr | **TERMS** |
+| - | - | 
+S	|	Source
+T	|	Target
+SP	|	Shortest Path
+DAG |	Directed Acyclic Graph
+
 **Some experiments:**  
 | 1 | 2 | 3 | 
 | - | - | - | 
@@ -114,15 +172,6 @@ See 1st 6 images below. Blue and red node are route start & finish nodes
   
 To see short animation navigate [here](https://github.com/UnacceptableBehaviour/js_canvas/blob/master/test_pages/u9_fp_random_target/anim/2022.03.15-19.28.22.mov) and click DOWNLOAD for mp4.
   
-### X. Next steps
-Create a graph from the nodes & link in the current frame.
-Think about the API to the Algo library
-Components needed for Dijkstra.
-
-
-  
-
-
 
 
 # Resources
