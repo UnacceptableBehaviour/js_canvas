@@ -85,9 +85,9 @@ class RouteNode{
   }
   
   distanceFrom(node){
-		let dx = Math.abs(this.x-node.x);
+    let dx = Math.abs(this.x-node.x);
     let dy = Math.abs(this.y-node.y);
-		return( Math.floor(Math.sqrt((dx*dx)+(dy*dy))) );    
+    return( Math.floor(Math.sqrt((dx*dx)+(dy*dy))) );    
   }
   
   static compAsc(nodeA, nodeB){
@@ -201,45 +201,45 @@ exports.dijkstra = dijkstra;
 
 //
 //def dijkstra(g,S,T,vertex_list):
-//	print(f"dijkstra from:{S} to:{T}")	
-//	path = []
-//	visited = {}
-//	
-//	q = PriorityQueue()
-//	S.dist_S_to_node = 0					# set start node distance to self
-//	q.put(S)
-//	visited[S] = S.dist_S_to_node	
-//	
-//	while T not in visited:
-//		node = q.get()		
-//		for adj_node in node.adj:
-//			# calc delta from source to adjacent
-//			path_weight = node.dist_S_to_node + node.distance(adj_node)
-//			
-//			print(f"f:{node}-[{node.dist_S_to_node}] > t:{adj_node}-[{adj_node.dist_S_to_node}] PW:{path_weight} < ADJ_S:{adj_node.dist_S_to_node} = {path_weight < adj_node.dist_S_to_node}")
-//			
-//			# if its smaller update - relax
-//			if path_weight < adj_node.dist_S_to_node:
-//				adj_node.dist_S_to_node = path_weight
-//				adj_node.pi = node
-//				q.put(adj_node)
-//				vertex_list.append([node, adj_node])
-//		
-//			visited[adj_node] = adj_node.dist_S_to_node
-//		
-//	
-//	path.append(T)
-//	parent = T.pi
-//	while S not in path:
-//		path.append(parent)
-//		parent = parent.pi
-//	
-//	
-//	print("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - S-D1")	
-//	print(path)
-//	print("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - E-D1")	
-//	
-//	return path
+//  print(f"dijkstra from:{S} to:{T}")  
+//  path = []
+//  visited = {}
+//  
+//  q = PriorityQueue()
+//  S.dist_S_to_node = 0          # set start node distance to self
+//  q.put(S)
+//  visited[S] = S.dist_S_to_node  
+//  
+//  while T not in visited:
+//    node = q.get()    
+//    for adj_node in node.adj:
+//      # calc delta from source to adjacent
+//      path_weight = node.dist_S_to_node + node.distance(adj_node)
+//      
+//      print(f"f:{node}-[{node.dist_S_to_node}] > t:{adj_node}-[{adj_node.dist_S_to_node}] PW:{path_weight} < ADJ_S:{adj_node.dist_S_to_node} = {path_weight < adj_node.dist_S_to_node}")
+//      
+//      # if its smaller update - relax
+//      if path_weight < adj_node.dist_S_to_node:
+//        adj_node.dist_S_to_node = path_weight
+//        adj_node.pi = node
+//        q.put(adj_node)
+//        vertex_list.append([node, adj_node])
+//    
+//      visited[adj_node] = adj_node.dist_S_to_node
+//    
+//  
+//  path.append(T)
+//  parent = T.pi
+//  while S not in path:
+//    path.append(parent)
+//    parent = parent.pi
+//  
+//  
+//  print("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - S-D1")  
+//  print(path)
+//  print("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - E-D1")  
+//  
+//  return path
 
 
 
