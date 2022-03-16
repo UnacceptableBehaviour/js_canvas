@@ -57,12 +57,6 @@ class PriorityQ {
 
 // start simple
 class RouteNode{
-  static ctorCount = 0;
-  static nodes = {};
-  static idToObject(id){
-    return RouteNode.nodes[id];
-  }
-  
   constructor(x,y,owner=undefined) {
     this.owner = owner;
     this.x = x;
@@ -70,9 +64,6 @@ class RouteNode{
     this.adj = [];
     this.pi = undefined;   // predecessor node - for route search
     this.distFromStartNode = Infinity;
-    this.id = RouteNode.ctorCount;
-    RouteNode.ctorCount++;
-    RouteNode.nodes[this.id] = this;
   }
   
   updatePos(x,y){
@@ -148,27 +139,28 @@ exports.Graph = Graph;
 // T - Target node
 function dijkstra(S, T, gDbg=null) {
   let path = [];
-  let visited = {};
+  let visited = new Set();
   let q = new PriorityQ(RouteNode.compAsc);
   S.distFromStartNode = 0;      
   q.push(S);
-  visited[S.id] = true;
+  visited.add(S);
   
   let noRoute = false;
-  while (!(T.id in visited)) {
+  while (!(visited.has(T))) {
     let qNode = q.pop();
     try {
       for (const n of qNode.adj) {
         let distQAdjacent; let adjNode; let pathWeight;
-        [adjNode, distQAdjacent] = n;    // n = [distance, node]
+        [adjNode, distQAdjacent] = n;    // n = [node, distance]
         pathWeight = qNode.distFromStartNode + distQAdjacent;
         
-        if (pathWeight < adjNode.distFromStartNode) { // update adjNode with new path
+        // relax - update adjNode with new path
+        if (pathWeight < adjNode.distFromStartNode) { 
           adjNode.distFromStartNode = pathWeight;
           adjNode.pi = qNode;
           q.push(adjNode);
         }      
-        visited[adjNode.id] = true; // adjNode; //adjNode.distFromStartNode;  // why are we storing distance here?
+        visited.add(adjNode); 
       }      
     } catch(e) {        //cl(e);
       noRoute = true;
@@ -190,58 +182,6 @@ function dijkstra(S, T, gDbg=null) {
   return(path);
 }
 exports.dijkstra = dijkstra;
-  
-// Ported from some python I wrote a while ago - which may not be right!! :/
-// Q1. No need for RouteNode.idToObject(T.id)
-//      if visited is an array and doesn;t store distFromS - no clear why that was needed
-// Q2. Is the first time we fine T the shortest? - while (!(T.id in visited)) { bla
-//      its always checking the shortest rout 1st through priorityQ - 
-//
-// Why not make  visited = []; then can store object and no need T.id
-
-//
-//def dijkstra(g,S,T,vertex_list):
-//  print(f"dijkstra from:{S} to:{T}")  
-//  path = []
-//  visited = {}
-//  
-//  q = PriorityQueue()
-//  S.dist_S_to_node = 0          # set start node distance to self
-//  q.put(S)
-//  visited[S] = S.dist_S_to_node  
-//  
-//  while T not in visited:
-//    node = q.get()    
-//    for adj_node in node.adj:
-//      # calc delta from source to adjacent
-//      path_weight = node.dist_S_to_node + node.distance(adj_node)
-//      
-//      print(f"f:{node}-[{node.dist_S_to_node}] > t:{adj_node}-[{adj_node.dist_S_to_node}] PW:{path_weight} < ADJ_S:{adj_node.dist_S_to_node} = {path_weight < adj_node.dist_S_to_node}")
-//      
-//      # if its smaller update - relax
-//      if path_weight < adj_node.dist_S_to_node:
-//        adj_node.dist_S_to_node = path_weight
-//        adj_node.pi = node
-//        q.put(adj_node)
-//        vertex_list.append([node, adj_node])
-//    
-//      visited[adj_node] = adj_node.dist_S_to_node
-//    
-//  
-//  path.append(T)
-//  parent = T.pi
-//  while S not in path:
-//    path.append(parent)
-//    parent = parent.pi
-//  
-//  
-//  print("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - S-D1")  
-//  print(path)
-//  print("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - E-D1")  
-//  
-//  return path
-
-
 
 
 
