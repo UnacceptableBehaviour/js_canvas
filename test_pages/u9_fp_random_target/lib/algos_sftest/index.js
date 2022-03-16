@@ -152,7 +152,7 @@ function dijkstra(S, T, gDbg=null) {
   let q = new PriorityQ(RouteNode.compAsc);
   S.distFromStartNode = 0;      
   q.push(S);
-  visited[S.id] = S.distFromStartNode; // why are we storing distance here?
+  visited[S.id] = true;
   
   let noRoute = false;
   while (!(T.id in visited)) {
@@ -168,7 +168,7 @@ function dijkstra(S, T, gDbg=null) {
           adjNode.pi = qNode;
           q.push(adjNode);
         }      
-        visited[adjNode.id] = adjNode.distFromStartNode;  // why are we storing distance here?
+        visited[adjNode.id] = true; // adjNode; //adjNode.distFromStartNode;  // why are we storing distance here?
       }      
     } catch(e) {        //cl(e);
       noRoute = true;
