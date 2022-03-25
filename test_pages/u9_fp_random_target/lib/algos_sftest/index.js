@@ -100,7 +100,7 @@ class Graph{
     this.allNodes = [];
   }
 
-  addEdge(u, v, distance=undefined){    
+  addEdge(u, v, distance=undefined){     // TODO - change name to undirected edge
     if (!(this.allNodes.includes(u))) {
       this.allNodes.push(u);
     }

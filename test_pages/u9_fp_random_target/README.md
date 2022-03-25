@@ -159,6 +159,8 @@ S	|	Source
 T	|	Target
 SP	|	Shortest Path
 DAG |	Directed Acyclic Graph
+DFS | Depth First Search
+BFS | Breadth First Search
 
 **Some experiments:**  
 | 1 | 2 | 3 | 

@@ -51,3 +51,18 @@ https://www.domestika.org/auth/login#course_lesson_28425
 
 #### Markdown syntax (.md)
 https://www.markdownguide.org/basic-syntax/  
+
+https://github.com/UnacceptableBehaviour/algorithms/blob/master/images/2022.03.13-19.57.14.png
+Some experiments:  
+| 1 | 2 | 3 | 4 |
+| - | - | - | - |
+| ![sk](https://github.com/UnacceptableBehaviour/algorithms/blob/master/images/Screenshot%202022-03-16%20at%2018.44.54.png) | ![sk](https://github.com/UnacceptableBehaviour/algorithms/blob/master/images/Screenshot%202022-03-16%20at%2018.45.21.png) | ![sk](https://github.com/UnacceptableBehaviour/algorithms/blob/master/images/Screenshot%202022-03-16%20at%2018.45.57.png) | ![sk](https://github.com/UnacceptableBehaviour/algorithms/blob/master/images/Screenshot%202022-03-16%20at%2018.46.20.png) |
+| Code @ [citimap.py](https://github.com/UnacceptableBehaviour/algorithms/blob/master/algos/citimap.py) | More nodes | More nodes |  More nodes | 
+| ![sk](https://github.com/UnacceptableBehaviour/js_canvas/blob/master/test_pages/u9_fp_random_target/images/2022.03.13-19.55.17.png) | ![sk](https://github.com/UnacceptableBehaviour/js_canvas/blob/master/test_pages/u9_fp_random_target/images/2022.03.13-19.31.46.png) | ![sk](https://github.com/UnacceptableBehaviour/js_canvas/blob/master/test_pages/u9_fp_random_target/images/2022.03.13-19.32.50.png) | ![sk]() |
+| Code @ [u9_fp_random_target.js](https://github.com/UnacceptableBehaviour/js_canvas/blob/b06198baa8ad26ff6bed0ed5eb69aad1f8cb5b8f/test_pages/u9_fp_random_target/u9_fp_random_target.js)  | More nodes | More nodes |  More nodes | 
+
+
+| ![sk]() | ![sk]() | ![sk]() |
+| Code @ [sketch-04.js]() | Code @ [sketch-04.js]() | Code @ [sketch-04.js]() | 
+| ![sk]() | ![sk]() | ![sk]() |
+| Code @ [sketch-04.js]() | Code @ [sketch-04.js]() | Code @ [sketch-04.js]() | 
