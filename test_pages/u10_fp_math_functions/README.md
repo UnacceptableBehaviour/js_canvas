@@ -5,6 +5,14 @@ A creative developer whos work I was introduced to doing this course.
 
   
 ### 1. Create a MathsTile class
+Create a frame border for the tile - prototyping.
+Centre a dot - a circular representation of the pulse of the equation.
+Pass an equation callback.
+Equation runs a 360deg/2pi cycle
+Draw line
+  - frequency or wavelength will govern the plot across the tile
+  - and the radius of the pulsing shape - circle in the prior art
+
   
 ### 2. How to add unit tests maybe?
 

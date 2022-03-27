@@ -3,11 +3,11 @@ const random = require('canvas-sketch-util/random');
 const math = require('canvas-sketch-util/math');
 const Tweakpane = require('tweakpane');
 
-const algos = require('algos_sftest');
+const algos = require('../u9_fp_random_target/lib/algos_sftest');
 
 const settings = {
   dimensions: [ 1048, 1048 ],
-  animate: true
+  //animate: true
 };
 
 // helpers
@@ -38,21 +38,26 @@ const createpane = () => {
   //folder.addInput(params, 'bounceOffWalls');
 };
 
+const mathSin = (rad) => {
+  return Math.sin(rad);
+};
+
 
 const sketch = ({ context, width, height }) => {
   
-  const agents = Array.from({length: params.maxAgents}, (e) => new Agent(random.rangeFloor(0, width), random.rangeFloor(0, height)) );
+  const mathTiles = [];
+  const agents = Array.from({length: 9}, (e) => new MathsTile(0, 0, height/4, e) );
 
-  agents[params.fromAgent].typeColor = AgentType.FROM_NODE;
-  agents[params.fromAgent].rad = 15;
-  agents[params.toAgent].typeColor = AgentType.TO_NODE;
-  agents[params.toAgent].rad = 10;
+  mathTiles.push( new MathsTile(50, 50, height/4, mathSin) );
   
   return ({ context, width, height }) => {
     context.fillStyle = 'beige';
     context.fillRect(0, 0, width, height);
     
 
+    mathTiles[0].draw(context);
+    
+    cl(agents);
     
     
     
@@ -80,22 +85,63 @@ const sketch = ({ context, width, height }) => {
 
 
 class MathsTile {
-  constructor(x, y, wh){
-    //this.pos = new Vector(x,y);
-    //this.vel = new Vector(random.rangeFloor(-4, 4), random.rangeFloor(-4, 4)); 
-    ////this.rad = random.rangeFloor(5, 21);
-    //this.rad = 5;
-    //this.typeColor = AgentType.COMMON_NODE;
-    //this.node = new algos.RouteNode(x, y, this);
+  constructor(x, y, size, equationCallback){
+    this.x = x;
+    this.y = y;
+    this.w = size;
+    this.h = size;
+    this.equC = equationCallback;
+    //this.rad = equationCallback(1);   // use -1 to 1 or rads?
+    this.rad = size / 10;
   }
   
   draw(context){
-    //// isolate drawing behaviour by saving & restoring context
-    //context.save();
+    // isolate drawing behaviour by saving & restoring context
+    context.save();
     //
-    //context.translate(this.pos.x, this.pos.y);  // move the origin / move canvas under plotter pen - see if it helps to think of it like this!?    
-    //context.lineWidth = 4;    
+    context.translate(this.x, this.y);  // move the origin / move canvas under plotter pen - see if it helps to think of it like this!?    
+    context.lineWidth = 2;    
+    context.beginPath();
+    
+    // border - guideline for now
+    context.rect(this.x,this.y, this.w,this.h);
+    context.strokeStyle = 'black';
+    context.stroke();
+
+    context.beginPath();
+    context.arc(this.x + this.w/2, this.y + this.h/2, this.rad, 0, Math.PI*2);    
+    //context.strokeStyle = 'black';
+    //context.stroke();
+    context.fillStyle = 'red';
+    context.fill();
+
     //context.beginPath();
+    //// show origin
+    //context.fillStyle = 'blue';
+    //context.arc(0, 0, 10, 0, 2*Math.PI);
+    //context.fill();
+    //
+    //// show rect place
+    //context.beginPath();
+    //context.fillStyle = 'green';
+    //context.arc(rx, ry, 10, 0, 2*Math.PI);
+    //context.fill();
+    //
+    //// show translate place
+    //context.beginPath();
+    //context.fillStyle = 'orange';
+    //context.arc(rx + w/2, ry + h/2, 15, 0, 2*Math.PI);
+    ////context.arc(0, 0, 10, 0, 2*Math.PI);
+    //context.fill();    
+    //
+    //context.translate(rx + w/2, ry + h/2);  // centre of rect
+    //context.beginPath();
+    //// show origin
+    //context.fillStyle = 'red';
+    //context.arc(0, 0, 5, 0, 2*Math.PI);
+    //context.fill();    
+    
+    //context.translate(this.x, this.y, this.w/2, this.h/2);
     //// was this before translate intorduced
     //// context.arc(this.pos.x, this.pos.y, this.rad, 0, Math.PI*2); // arc(x,y,r,sAngle,eAngle,counterclockwise);    
     //context.arc(0,0, this.rad, 0, Math.PI*2);    
@@ -104,7 +150,7 @@ class MathsTile {
     //context.fillStyle = this.typeColor;
     //context.fill();
     //
-    //context.restore();
+    context.restore();
   }
     
   
