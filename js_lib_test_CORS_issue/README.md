@@ -15,9 +15,32 @@ To fire up code and demonstrate module behaviour:
 | Code @ [collision_canvas.js](https://github.com/UnacceptableBehaviour/js_canvas/blob/master/js_lib_test_CORS_issue/collision_canvas.js) | [README.md](https://github.com/UnacceptableBehaviour/js_canvas/blob/master/js_lib_test_CORS_issue/README.md) | 
   
 **This hangs together like this:**
-![sw_overview.jpg](https://github.com/UnacceptableBehaviour/js_canvas/blob/master/js_lib_test_CORS_issue/sw_overview.jpg)
+<img src="https://github.com/UnacceptableBehaviour/js_canvas/blob/master/js_lib_test_CORS_issue/sw_overview.jpg" width="100%">
   
-With the anonymous function being passed into the **animation** parameter, being called from within the **frame** function. The frame function is the one that is registered with requestAnimationFrame(frame) and re-registers itself at the end. See here:
+```
+export function collidingBalls({ width = 400, height = 400, parent = document.body, count = 50 } = {}){
+  
+                                                      // setup display, balls & state
+  const display = new Canvas(parent, width, height);
+  const balls = [];
+  for (let i = 0; i < count; i++) {
+    balls.push(new Ball({
+      radius: random(8, 3) + Math.random(),
+      color: colors[random(colors.length - 1)],
+      position: new Vector(random(width - 10, 10), random(height - 10, 10)),
+      velocity: new Vector(random(3, -3), random(3, -3)),
+    }));
+  }
+  let state = new State(display, balls);
+  
+                                                      // kick off the animation
+  runAnimation(time => {
+    state = state.update(time);
+    display.sync(state);
+  });
+};
+```
+The animation is kicked off with runAnimation(). The anonymous function is passed into the **animation** parameter, and called from within the **frame** function. The frame function is registered with requestAnimationFrame(frame) and re-registers itself at the end. See here:
   
 ```
 const runAnimation = animation => {
@@ -40,10 +63,10 @@ const runAnimation = animation => {
   
 # Resources
 **Canvas - javascript & html - Josh Bradley**  
-https://joshbradley.me/object-collisions-with-canvas/  
+https://joshbradley.me/object-collisions-with-canvas/ - 
 [code](https://gist.github.com/joshuabradley012/bd2bc96bbe1909ca8555a792d6a36e04)  
   
-**window.requestAnimationFrame(callback)**
+**window.requestAnimationFrame(callback)**  
 https://developer.mozilla.org/en-US/docs/Web/API/window/requestAnimationFrame
   
 **W3 Canvas Reference**  
