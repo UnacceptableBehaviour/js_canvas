@@ -93,46 +93,52 @@ class MathsTile {
     this.equC = equationCallback;
     //this.rad = equationCallback(1);   // use -1 to 1 or rads?
     this.rad = size / 10;
+    this.amp = size / 2;                // waveform amplitude
+    this.yequ0 = y + size / 2;          // y = 0
+    this.waveL = size;
+    this.step = 1;
+    this.waveLineWidth = 2;
   }
   
   draw(context){
     // isolate drawing behaviour by saving & restoring context
     context.save();
+    context.beginPath();
+    // show origin
+    context.fillStyle = 'blue';
+    context.arc(0, 0, 10, 0, 2*Math.PI);
+    context.fill();    
+    
     //
     context.translate(this.x, this.y);  // move the origin / move canvas under plotter pen - see if it helps to think of it like this!?    
     context.lineWidth = 2;    
+
+    // show rect place
     context.beginPath();
+    context.fillStyle = 'green';
+    context.strokeStyle = 'green';
+    context.arc(this.x, this.y, 10, 0, 2*Math.PI);
+    context.stroke();
+    context.fill();    
     
     // border - guideline for now
+    context.beginPath();
     context.rect(this.x,this.y, this.w,this.h);
     context.strokeStyle = 'black';
     context.stroke();
 
-    context.beginPath();
-    context.arc(this.x + this.w/2, this.y + this.h/2, this.rad, 0, Math.PI*2);    
-    //context.strokeStyle = 'black';
-    //context.stroke();
-    context.fillStyle = 'red';
-    context.fill();
-
-    //context.beginPath();
-    //// show origin
-    //context.fillStyle = 'blue';
-    //context.arc(0, 0, 10, 0, 2*Math.PI);
-    //context.fill();
-    //
-    //// show rect place
-    //context.beginPath();
-    //context.fillStyle = 'green';
-    //context.arc(rx, ry, 10, 0, 2*Math.PI);
-    //context.fill();
-    //
-    //// show translate place
-    //context.beginPath();
-    //context.fillStyle = 'orange';
-    //context.arc(rx + w/2, ry + h/2, 15, 0, 2*Math.PI);
-    ////context.arc(0, 0, 10, 0, 2*Math.PI);
-    //context.fill();    
+    // waveform dots    
+    cl('wave-dots - S');
+    cl(`${this.w}`); // - ${} - ${} - ${}`);
+    for (let step = 0; step < this.w; step++) {
+      // draw a dot per step
+      context.beginPath();
+      context.fillStyle = 'grey';
+      context.arc(this.x + step, this.y + this.h/2, this.waveLineWidth, 0, Math.PI*2);
+      context.fill();
+      cl(this.x + step);
+    }
+    cl('wave-dots - E');
     //
     //context.translate(rx + w/2, ry + h/2);  // centre of rect
     //context.beginPath();
@@ -150,6 +156,22 @@ class MathsTile {
     //context.fillStyle = this.typeColor;
     //context.fill();
     //
+    
+    context.beginPath();
+    context.arc(this.x + this.w/2, this.y + this.h/2, this.rad, 0, Math.PI*2);    
+    //context.strokeStyle = 'black';
+    //context.stroke();
+    context.fillStyle = 'red';
+    context.fill();
+    
+    
+    // show translate place
+    context.beginPath();
+    context.fillStyle = 'orange';
+    context.arc(this.x + this.w/2, this.y + this.h/2, 10, 0, Math.PI*2);
+    //context.arc(0, 0, 10, 0, 2*Math.PI);
+    context.fill();
+    
     context.restore();
   }
     
