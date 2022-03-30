@@ -2,25 +2,24 @@
 ### Aim
 Try and reproduce something like this page [here](https://soulwire.co.uk/math-for-motion/) from Justin Windle
 A creative developer whos work I was introduced to doing this course.
-
   
-### 1. Create a MathsTile class
-Create a frame border for the tile - prototyping.
-Centre a dot - a circular representation of the pulse of the equation.
-Pass an equation callback.
-Equation runs a 360deg/2pi cycle
-Draw line
-  - frequency or wavelength will govern the plot across the tile
-  - and the radius of the pulsing shape - circle in the prior art
-
+### 1. Create a MathsTile class  
+Create a frame border for the tile - prototyping.  
+Centre a dot - a circular representation of the pulse of the equation.  
+Pass an equation callback.  
+Equation runs a 360deg/2pi cycle  
+Draw line  
+  - frequency or wavelength will govern the plot across the tile  
+  - and the radius of the pulsing shape - circle in the prior art  
+[Rough Code for this step](https://github.com/UnacceptableBehaviour/js_canvas/tree/fef9827a151e83704a811ba1b6f1ff0f74a4b191)
   
 ### 2. How to add unit tests maybe?
-
+  
 **Some experiments:**  
 | 1 | 2 | 3 | 
 | - | - | - | 
-| ![sk](https://github.com/UnacceptableBehaviour/js_canvas/blob/master/test_pages/u10_fp_math_functions/images/2022.03.30-19.03.52.png) | ![sk]() | ![sk]() |
-| Code @ [u10_fp_math_functions.js](https://github.com/UnacceptableBehaviour/js_canvas/blob/e41fa1e19bd49fd3987455c2eb2f8b58df2f3d30/test_pages/u10_fp_math_functions/u10_fp_math_functions.js) | Code @ [u10_fp_math_functions.js]() | Code @ [u10_fp_math_functions.js]() |
+| ![sk](https://github.com/UnacceptableBehaviour/js_canvas/blob/master/test_pages/u10_fp_math_functions/images/2022.03.30-19.03.52.png) | ![sk](https://github.com/UnacceptableBehaviour/js_canvas/blob/master/test_pages/u10_fp_math_functions/images/2022.03.30-19.57.16.png) | ![sk](https://github.com/UnacceptableBehaviour/js_canvas/blob/master/test_pages/u10_fp_math_functions/images/2022.03.30-20.47.30.png) |
+| Code @ [u10_fp_math_functions.js](https://github.com/UnacceptableBehaviour/js_canvas/blob/e41fa1e19bd49fd3987455c2eb2f8b58df2f3d30/test_pages/u10_fp_math_functions/u10_fp_math_functions.js) | Code @ [u10_fp_math_functions.js](https://github.com/UnacceptableBehaviour/js_canvas/tree/fef9827a151e83704a811ba1b6f1ff0f74a4b191) | Code @ [u10_fp_math_functions.js](https://github.com/UnacceptableBehaviour/js_canvas/tree/fef9827a151e83704a811ba1b6f1ff0f74a4b191) |
 | ![sk]() | ![sk]() | ![sk]() |
 | Code @ [u10_fp_math_functions.js]() | Code @ [u10_fp_math_functions.js]() | Code @ [u10_fp_math_functions.js]() |
 | ![sk]() | ![sk]() | ![sk]() |
