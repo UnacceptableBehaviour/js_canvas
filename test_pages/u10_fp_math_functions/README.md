@@ -19,8 +19,8 @@ Draw line
 **Some experiments:**  
 | 1 | 2 | 3 | 
 | - | - | - | 
-| ![sk]() | ![sk]() | ![sk]() |
-| Code @ [u10_fp_math_functions.js]() | Code @ [u10_fp_math_functions.js]() | Code @ [u10_fp_math_functions.js]() |
+| ![sk](https://github.com/UnacceptableBehaviour/js_canvas/blob/master/test_pages/u10_fp_math_functions/images/2022.03.30-19.03.52.png) | ![sk]() | ![sk]() |
+| Code @ [u10_fp_math_functions.js](https://github.com/UnacceptableBehaviour/js_canvas/blob/e41fa1e19bd49fd3987455c2eb2f8b58df2f3d30/test_pages/u10_fp_math_functions/u10_fp_math_functions.js) | Code @ [u10_fp_math_functions.js]() | Code @ [u10_fp_math_functions.js]() |
 | ![sk]() | ![sk]() | ![sk]() |
 | Code @ [u10_fp_math_functions.js]() | Code @ [u10_fp_math_functions.js]() | Code @ [u10_fp_math_functions.js]() |
 | ![sk]() | ![sk]() | ![sk]() |
