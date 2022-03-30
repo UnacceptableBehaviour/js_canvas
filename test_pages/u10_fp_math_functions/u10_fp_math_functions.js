@@ -7,7 +7,7 @@ const algos = require('../u9_fp_random_target/lib/algos_sftest');
 
 const settings = {
   dimensions: [ 1048, 1048 ],
-  //animate: true
+  animate: true
 };
 
 // helpers
@@ -42,13 +42,39 @@ const mathSin = (rad) => {
   return Math.sin(rad);
 };
 
+const f1 = (rad) => {
+  return Math.cos(rad);
+};
+
+const f2 = (rad) => {
+  return Math.tan(rad);
+};
+
+const f3 = (rad) => {
+  return Math.sin(Math.pow(8, Math.sin(rad)));
+};
+
+const f4 = (rad) => {
+  return Math.sqrt(rad);
+};
+
+
 
 const sketch = ({ context, width, height }) => {
   
   const mathTiles = [];
-  const agents = Array.from({length: 9}, (e) => new MathsTile(0, 0, height/4, e) );
+  //const agents = Array.from({length: 9}, (e) => new MathsTile(0, 0, height/4, e) );
 
+  cl('check maths funcs - S')
+  cl(mathSin(Math.PI));
+  cl(f1(Math.PI));
+  cl(f2(Math.PI));
+  cl(f4(Math.PI));
+  cl('check maths funcs - E')
   mathTiles.push( new MathsTile(50, 50, height/4, mathSin) );
+  mathTiles.push( new MathsTile(250, 50, height/4, f1) );
+  mathTiles.push( new MathsTile(50, 250, height/4, f3) );
+  mathTiles.push( new MathsTile(250, 250, height/4, f4) );
   
   return ({ context, width, height }) => {
     context.fillStyle = 'beige';
@@ -56,14 +82,14 @@ const sketch = ({ context, width, height }) => {
     
 
     mathTiles[0].draw(context);
-    
-    cl(agents);
-    
-    
-    
-
-
-
+    mathTiles[0].update();
+    mathTiles[1].draw(context);
+    mathTiles[1].update();
+    mathTiles[2].draw(context);
+    mathTiles[2].update();
+    mathTiles[3].draw(context);
+    mathTiles[3].update();    
+    //cl(agents);
 
     //for (let i = 0; i < params.numAgents; i++) {
     //  const agent = agents[i];
@@ -93,11 +119,24 @@ class MathsTile {
     this.equC = equationCallback;
     //this.rad = equationCallback(1);   // use -1 to 1 or rads?
     this.rad = size / 10;
-    this.amp = size / 2;                // waveform amplitude
+    this.amp = size / 3;                // waveform amplitude
     this.yequ0 = y + size / 2;          // y = 0
     this.waveL = size;
     this.step = 1;
     this.waveLineWidth = 2;
+    this.offset = 0;
+    this.ballScale = 1.3;
+    
+    this.yValues = [];
+    for (let step = 0; step < this.w; step++) {
+      let rads = (step / this.w) * Math.PI*2;
+      let y = this.amp * this.equC(rads);      
+      //   let y = this.amp * Math.sin(rads);
+      //let y = this.amp * Math.tan(rads);
+      //let y = this.amp * Math.cos(rads);
+      //let y = this.amp * equationCallback(rads);
+      this.yValues.push(y);
+    }
   }
   
   draw(context){
@@ -127,49 +166,30 @@ class MathsTile {
     context.strokeStyle = 'black';
     context.stroke();
 
+    
+    context.beginPath();
+    let ballRadius = Math.abs(this.yValues[this.offset]) * this.ballScale;
+    context.arc(this.x + this.w/2, this.y + this.h/2, ballRadius, 0, Math.PI*2);    
+    context.fillStyle = 'pink';
+    context.fill();
+
     // waveform dots    
-    cl('wave-dots - S');
-    cl(`${this.w}`); // - ${} - ${} - ${}`);
-    for (let step = 0; step < this.w; step++) {
+    let index = this.offset;
+    for (let step = 0; step < this.w; step += 2) {
       // draw a dot per step
       context.beginPath();
       context.fillStyle = 'grey';
-      context.arc(this.x + step, this.y + this.h/2, this.waveLineWidth, 0, Math.PI*2);
+      context.arc(this.x + step, this.y + this.h/2 + this.yValues[index], this.waveLineWidth, 0, Math.PI*2);      
       context.fill();
-      cl(this.x + step);
+      index++; 
+      if (index >= this.w) index = 0;
     }
-    cl('wave-dots - E');
-    //
-    //context.translate(rx + w/2, ry + h/2);  // centre of rect
-    //context.beginPath();
-    //// show origin
-    //context.fillStyle = 'red';
-    //context.arc(0, 0, 5, 0, 2*Math.PI);
-    //context.fill();    
-    
-    //context.translate(this.x, this.y, this.w/2, this.h/2);
-    //// was this before translate intorduced
-    //// context.arc(this.pos.x, this.pos.y, this.rad, 0, Math.PI*2); // arc(x,y,r,sAngle,eAngle,counterclockwise);    
-    //context.arc(0,0, this.rad, 0, Math.PI*2);    
-    //context.strokeStyle = 'black';
-    //context.stroke();
-    //context.fillStyle = this.typeColor;
-    //context.fill();
-    //
-    
-    context.beginPath();
-    context.arc(this.x + this.w/2, this.y + this.h/2, this.rad, 0, Math.PI*2);    
-    //context.strokeStyle = 'black';
-    //context.stroke();
-    context.fillStyle = 'red';
-    context.fill();
-    
+      
     
     // show translate place
     context.beginPath();
     context.fillStyle = 'orange';
     context.arc(this.x + this.w/2, this.y + this.h/2, 10, 0, Math.PI*2);
-    //context.arc(0, 0, 10, 0, 2*Math.PI);
     context.fill();
     
     context.restore();
@@ -177,6 +197,8 @@ class MathsTile {
     
   
   update() {
+    this.offset++;
+    if (this.offset >= this.w) this.offset    = 0;
     //this.pos.x += this.vel.x;
     //this.pos.y += this.vel.y;    
     //this.node.updatePos(this.pos.x, this.pos.y);
