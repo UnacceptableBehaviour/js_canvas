@@ -32,22 +32,23 @@ const f11 = (rad) => { return Math.sin(rad); };
 var equA = [f0, f1, f2, f3, f4, f5, f6, f7, f8, f9, f10, f11];
 
 const sketch = ({ context, width, height }) => {
+  // TODO add paint metrics
   
   const mathTiles = [];
 
   const xTiles = 4; const yTiles = 3;
   const spacer = 10;
-  const tW = ( width - ( spacer * xTiles -1 ) ) / xTiles;
-  const tH = ( height - ( spacer * yTiles -1 ) ) / yTiles;
+  const tW = ( width - ( spacer * (xTiles -1) ) ) / xTiles;
+  const tH = ( height - ( spacer * (yTiles -1) ) ) / yTiles;
     //
     // enforce square ??? - TODO - - - - - - - - - - - - - - - - - - - - - - - - -\
                                                                                   //
   let cnt = 0;                                                                    //
-  for (let rectX = 0; rectX < xTiles; rectX++) {                                  //
+  for (let rectX = 0; rectX < xTiles; rectX++) {                                  //     
     for (let rectY = 0; rectY < yTiles; rectY++) {                                //
       mathTiles.push( new MathsTile(rectX * (tW + spacer), rectY * (tH + spacer), tW, equA[cnt]) );
       cnt++;
-      cl(`rX*(tW+spc):${rectX * (tW + spacer)}, rY*(tH+spc):${rectY * (tH + spacer)}, tW:${tW},`);
+      cl(`rX*(tW+spc):${rectX * (tW + spacer)}, rY*(tH+spc):${rectY * (tH + spacer)}, tW:${tW}, spc:${spacer}`);
     }
   }
   
@@ -79,8 +80,9 @@ class MathsTile {
     this.waveLineWidth = 2;
     this.offset = 0;
     this.ballScale = 1.3;
-    this.markers = false;
+    this.markers = true;                // component switches
     this.border = true;
+    this.title = true;
     
     this.yValues = [];
     for (let step = 0; step < this.w; step++) {
@@ -93,7 +95,7 @@ class MathsTile {
   draw(context){
     // isolate drawing behaviour by saving & restoring context
     context.save();
-    context.translate(this.x, this.y);  // move the origin / move canvas under plotter pen - see if it helps to think of it like this!?    
+    //context.translate(this.x, this.y);  
     context.lineWidth = 2;    
 
     // circle    
@@ -103,7 +105,8 @@ class MathsTile {
     context.fillStyle = 'pink';
     context.fill();
 
-    // waveform dots    
+    // TODO make line from last dot to dot
+    // waveform dots
     let index = this.offset;
     for (let step = 0; step < this.w; step += 2) {
       // draw a dot per step
@@ -121,14 +124,15 @@ class MathsTile {
       context.rect(this.x,this.y, this.w,this.h);
       context.strokeStyle = 'black';
       context.stroke();
-    }  
+    }
+    if (this.title) {
+      
+    }
     if (this.markers) {
       // show rect place
       context.beginPath();
-      context.fillStyle = 'green';
-      context.strokeStyle = 'green';
+      context.fillStyle = 'cyan';
       context.arc(this.x, this.y, 10, 0, 2*Math.PI);
-      context.stroke();
       context.fill();
       
       // show translate place
@@ -141,7 +145,7 @@ class MathsTile {
       context.translate(0, 0);     
       context.beginPath();
       context.fillStyle = 'blue';
-      context.arc(0, 0, 10, 0, 2*Math.PI);
+      context.arc(0, 0, 5, 0, 2*Math.PI);
       context.fill();       
     }    
     context.restore();
