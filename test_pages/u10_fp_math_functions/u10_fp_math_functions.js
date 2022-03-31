@@ -91,9 +91,10 @@ class MathsTile {
     this.offset = 0;
     this.ballScale = 1.3;
     
-    this.markers = true;                // component switches
+    this.markers = false;                // component switches / debug
     this.border = true;
     this.titleOn = true;
+    this.textEdgeMarkers = false;
     
     this.yValues = [];
     for (let step = 0; step < this.w; step++) {
@@ -210,21 +211,23 @@ class MathsTile {
     let textMetrics = ctx.measureText(text);
     let textStart = markMiddle;
     
-    // place left vert line
-    ctx.beginPath();
-    ctx.lineWidth = lnW;
-    ctx.strokeStyle = color;
-    ctx.moveTo(xl, y);
-    ctx.lineTo(xl, y+fontSize);  // line depth - marker depth
-    ctx.stroke(); 
-  
-    // place right vert line
-    ctx.beginPath();
-    ctx.lineWidth = lnW;
-    ctx.strokeStyle = color;
-    ctx.moveTo(xr, y);
-    ctx.lineTo(xr, y+fontSize);  // line depth - marker depth
-    ctx.stroke(); 
+    if (this.textEdgeMarkers) {
+      // place left vert line
+      ctx.beginPath();
+      ctx.lineWidth = lnW;
+      ctx.strokeStyle = color;
+      ctx.moveTo(xl, y);
+      ctx.lineTo(xl, y+fontSize);  // line depth - marker depth
+      ctx.stroke(); 
+    
+      // place right vert line
+      ctx.beginPath();
+      ctx.lineWidth = lnW;
+      ctx.strokeStyle = color;
+      ctx.moveTo(xr, y);
+      ctx.lineTo(xr, y+fontSize);  // line depth - marker depth
+      ctx.stroke();
+    }
   
     // place text between if it fits below if not
     ctx.fillStyle = color;
