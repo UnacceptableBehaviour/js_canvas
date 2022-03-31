@@ -14,15 +14,16 @@ Draw line
 [Rough Code for this step](https://github.com/UnacceptableBehaviour/js_canvas/tree/fef9827a151e83704a811ba1b6f1ff0f74a4b191)
   
 ### 2. Draw a set of labelled tile objects with a different equation in each one.
-Create equation array with title & equation callback.  
-Modify MathTile class to take title, display at bottome of tile.  
+Create equation array with title, color & equation callback.  
+Modify MathTile class to take title and display it at bottom of tile.  
 Centre the text, font currently hardcoded.  
-Sit tiles evenly in available display area.  
-Give each 
+Sit tiles evenly in available display area.
+Code starting to look a bit more presentable. [12 tiles 4x3 code]().  
   
-### X. How to add unit tests maybe?
+### 3. How to add unit tests maybe?
 Add paint metrics.  
-Add mode to draw lines from adjacent points, instead of dots.  
+Add mode to draw lines from adjacent points, instead of dots.
+Paint on internal object canvas and copy to main canvas to clip MathTile.
   
 ### X. How to add unit tests maybe?
   
@@ -31,8 +32,8 @@ Add mode to draw lines from adjacent points, instead of dots.
 | - | - | - | 
 | ![sk](https://github.com/UnacceptableBehaviour/js_canvas/blob/master/test_pages/u10_fp_math_functions/images/2022.03.30-19.03.52.png) | ![sk](https://github.com/UnacceptableBehaviour/js_canvas/blob/master/test_pages/u10_fp_math_functions/images/2022.03.30-19.57.16.png) | ![sk](https://github.com/UnacceptableBehaviour/js_canvas/blob/master/test_pages/u10_fp_math_functions/images/2022.03.30-20.47.30.png) |
 | Code @ [u10_fp_math_functions.js](https://github.com/UnacceptableBehaviour/js_canvas/blob/e41fa1e19bd49fd3987455c2eb2f8b58df2f3d30/test_pages/u10_fp_math_functions/u10_fp_math_functions.js) | Code @ [u10_fp_math_functions.js](https://github.com/UnacceptableBehaviour/js_canvas/tree/fef9827a151e83704a811ba1b6f1ff0f74a4b191) | Code @ [u10_fp_math_functions.js](https://github.com/UnacceptableBehaviour/js_canvas/tree/fef9827a151e83704a811ba1b6f1ff0f74a4b191) |
-| ![sk]() | ![sk]() | ![sk]() |
-| Code @ [u10_fp_math_functions.js]() | Code @ [u10_fp_math_functions.js]() | Code @ [u10_fp_math_functions.js]() |
+| ![sk](https://github.com/UnacceptableBehaviour/js_canvas/blob/master/test_pages/u10_fp_math_functions/images/2022.03.31-14.37.35.png) | ![sk](https://github.com/UnacceptableBehaviour/js_canvas/blob/master/test_pages/u10_fp_math_functions/images/2022.03.31-14.41.13.png) | ![sk](https://github.com/UnacceptableBehaviour/js_canvas/blob/master/test_pages/u10_fp_math_functions/images/2022.03.31-14.51.30.png) |
+| Debug markers in place. | Color scheme added. | Code @ [u10_fp_math_functions.js](https://github.com/UnacceptableBehaviour/js_canvas/tree/f061f6283458a79b2545d58a226f466026898292) |
 | ![sk]() | ![sk]() | ![sk]() |
 | Code @ [u10_fp_math_functions.js]() | Code @ [u10_fp_math_functions.js]() | Code @ [u10_fp_math_functions.js]() |
   
