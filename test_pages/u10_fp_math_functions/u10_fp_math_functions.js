@@ -16,20 +16,25 @@ const cl = (str) => {
 };
 
 
-const f0 = (rad) => { return Math.sin(rad); };
-const f1 = (rad) => { return Math.cos(rad); };
-const f2 = (rad) => { return Math.tan(rad); };
-const f3 = (rad) => { return Math.sin(Math.pow(8, Math.sin(rad))); };
-const f4 = (rad) => { return (Math.sqrt(rad)/rad + Math.sqrt(rad)/2) /5; };
-const f5 = (rad) => { return (Math.floor((Math.sin(rad) * 5) +1) /5); };
-const f6 = (rad) => { return Math.sin(rad); };
-const f7 = (rad) => { return Math.sin(rad); };
-const f8 = (rad) => { return Math.sin(rad); };
-const f9 = (rad) => { return Math.sin(rad); };
-const f10 = (rad) => { return Math.sin(rad); };
-const f11 = (rad) => { return Math.sin(rad); };
+const EQU_COLOR = 0;
+const EQU_TITLE = 1;
+const EQU_EQUATION = 2;
+var equA = [[ '#99650D', 'sin(x)',                        (rad) => { return Math.sin(rad); } ],
+            [ '#E89E00', 'cos(x)',                        (rad) => { return Math.cos(rad); } ],
+            [ '#F4EC00', 'tan(x)',                        (rad) => { return Math.tan(rad); } ],
+            [ '#5E2100', 'sin(sin(x)^8)',                 (rad) => { return Math.sin(Math.pow(8, Math.sin(rad))); } ],
+            [ '#600000', '(sqrt(x)/x + sqrt(x)/2) / 5',   (rad) => { return (Math.sqrt(rad)/rad + Math.sqrt(rad)/2) /5; } ],
+            [ '#630E32', 'floor((sin(rad) * 5) +1) / 5))',(rad) => { return (Math.floor((Math.sin(rad) * 5) +1) /5); } ],
+            [ '#840919', 'sin(rad) + cos(rad)/4',         (rad) => { return Math.sin(rad) + Math.cos(rad*4)/4; } ],
+            [ '#AA842A', 'sin(x*10)',                     (rad) => { return Math.sin(rad*10); } ],
+            [ '#C17700', 'sin(x)+cos(rad*10)/4',          (rad) => { return Math.sin(rad)+Math.cos(rad*10)/4; } ],
+            [ '#F4C300', 'sec(x)',                        (rad) => { return (1 / Math.cos(rad)) /20; } ],
+            [ '#93832F', 'cos(sin(x)^4)',                 (rad) => { return Math.cos(Math.pow(4, Math.sin(rad))); } ],
+            [ '#3D2409', 'f(x)',                        (rad) => { return (Math.sqrt(rad)/rad + Math.sqrt(rad)/2) /3 + (Math.sin(rad*10)/4) } ],
+            ];
 
-var equA = [f0, f1, f2, f3, f4, f5, f6, f7, f8, f9, f10, f11];
+
+
 
 const sketch = ({ context, width, height }) => {
   // TODO add paint metrics
@@ -46,7 +51,7 @@ const sketch = ({ context, width, height }) => {
   let cnt = 0;                                                                    //
   for (let rectX = 0; rectX < xTiles; rectX++) {                                  //      
     for (let rectY = 0; rectY < yTiles; rectY++) {                                //
-      mathTiles.push( new MathsTile(rectX * (tW + spacer), rectY * (tH + spacer), tW, equA[cnt]) );
+      mathTiles.push( new MathsTile(rectX * (tW + spacer), rectY * (tH + spacer), tW, equA[cnt][EQU_EQUATION], equA[cnt][EQU_TITLE], equA[cnt][EQU_COLOR]) );
       cnt++;
       cl(`rX*(tW+spc):${rectX * (tW + spacer)}, rY*(tH+spc):${rectY * (tH + spacer)}, tW:${tW}, spc:${spacer}`);
     }
@@ -66,15 +71,17 @@ const sketch = ({ context, width, height }) => {
 
 
 class MathsTile {
-  constructor(x, y, size, equationCallback, title ){
+  constructor(x, y, size, equationCallback, title, color ){
     this.x = x;
     this.y = y;
     this.w = size;
     this.h = size;
+    this.radialColor = color;
     this.equC = equationCallback;       // use -1 to 1 or rads?
-    this.title = 'sin(x)';
-    this.titleX = x + size / 2.5;
-    this.titleY = y + size * 1.1;
+    this.title = title;
+    this.fontSz = 20;
+    //this.titleX = x + size / 2.5;
+    //this.titleY = y + size * 1.1;
     this.rad = size / 10;
     this.amp = size / 3;                // waveform amplitude
     this.yequ0 = y + size / 2;          // y = 0
@@ -83,6 +90,7 @@ class MathsTile {
     this.waveDotWidth = 2;
     this.offset = 0;
     this.ballScale = 1.3;
+    
     this.markers = true;                // component switches
     this.border = true;
     this.titleOn = true;
@@ -93,6 +101,11 @@ class MathsTile {
       let y = this.amp * this.equC(rads);      
       this.yValues.push(y);
     }
+    
+    // data source canvas
+    // TODO create local canvas to clip drawing
+    this.tileCanvas = document.createElement('canvas');
+    this.tileContext = this.tileCanvas.getContext('2d');
   }
   
   draw(context){
@@ -100,7 +113,7 @@ class MathsTile {
     context.save();
     
     let fontSize = (this.h/10).toString();
-    context.font = `${fontSize}px serif`;    
+    context.font = `${fontSize}px Arial`;    // was serif
     
     //context.translate(this.x, this.y);  
     context.lineWidth = 2;    
@@ -109,7 +122,7 @@ class MathsTile {
     context.beginPath();
     let ballRadius = Math.abs(this.yValues[this.offset]) * this.ballScale;
     context.arc(this.x + this.w/2, this.y + this.h/2, ballRadius, 0, Math.PI*2);    
-    context.fillStyle = 'pink';
+    context.fillStyle = this.radialColor;
     context.fill();
 
     // TODO make line from last dot to dot
@@ -132,10 +145,12 @@ class MathsTile {
       context.strokeStyle = 'black';
       context.stroke();
     }
-    if (this.titleOn) {
-      
-      context.fillStyle = 'black';
+    if (this.titleOn) {      
+      context.fillStyle = 'blue';
       context.fillText(this.title, this.titleX, this.titleY);
+      //placeCentreText(ctx, text, xl, xr, y, color, fontSize, lnW = 2)
+      // left parameter in so can pull it out as a function later
+      this.placeCentreText(context, this.title, this.x, this.x + this.w, this.y + this.h, 'black', this.fontSz);
     }
     if (this.markers) {
       // show rect place
@@ -174,6 +189,47 @@ class MathsTile {
   }
   borderOnOff(tf){
     this.border = tf && true;
+  }
+  
+  placeCentreText(ctx, text, xl, xr, y, color, fontSize, lnW = 2) {
+    
+    //   |                                 |      < fontSize(epth)
+    //   xl             texts              xr
+    //                    |
+    //                    ^ markMidddle
+    ctx.save();
+    
+    // font def
+    //let fontSz = (fontSize*2).toString();
+    ctx.font = `${fontSize}px Arial`;
+    ctx.textBaseline = 'middle'; // hanging
+    ctx.textAlign = 'center';
+  
+    
+    let markMiddle = xl + (xr - xl) / 2;
+    let textMetrics = ctx.measureText(text);
+    let textStart = markMiddle;
+    
+    // place left vert line
+    ctx.beginPath();
+    ctx.lineWidth = lnW;
+    ctx.strokeStyle = color;
+    ctx.moveTo(xl, y);
+    ctx.lineTo(xl, y+fontSize);  // line depth - marker depth
+    ctx.stroke(); 
+  
+    // place right vert line
+    ctx.beginPath();
+    ctx.lineWidth = lnW;
+    ctx.strokeStyle = color;
+    ctx.moveTo(xr, y);
+    ctx.lineTo(xr, y+fontSize);  // line depth - marker depth
+    ctx.stroke(); 
+  
+    // place text between if it fits below if not
+    ctx.fillStyle = color;
+    ctx.fillText(text, textStart, y+fontSize);
+    ctx.restore();
   }  
 }
 
