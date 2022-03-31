@@ -44,7 +44,7 @@ const sketch = ({ context, width, height }) => {
     // enforce square ??? - TODO - - - - - - - - - - - - - - - - - - - - - - - - -\
                                                                                   //
   let cnt = 0;                                                                    //
-  for (let rectX = 0; rectX < xTiles; rectX++) {                                  //     
+  for (let rectX = 0; rectX < xTiles; rectX++) {                                  //      
     for (let rectY = 0; rectY < yTiles; rectY++) {                                //
       mathTiles.push( new MathsTile(rectX * (tW + spacer), rectY * (tH + spacer), tW, equA[cnt]) );
       cnt++;
@@ -66,23 +66,26 @@ const sketch = ({ context, width, height }) => {
 
 
 class MathsTile {
-  constructor(x, y, size, equationCallback ){
+  constructor(x, y, size, equationCallback, title ){
     this.x = x;
     this.y = y;
     this.w = size;
     this.h = size;
     this.equC = equationCallback;       // use -1 to 1 or rads?
+    this.title = 'sin(x)';
+    this.titleX = x + size / 2.5;
+    this.titleY = y + size * 1.1;
     this.rad = size / 10;
     this.amp = size / 3;                // waveform amplitude
     this.yequ0 = y + size / 2;          // y = 0
     this.waveL = size;
     this.step = 1;
-    this.waveLineWidth = 2;
+    this.waveDotWidth = 2;
     this.offset = 0;
     this.ballScale = 1.3;
     this.markers = true;                // component switches
     this.border = true;
-    this.title = true;
+    this.titleOn = true;
     
     this.yValues = [];
     for (let step = 0; step < this.w; step++) {
@@ -95,6 +98,10 @@ class MathsTile {
   draw(context){
     // isolate drawing behaviour by saving & restoring context
     context.save();
+    
+    let fontSize = (this.h/10).toString();
+    context.font = `${fontSize}px serif`;    
+    
     //context.translate(this.x, this.y);  
     context.lineWidth = 2;    
 
@@ -112,7 +119,7 @@ class MathsTile {
       // draw a dot per step
       context.beginPath();
       context.fillStyle = 'grey';
-      context.arc(this.x + step, this.y + this.h/2 + this.yValues[index], this.waveLineWidth, 0, Math.PI*2);      
+      context.arc(this.x + step, this.y + this.h/2 + this.yValues[index], this.waveDotWidth, 0, Math.PI*2);      
       context.fill();
       index++; 
       if (index >= this.w) index = 0;
@@ -125,8 +132,10 @@ class MathsTile {
       context.strokeStyle = 'black';
       context.stroke();
     }
-    if (this.title) {
+    if (this.titleOn) {
       
+      context.fillStyle = 'black';
+      context.fillText(this.title, this.titleX, this.titleY);
     }
     if (this.markers) {
       // show rect place
