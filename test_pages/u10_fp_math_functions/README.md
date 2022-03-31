@@ -13,7 +13,18 @@ Draw line
   - and the radius of the pulsing shape - circle in the prior art  
 [Rough Code for this step](https://github.com/UnacceptableBehaviour/js_canvas/tree/fef9827a151e83704a811ba1b6f1ff0f74a4b191)
   
-### 2. How to add unit tests maybe?
+### 2. Draw a set of labelled tile objects with a different equation in each one.
+Create equation array with title & equation callback.  
+Modify MathTile class to take title, display at bottome of tile.  
+Centre the text, font currently hardcoded.  
+Sit tiles evenly in available display area.  
+Give each 
+  
+### X. How to add unit tests maybe?
+Add paint metrics.  
+Add mode to draw lines from adjacent points, instead of dots.  
+  
+### X. How to add unit tests maybe?
   
 **Some experiments:**  
 | 1 | 2 | 3 | 
@@ -30,6 +41,9 @@ To see short animation navigate [here]() and click DOWNLOAD for mp4. (Ver: add H
 
 
 # Resources
+**Text Metrics**  
+https://developer.mozilla.org/en-US/docs/Web/API/TextMetrics
+
 **NPM package manager**  
 https://www.digitalocean.com/community/tutorials/how-to-use-node-js-modules-with-npm-and-package-json
   

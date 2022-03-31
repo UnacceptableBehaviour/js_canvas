@@ -5,11 +5,6 @@ const Tweakpane = require('tweakpane');
 
 const algos = require('../u9_fp_random_target/lib/algos_sftest');
 
-const settings = {
-  dimensions: [ 1024, 1024 ],
-  animate: true
-};
-
 // helpers
 const cl = (str) => {
   console.log(str);
@@ -19,9 +14,10 @@ const cl = (str) => {
 const EQU_COLOR = 0;
 const EQU_TITLE = 1;
 const EQU_EQUATION = 2;
-var equA = [[ '#99650D', 'sin(x)',                        (rad) => { return Math.sin(rad); } ],
-            [ '#E89E00', 'cos(x)',                        (rad) => { return Math.cos(rad); } ],
-            [ '#F4EC00', 'tan(x)',                        (rad) => { return Math.tan(rad); } ],
+//              color     title                            anonymous maths function taking radians
+var equA = [[ '#F4EC00', 'tan(x)',                        (rad) => { return Math.tan(rad); } ],
+            [ '#99650D', 'sin(x)',                        (rad) => { return Math.sin(rad); } ],
+            [ '#E89E00', 'cos(x)',                        (rad) => { return Math.cos(rad); } ],            
             [ '#5E2100', 'sin(sin(x)^8)',                 (rad) => { return Math.sin(Math.pow(8, Math.sin(rad))); } ],
             [ '#600000', '(sqrt(x)/x + sqrt(x)/2) / 5',   (rad) => { return (Math.sqrt(rad)/rad + Math.sqrt(rad)/2) /5; } ],
             [ '#630E32', 'floor((sin(rad) * 5) +1) / 5))',(rad) => { return (Math.floor((Math.sin(rad) * 5) +1) /5); } ],
@@ -30,30 +26,51 @@ var equA = [[ '#99650D', 'sin(x)',                        (rad) => { return Math
             [ '#C17700', 'sin(x)+cos(rad*10)/4',          (rad) => { return Math.sin(rad)+Math.cos(rad*10)/4; } ],
             [ '#F4C300', 'sec(x)',                        (rad) => { return (1 / Math.cos(rad)) /20; } ],
             [ '#93832F', 'cos(sin(x)^4)',                 (rad) => { return Math.cos(Math.pow(4, Math.sin(rad))); } ],
-            [ '#3D2409', 'f(x)',                        (rad) => { return (Math.sqrt(rad)/rad + Math.sqrt(rad)/2) /3 + (Math.sin(rad*10)/4) } ],
+            [ '#3D2409', 'f(x)',                          (rad) => { return (Math.sqrt(rad)/rad + Math.sqrt(rad)/2) /3 + (Math.sin(rad*10)/4); }  ],
             ];
 
+function getOptTileLayoutInfo(canvWidth, canvHeight, noOfXTiles, noOfYTiles, minSpace, fontSize=20) {
+  // tiles should have a space between them and
+  // enough space to write the equation below them  
+  let yCombinedSpace = minSpace + fontSize *1.5;
+  let maxW = ( canvWidth - ( minSpace * (noOfXTiles -1) ) ) / noOfXTiles;
+  let maxH = ( canvHeight - ( yCombinedSpace * noOfYTiles )) / noOfYTiles;      // all tile have a title
+  let size = Math.floor(Math.min(maxW,maxH));
+  
+  let spaceX = Math.floor((canvWidth - size*noOfXTiles) / noOfXTiles);
+  let spaceY = Math.floor((canvHeight - size*noOfYTiles) / noOfYTiles);
+  return [size, spaceX, spaceY];
+}
 
-
+const settings = {
+  //dimensions: [ 1600, 1024 ],
+  //dimensions: [ 1024, 1024 ],
+  dimensions: [ 1280, 1024 ],
+  //dimensions: [ 2000, 1224 ],
+  animate: true
+};
+const xTiles = 4;
+const yTiles = 3;
+const minSpacerSize = 10;
 
 const sketch = ({ context, width, height }) => {
   // TODO add paint metrics
   
-  const mathTiles = [];
+  const mathTiles = [];  
+  const [size, spaceX, spaceY] = getOptTileLayoutInfo(width, height, xTiles, yTiles, minSpacerSize);
 
-  const xTiles = 4; const yTiles = 3;
-  const spacer = 10;
-  const tW = ( width - ( spacer * (xTiles -1) ) ) / xTiles;
-  const tH = ( height - ( spacer * (yTiles -1) ) ) / yTiles;
-    //
-    // enforce square ??? - TODO - - - - - - - - - - - - - - - - - - - - - - - - -\
-                                                                                  //
-  let cnt = 0;                                                                    //
-  for (let rectX = 0; rectX < xTiles; rectX++) {                                  //      
-    for (let rectY = 0; rectY < yTiles; rectY++) {                                //
-      mathTiles.push( new MathsTile(rectX * (tW + spacer), rectY * (tH + spacer), tW, equA[cnt][EQU_EQUATION], equA[cnt][EQU_TITLE], equA[cnt][EQU_COLOR]) );
+  let cnt = 0;
+  for (let rectX = 0; rectX < xTiles; rectX++) {
+    for (let rectY = 0; rectY < yTiles; rectY++) {
+      mathTiles.push( new MathsTile(rectX * (size + spaceX) + (spaceX/2),   // centre w/ + (spaceX/2) offset
+                                    rectY * (size + spaceY),
+                                    size,
+                                    equA[cnt][EQU_EQUATION],
+                                    equA[cnt][EQU_TITLE],
+                                    equA[cnt][EQU_COLOR])
+                     );
       cnt++;
-      cl(`rX*(tW+spc):${rectX * (tW + spacer)}, rY*(tH+spc):${rectY * (tH + spacer)}, tW:${tW}, spc:${spacer}`);
+      cl(`pX:${rectX * (size + spaceX)}, pY:${rectY * (size + spaceY)}, size:${size}, spcX-Y:${spaceX}-${spaceY}`);
     }
   }
   
@@ -76,27 +93,25 @@ class MathsTile {
     this.y = y;
     this.w = size;
     this.h = size;
+    
     this.radialColor = color;
     this.equC = equationCallback;       // use -1 to 1 or rads?
+    
     this.title = title;
     this.fontSz = 20;
-    //this.titleX = x + size / 2.5;
-    //this.titleY = y + size * 1.1;
-    this.rad = size / 10;
+
     this.amp = size / 3;                // waveform amplitude
-    this.yequ0 = y + size / 2;          // y = 0
-    this.waveL = size;
-    this.step = 1;
     this.waveDotWidth = 2;
-    this.offset = 0;
-    this.ballScale = 1.3;
+    this.offset = 0;                    // plot start point - increased to creat animation
+    this.ballScale = 1.3;               // compared to waveform amplitude
     
-    this.markers = false;                // component switches / debug
+    // component switches / debug
+    this.markers = false;
+    this.textEdgeMarkers = false;
     this.border = true;
     this.titleOn = true;
-    this.textEdgeMarkers = false;
-    
-    this.yValues = [];
+
+    this.yValues = [];                  // calculate the plot values once!
     for (let step = 0; step < this.w; step++) {
       let rads = (step / this.w) * Math.PI*2;
       let y = this.amp * this.equC(rads);      
@@ -126,7 +141,7 @@ class MathsTile {
     context.fillStyle = this.radialColor;
     context.fill();
 
-    // TODO make line from last dot to dot
+    // TODO make line from last dot to dot - do paint metrics first
     // waveform dots
     let index = this.offset;
     for (let step = 0; step < this.w; step += 2) {
@@ -147,8 +162,6 @@ class MathsTile {
       context.stroke();
     }
     if (this.titleOn) {      
-      context.fillStyle = 'blue';
-      context.fillText(this.title, this.titleX, this.titleY);
       //placeCentreText(ctx, text, xl, xr, y, color, fontSize, lnW = 2)
       // left parameter in so can pull it out as a function later
       this.placeCentreText(context, this.title, this.x, this.x + this.w, this.y + this.h, 'black', this.fontSz);
@@ -192,8 +205,7 @@ class MathsTile {
     this.border = tf && true;
   }
   
-  placeCentreText(ctx, text, xl, xr, y, color, fontSize, lnW = 2) {
-    
+  placeCentreText(ctx, text, xl, xr, y, color, fontSize, lnW = 2) {    
     //   |                                 |      < fontSize(epth)
     //   xl             texts              xr
     //                    |
@@ -201,12 +213,10 @@ class MathsTile {
     ctx.save();
     
     // font def
-    //let fontSz = (fontSize*2).toString();
     ctx.font = `${fontSize}px Arial`;
     ctx.textBaseline = 'middle'; // hanging
     ctx.textAlign = 'center';
-  
-    
+      
     let markMiddle = xl + (xr - xl) / 2;
     let textMetrics = ctx.measureText(text);
     let textStart = markMiddle;
