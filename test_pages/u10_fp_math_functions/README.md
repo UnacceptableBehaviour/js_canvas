@@ -44,6 +44,9 @@ To see short animation navigate [here]() and click DOWNLOAD for mp4. (Ver: add H
 # Resources
 **Text Metrics**  
 https://developer.mozilla.org/en-US/docs/Web/API/TextMetrics
+  
+**Canvas - Clipping**
+https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/clip
 
 **NPM package manager**  
 https://www.digitalocean.com/community/tutorials/how-to-use-node-js-modules-with-npm-and-package-json
