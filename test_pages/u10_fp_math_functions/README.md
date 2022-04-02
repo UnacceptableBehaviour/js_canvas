@@ -8,22 +8,24 @@ Create a frame border for the tile - prototyping.
 Centre a dot - a circular representation of the pulse of the equation.  
 Pass an equation callback.  
 Equation runs a 360deg/2pi cycle  
-Draw line  
-  - frequency or wavelength will govern the plot across the tile  
-  - and the radius of the pulsing shape - circle in the prior art  
+Draw line:  
+Frequency or wavelength will govern the plot across the tile.  
+The value at x=0 will govern the radius of the pulsing shape. (a circle in the [prior art](https://soulwire.co.uk/math-for-motion/))  
 [Rough Code for this step](https://github.com/UnacceptableBehaviour/js_canvas/tree/fef9827a151e83704a811ba1b6f1ff0f74a4b191)
   
-### 2. Draw a set of labelled tile objects with a different equation in each one.
+### 2. Draw a set of labelled tile objects with a different equation in each one.  
 Create equation array with title, color & equation callback.  
 Modify MathTile class to take title and display it at bottom of tile.  
 Centre the text, font currently hardcoded.  
-Sit tiles evenly in available display area.
-Code starting to look a bit more presentable. [CODE: 12 tiles 4x3](https://github.com/UnacceptableBehaviour/js_canvas/blob/f061f6283458a79b2545d58a226f466026898292/test_pages/u10_fp_math_functions/u10_fp_math_functions.js).  
+Sit tiles evenly in available display area.  
+Code starting to look a bit more presentable.  
+[CODE: 12 tiles 4x3](https://github.com/UnacceptableBehaviour/js_canvas/blob/f061f6283458a79b2545d58a226f466026898292/test_pages/u10_fp_math_functions/u10_fp_math_functions.js).  
   
-### 3. How to add unit tests maybe?
-Add paint metrics.  
+### 3. How to do metrics on requestAnimationFrame (RAF) call?
+Add paint metrics. Take a baseline.  
 Add mode to draw lines from adjacent points, instead of dots.  
-Paint on internal object canvas and copy to main canvas to clip MathTile.  
+Paint on internal object canvas and copy to main canvas to clip MathTile.
+Redo metrics, improved?  
   
 ### X. How to add unit tests maybe?
   
@@ -48,6 +50,20 @@ https://developer.mozilla.org/en-US/docs/Web/API/TextMetrics
 **Canvas - Clipping**
 https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/clip
 
+**Chrome Performance Analysis**
+https://www.codetd.com/en/article/9044611
+FP (First Paint) for the first time to draw
+FCP (First Contentful Paint) for the first time content to draw
+LCP (Largest Contentful Paint) maximum content rendering
+DCL (DOMContentLoaded)
+FMP (First Meaningful Paint) first qualifying draw
+L (onLoad)
+TTI (Time to Interactive) interactive time
+TBT (Total Blocking Time) the total duration of obstruction page
+FID (First Input Delay) Input delay for the first time
+CLS (Cumulative Layout Shift) the cumulative offset layout
+SI (Speed Index)
+  
 **NPM package manager**  
 https://www.digitalocean.com/community/tutorials/how-to-use-node-js-modules-with-npm-and-package-json
   
