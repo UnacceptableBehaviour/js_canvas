@@ -1,10 +1,3 @@
-const canvasSketch = require('canvas-sketch');
-const random = require('canvas-sketch-util/random');
-const math = require('canvas-sketch-util/math');
-const Tweakpane = require('tweakpane');
-
-const algos = require('../u9_fp_random_target/lib/algos_sftest');
-
 // helpers
 const cl = (str) => {
   console.log(str);
@@ -71,69 +64,26 @@ const xTiles = 4;
 const yTiles = 3;
 const minSpacerSize = 10;
 
-const sketch = ({ context, width, height }) => {  
-  
-  const mathTiles = [];  
-  const [size, spaceX, spaceY] = getOptTileLayoutInfo(width, height, xTiles, yTiles, minSpacerSize);
+console.log(`Main: ${document.body}`);
 
-  let cnt = 0;
-  for (let rectX = 0; rectX < xTiles; rectX++) {
-    for (let rectY = 0; rectY < yTiles; rectY++) {
-      mathTiles.push( new MathsTile(rectX * (size + spaceX) + (spaceX/2),   // centre w/ + (spaceX/2) offset
-                                    rectY * (size + spaceY),
-                                    size,
-                                    equA[cnt][EQU_EQUATION],
-                                    equA[cnt][EQU_TITLE],
-                                    equA[cnt][EQU_COLOR])
-                     );
-      cnt++;
-      cl(`pX:${rectX * (size + spaceX)}, pY:${rectY * (size + spaceY)}, size:${size}, spcX-Y:${spaceX}-${spaceY}`);
-    }
+class Canvas {
+  constructor(parent = document.body, width = settings.dimensions[0], height = settings.dimensions[1]) {
+    console.log(`Canvas:\nparent: ${parent} - ${document.body}`);
+    this.canvas = document.createElement('canvas');
+    this.canvas.width = width;
+    this.canvas.height = height;
+    parent.appendChild(this.canvas);
+    this.ctx = this.canvas.getContext('2d');
+  }
+
+  getContext(){
+    return this.ctx;
   }
   
-  cl('setTimeout(resetWatermarks)')
-  setTimeout(resetWatermarks, 5000);
-  
-  return ({ context, width, height }) => {
-    rafStartTime = performance.now();                                           //
-    // metrics - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -//
-    
-    context.fillStyle = 'beige';
-    context.fillRect(0, 0, width, height);
-    
-    for (let t = 0; t < mathTiles.length; t++) {
-    //for (let t = 0; t < 6; t++) {
-      mathTiles[t].draw(context);
-      mathTiles[t].update();
-    }
-  
-    // metrics - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -//
-    rafFinishTime = performance.now();                                          //
-    rafCount++;                                                                 //
-    rafFrameTime = rafFinishTime - rafStartTime;                                //
-    rafTotalTime += rafFrameTime;                                               //
-    rafAveFrameTime = rafTotalTime / rafCount;                                  //
-    if (rafFrameTime < rafLowWatermark) rafLowWatermark = rafFrameTime;         //
-    if (rafFrameTime > rafHighWatermark) rafHighWatermark = rafFrameTime;       //
-    let idx = Math.floor(rafFrameTime);                                         //
-    if (rafBuckets[idx] === undefined)                                          //
-      rafBuckets[idx] = 1;                                                      //
-    else{                                                                       //
-      rafBuckets[idx]++;                                                        //
-    }                                                                           //
-    if (rafCount % 60 === 0) {                                                  //
-      cl(performance.now());                                                    //
-      cl(`This frame:   ${rafFrameTime}`);                                      //
-      cl(`Average frame:${rafAveFrameTime}`);                                   //
-      cl(`Low tide:     ${rafLowWatermark}`);                                   //
-      cl(`High tide:    ${rafHighWatermark}`);                                  //
-      cl('rafBuckets');                                                         //
-      cl(rafBuckets);                                                           //
-    }
-  };
-};
-
-
+  getCanvasWH(){
+    return [this.canvas.width, this.canvas.height];
+  }
+}
 
 class MathsTile {
   constructor(x, y, size, equationCallback, title, color ){
@@ -294,8 +244,63 @@ class MathsTile {
   }  
 }
 
-//createpane();    
-canvasSketch(sketch, settings);
+const runAnimation = animation => {
+  let lastTime = null;
+  const frame = time => {
+    if (lastTime !== null) {
+      const timeStep = Math.min(100, time - lastTime) / 1000;
 
-cl('IMPORTED MODULE: algos_sftest');
-algos.algoInfo();
+      // return false from animation to stop
+      if (animation(timeStep) === false) {
+        return;
+      }
+    }
+    lastTime = time;
+    requestAnimationFrame(frame);     // re-insert frame callback in animation Q
+  };
+  requestAnimationFrame(frame);       // start animation
+};
+
+const random = (max = 9, min = 0) => {
+  return Math.floor(Math.random() * (max - min + 1) + min);
+};
+
+
+//const mathTiles = ({ width = 400, height = 400, parent = document.body, count = 50 } = {}) => {
+const mathTiles = () => {
+  const display = new Canvas();
+  const [width, height] = display.getCanvasWH();  
+  const mathTiles = [];  
+  const [size, spaceX, spaceY] = getOptTileLayoutInfo(width, height, xTiles, yTiles, minSpacerSize);
+
+  let cnt = 0;
+  for (let rectX = 0; rectX < xTiles; rectX++) {
+    for (let rectY = 0; rectY < yTiles; rectY++) {
+      mathTiles.push( new MathsTile(rectX * (size + spaceX) + (spaceX/2),   // centre w/ + (spaceX/2) offset
+                                    rectY * (size + spaceY),
+                                    size,
+                                    equA[cnt][EQU_EQUATION],
+                                    equA[cnt][EQU_TITLE],
+                                    equA[cnt][EQU_COLOR])
+                     );
+      cnt++;
+      cl(`pX:${rectX * (size + spaceX)}, pY:${rectY * (size + spaceY)}, size:${size}, spcX-Y:${spaceX}-${spaceY}`);
+    }
+  }
+  
+  runAnimation(time => {
+    //state = state.update(time);
+    //display.sync(state);
+    
+    let context = display.getContext();
+    context.fillStyle = 'beige';
+    context.fillRect(0, 0, width, height);    
+    //for (let t = 0; t < mathTiles.length; t++) {
+    for (let t = 0; t < 4; t++) {
+      mathTiles[t].draw(context);
+      mathTiles[t].update();
+    }    
+  });
+};
+
+mathTiles();
