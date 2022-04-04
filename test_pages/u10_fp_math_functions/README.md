@@ -35,9 +35,6 @@ To see short animation navigate [here]() and click DOWNLOAD for mp4. (Ver: add H
   
 ### 3. How to do metrics on requestAnimationFrame (RAF) call?
 Add paint metrics. Take a baseline.  
-Add mode to draw lines from adjacent points, instead of dots.  
-Paint on internal object canvas and copy to main canvas to clip MathTile.  
-Redo metrics, improved?
   
 Initial metrics using ```performance.now()``` using high & low watermarks to get a feel for size of bucket bands,
 a counter bucket with 1ms slots:
@@ -91,29 +88,32 @@ Test with 6 & 12 tile - quick check to see if there are any overheads I'm unawar
 | - | - |
 | ![6 tile metrics](https://github.com/UnacceptableBehaviour/js_canvas/blob/master/test_pages/u10_fp_math_functions/images/metrics_6_tiles.png) | ![12 tile metrics](https://github.com/UnacceptableBehaviour/js_canvas/blob/master/test_pages/u10_fp_math_functions/images/metrics_12_tiles.png) |
   
-### X. How to add unit tests maybe?
-
+### 4. Make Optimisations
+Add mode to draw lines from adjacent points, instead of circles/dots for each point.  
+Paint on internal object canvas and copy to main canvas to clip MathTile.
+Or use clipping.
+Redo metrics, improved?
 
 # Resources
 **Text Metrics**  
 https://developer.mozilla.org/en-US/docs/Web/API/TextMetrics
   
-**Canvas - Clipping**
+**Canvas - Clipping**  
 https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/clip
 
 **Chrome Performance Analysis**
-https://www.codetd.com/en/article/9044611
-FP (First Paint) for the first time to draw
-FCP (First Contentful Paint) for the first time content to draw
-LCP (Largest Contentful Paint) maximum content rendering
-DCL (DOMContentLoaded)
-FMP (First Meaningful Paint) first qualifying draw
-L (onLoad)
-TTI (Time to Interactive) interactive time
-TBT (Total Blocking Time) the total duration of obstruction page
-FID (First Input Delay) Input delay for the first time
-CLS (Cumulative Layout Shift) the cumulative offset layout
-SI (Speed Index)
+https://www.codetd.com/en/article/9044611  
+**FP**  (First Paint) for the first time to draw  
+**FCP** (First Contentful Paint) for the first time content to draw  
+**LCP** (Largest Contentful Paint) maximum content rendering  
+**DCL** (DOMContentLoaded)  
+**FMP** (First Meaningful Paint) first qualifying draw  
+**L**   (onLoad)  
+**TTI** (Time to Interactive) interactive time  
+**TBT** (Total Blocking Time) the total duration of obstruction page  
+**FID** (First Input Delay) Input delay for the first time  
+**CLS** (Cumulative Layout Shift) the cumulative offset layout  
+**SI**  (Speed Index)  
   
 **NPM package manager**  
 https://www.digitalocean.com/community/tutorials/how-to-use-node-js-modules-with-npm-and-package-json
