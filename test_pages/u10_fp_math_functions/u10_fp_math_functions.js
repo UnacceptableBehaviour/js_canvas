@@ -15,6 +15,7 @@ var rafCount = 0;
 var rafStartTime = 0;
 var rafFinishTime = 0;
 var rafFrameTime = 0;
+var rafTotalTimeStart = 0;
 var rafTotalTime = 0;
 var rafHighWatermark = 0;
 var rafLowWatermark = 10000;
@@ -27,6 +28,20 @@ function resetWatermarks() {
   cl('Watermarks - RESET');
   rafHighWatermark = 0;
   rafLowWatermark = 10000;
+}
+function resetMetrics() { 
+  cl('Metrics - RESET');
+  rafCount = 0;
+  rafStartTime = 0;
+  rafFinishTime = 0;
+  rafFrameTime = 0;
+  rafTotalTimeStart = performance.now();  
+  rafTotalTime = 0;
+  rafHighWatermark = 0;
+  rafLowWatermark = 10000;
+  rafAveFrameTime = 0;
+  rafBuckets = [];
+  rafEvents = 0;
 }
 
 const EQU_COLOR = 0;
@@ -92,7 +107,7 @@ const sketch = ({ context, width, height }) => {
   }
   
   cl('setTimeout(resetWatermarks)')
-  setTimeout(resetWatermarks, 5000);
+  setTimeout(resetMetrics, 5000);
   
   return ({ context, width, height }) => {
     rafStartTime = performance.now();                                           //
@@ -101,8 +116,8 @@ const sketch = ({ context, width, height }) => {
     context.fillStyle = 'beige';
     context.fillRect(0, 0, width, height);
     
-    for (let t = 0; t < mathTiles.length; t++) {
-    //for (let t = 0; t < 6; t++) {
+    //for (let t = 0; t < mathTiles.length; t++) {
+    for (let t = 0; t < 6; t++) {
       mathTiles[t].draw(context);
       mathTiles[t].update();
     }
@@ -123,16 +138,17 @@ const sketch = ({ context, width, height }) => {
     }                                                                           //
     if (rafCount % 60 === 0) {                                                  //
       cl(performance.now());                                                    //
-      cl(`This frame:   ${rafFrameTime}`);                                      //
-      cl(`Average frame:${rafAveFrameTime}`);                                   //
-      cl(`Low tide:     ${rafLowWatermark}`);                                   //
-      cl(`High tide:    ${rafHighWatermark}`);                                  //
+      cl(`This frame:    ${rafFrameTime}`);                                     //
+      cl(`Average frame: ${rafAveFrameTime}`);                                  //
+      cl(`Low tide:      ${rafLowWatermark}`);                                  //
+      cl(`High tide:     ${rafHighWatermark}`);                                 //
+      cl(`rafCount:      ${rafCount}`);                                         //
+      cl(`totalTime:     ${performance.now() - rafTotalTimeStart}`);            //
       cl('rafBuckets');                                                         //
       cl(rafBuckets);                                                           //
     }
   };
 };
-
 
 
 class MathsTile {

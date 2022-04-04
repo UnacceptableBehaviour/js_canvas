@@ -21,14 +21,6 @@ Sit tiles evenly in available display area.
 Code starting to look a bit more presentable.  
 [CODE: 12 tiles 4x3](https://github.com/UnacceptableBehaviour/js_canvas/blob/f061f6283458a79b2545d58a226f466026898292/test_pages/u10_fp_math_functions/u10_fp_math_functions.js).  
   
-### 3. How to do metrics on requestAnimationFrame (RAF) call?
-Add paint metrics. Take a baseline.  
-Add mode to draw lines from adjacent points, instead of dots.  
-Paint on internal object canvas and copy to main canvas to clip MathTile.
-Redo metrics, improved?  
-  
-### X. How to add unit tests maybe?
-  
 **Some experiments:**  
 | 1 | 2 | 3 | 
 | - | - | - | 
@@ -41,6 +33,65 @@ Redo metrics, improved?
   
 To see short animation navigate [here]() and click DOWNLOAD for mp4. (Ver: add HASH)
   
+### 3. How to do metrics on requestAnimationFrame (RAF) call?
+Add paint metrics. Take a baseline.  
+Add mode to draw lines from adjacent points, instead of dots.  
+Paint on internal object canvas and copy to main canvas to clip MathTile.  
+Redo metrics, improved?
+  
+Initial metrics using ```performance.now()``` using high & low watermarks to get a feel for size of bucket bands,
+a counter bucket with 1ms slots:
+```
+  cl('setTimeout(resetWatermarks)')
+  setTimeout(resetMetrics, 5000);
+  
+  return ({ context, width, height }) => {
+    rafStartTime = performance.now();                                           //
+    // metrics - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -//
+    
+    context.fillStyle = 'beige';
+    context.fillRect(0, 0, width, height);
+    
+    //for (let t = 0; t < mathTiles.length; t++) {
+    for (let t = 0; t < 6; t++) {
+      mathTiles[t].draw(context);
+      mathTiles[t].update();
+    }
+  
+    // metrics - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -//
+    rafFinishTime = performance.now();                                          //
+    rafCount++;                                                                 //
+    rafFrameTime = rafFinishTime - rafStartTime;                                //
+    rafTotalTime += rafFrameTime;                                               //
+    rafAveFrameTime = rafTotalTime / rafCount;                                  //
+    if (rafFrameTime < rafLowWatermark) rafLowWatermark = rafFrameTime;         //
+    if (rafFrameTime > rafHighWatermark) rafHighWatermark = rafFrameTime;       //
+    let idx = Math.floor(rafFrameTime);                                         //
+    if (rafBuckets[idx] === undefined)                                          //
+      rafBuckets[idx] = 1;                                                      //
+    else{                                                                       //
+      rafBuckets[idx]++;                                                        //
+    }                                                                           //
+    if (rafCount % 60 === 0) {                                                  //
+      cl(performance.now());                                                    //
+      cl(`This frame:    ${rafFrameTime}`);                                     //
+      cl(`Average frame: ${rafAveFrameTime}`);                                  //
+      cl(`Low tide:      ${rafLowWatermark}`);                                  //
+      cl(`High tide:     ${rafHighWatermark}`);                                 //
+      cl(`rafCount:      ${rafCount}`);                                         //
+      cl(`totalTime:     ${performance.now() - rafTotalTimeStart}`);            //
+      cl('rafBuckets');                                                         //
+      cl(rafBuckets);                                                           //
+    }
+  };
+```
+Test with 6 & 12 tile - quick check to see if there are any overheads I'm unaware of:
+  
+| 6 tiles | 12 tiles |
+| - | - |
+| ![6 tile metrics](https://github.com/UnacceptableBehaviour/js_canvas/blob/master/test_pages/u10_fp_math_functions/images/metrics_6_tiles.png) | ![12 tile metrics](https://github.com/UnacceptableBehaviour/js_canvas/blob/master/test_pages/u10_fp_math_functions/images/metrics_12_tiles.png) |
+  
+### X. How to add unit tests maybe?
 
 
 # Resources
