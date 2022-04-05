@@ -90,18 +90,21 @@ Test with 6 & 12 tile - quick check to see if there are any overheads I'm unawar
   
 ### 4. Make Optimisations
 Add mode to draw lines from adjacent points, instead of circles/dots for each point.  
-Paint on internal object canvas and copy to main canvas to clip MathTile.
-Or use clipping.
-Redo metrics, improved?
+Paint on internal object canvas and copy to main canvas to clip MathTile.  
+Or use clipping.  
+Redo metrics, improved?  
 
 # Resources
-**Text Metrics**  
+**Text Metrics - measuring text attributes**  
 https://developer.mozilla.org/en-US/docs/Web/API/TextMetrics
+  
+**Canvas Ref**
+https://www.w3schools.com/tags/ref_canvas.asp
   
 **Canvas - Clipping**  
 https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/clip
 
-**Chrome Performance Analysis**
+**Chrome Performance Analysis**  
 https://www.codetd.com/en/article/9044611  
 **FP**  (First Paint) for the first time to draw  
 **FCP** (First Contentful Paint) for the first time content to draw  
