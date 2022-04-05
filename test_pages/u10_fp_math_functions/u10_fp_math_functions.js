@@ -116,8 +116,8 @@ const sketch = ({ context, width, height }) => {
     context.fillStyle = 'beige';
     context.fillRect(0, 0, width, height);
     
-    //for (let t = 0; t < mathTiles.length; t++) {
-    for (let t = 0; t < 6; t++) {
+    for (let t = 0; t < mathTiles.length; t++) {
+    //for (let t = 0; t < 6; t++) {
       mathTiles[t].draw(context);
       mathTiles[t].update();
     }
@@ -152,6 +152,10 @@ const sketch = ({ context, width, height }) => {
 
 
 class MathsTile {
+  static CIRCLE_DOT = 0;
+  static LINE_BUG = 1;
+  static LINE = 2;
+  
   constructor(x, y, size, equationCallback, title, color ){
     this.x = x;
     this.y = y;
@@ -205,15 +209,31 @@ class MathsTile {
     context.fillStyle = this.radialColor;
     context.fill();
 
-    // TODO make line from last dot to dot - do paint metrics first
-    // waveform dots
+    let paintChoice =  MathsTile.CIRCLE_DOT;
+    let paintChoice =  MathsTile.LINE_BUG;
+    let paintChoice =  MathsTile.LINE;
+
+    switch (paintChoice) {
+      case MathsTile.CIRCLE_DOT:
+        break;
+      case MathsTile.LINE_BUG:
+        break;
+      case MathsTile.LINE:
+        break;
+    }    
     let index = this.offset;
+    let nextPoint = index + 1;
+    if (nextPoint >= this.w) nextPoint = 0;
     for (let step = 0; step < this.w; step += 2) {
       // draw a dot per step
       context.beginPath();
       context.fillStyle = 'grey';
-      context.arc(this.x + step, this.y + this.h/2 + this.yValues[index], this.waveDotWidth, 0, Math.PI*2);      
-      context.fill();
+      context.moveTo(this.x + step, this.y + this.h/2 + this.yValues[index]);
+      context.lineTo(this.x + nextPoint, this.y + this.h/2 + this.yValues[nextPoint]);
+      context.stroke();
+      //context.line from step for x values  and index to nextPoint for y values
+      //context.arc(this.x + step, this.y + this.h/2 + this.yValues[index], this.waveDotWidth, 0, Math.PI*2);      
+      //context.fill();
       index++; 
       if (index >= this.w) index = 0;
     }
