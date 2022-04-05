@@ -209,7 +209,7 @@ class MathsTile {
     context.fillStyle = this.radialColor;
     context.fill();
 
-    //  let paintChoice =  MathsTile.CIRCLE_DOT;
+    //let paintChoice =  MathsTile.CIRCLE_DOT;
     //let paintChoice =  MathsTile.LINE_BUG;
     let paintChoice =  MathsTile.LINE;
     let index;
