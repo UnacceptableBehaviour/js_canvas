@@ -93,10 +93,28 @@ Test with 6 & 12 tile - quick check to see if there are any overheads I'm unawar
   
 ### 4. Make Optimisations
 Add mode to draw lines from adjacent points, instead of circles/dots for each point.  
-Paint on internal object canvas and copy to main canvas to clip MathTile.  
+Paint on internal object canvas and copy to main canvas to clip MathTile.   
 Or use clipping.  
-Redo metrics, improved?  
+Redo metrics, improved? - YES  
+  
+| Use copy canvas to clip Tile | Use context.clip(path) to clip tile |
+| - | - |
+| ![canvas](https://github.com/UnacceptableBehaviour/js_canvas/blob/master/test_pages/u10_fp_math_functions/images/metrics_12_tiles_clip_w_copy_canvas.png) | ![clip func](https://github.com/UnacceptableBehaviour/js_canvas/blob/master/test_pages/u10_fp_math_functions/images/metrics_12_tiles_clip_w_ctx_clip.png) |
+  
+Using context.clip(path) much faster than creating an internal canvas for each tile and copying it.
+In fact using clipping makes drawing 12 tiles faster than drawing 6 w/o clipping. 
+```
+context.save();
+let clipRegion = new Path2D();                  // create clipping region
+clipRegion.rect(this.x,this.y, this.w,this.h);  // x,y,w,h
+context.clip(clipRegion,"nonzero");
 
+// drawing activity
+
+context.restore();                              // clear clipping region
+```
+  
+  
 # Resources
 **Text Metrics - measuring text attributes**  
 https://developer.mozilla.org/en-US/docs/Web/API/TextMetrics
