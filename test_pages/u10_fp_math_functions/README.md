@@ -114,6 +114,14 @@ context.clip(clipRegion,"nonzero");
 context.restore();                              // clear clipping region
 ```
   
+| Tiles | clipping? | type            | rafCount | LowWM / ms  | Average / ms | HighWM / ms  |
+| - | - | - | - | - | - | - |
+|  6    | no        | -               | 5640     | 2.09        | 3.66         | 14.39        |
+| 12    | no        | -               | 3180     | 4.5         | 7.38         | 92.4         |
+| 12    | yes       | cpy canvas      | 4980     | 12.4        | 18.4         | 96.5         |
+| 12    | yes       | ctx.clip(path)  | 5400     | 5.59        | 8.41         | 64.2         |
+  
+  
   
 # Resources
 **Text Metrics - measuring text attributes**  
