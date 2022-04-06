@@ -189,8 +189,6 @@ class MathsTile {
     // data source canvas
     // TODO create local canvas to clip drawing
     this.tileCanvas = document.createElement('canvas');
-    this.tileCanvas.width = this.w;
-    this.tileCanvas.height = this.h;
     this.tileContext = this.tileCanvas.getContext('2d');
   }
   
@@ -201,18 +199,19 @@ class MathsTile {
     let fontSize = (this.h/10).toString();
     context.font = `${fontSize}px Arial`;    // was serif
     
-    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
-    // drwa graph & circle to local context then copy over - clipping v1
-    this.tileContext.lineWidth = 2;
-    this.tileContext.fillStyle = 'beige';
-    this.tileContext.fillRect(0, 0, this.w, this.h);
-
+    //context.translate(this.x, this.y);  
+    context.lineWidth = 2;    
+    
+    let clipRegion = new Path2D();
+    clipRegion.rect(this.x,this.y, this.w,this.h); // x,y,w,h
+    context.clip(clipRegion,"nonzero");
+    
     // circle    
-    this.tileContext.beginPath();
+    context.beginPath();
     let ballRadius = Math.abs(this.yValues[this.offset]) * this.ballScale;
-    this.tileContext.arc(0 + this.w/2, 0 + this.h/2, ballRadius, 0, Math.PI*2);    
-    this.tileContext.fillStyle = this.radialColor;
-    this.tileContext.fill();
+    context.arc(this.x + this.w/2, this.y + this.h/2, ballRadius, 0, Math.PI*2);    
+    context.fillStyle = this.radialColor;
+    context.fill();
 
     let index = this.offset;
     let nextPoint = index + 1;
@@ -221,27 +220,28 @@ class MathsTile {
     for (let step = 0; step < this.w; step++) {
     //for (let step = 0; step < 5 ; step++) {
       // draw a dot per step
-      this.tileContext.beginPath();
-      this.tileContext.fillStyle = 'grey';
-      this.tileContext.lineWidth = 2;
-      this.tileContext.moveTo(0 + step, 0 + this.h/2 + this.yValues[index]);
-      this.tileContext.lineTo(0 + step + 1, 0 + this.h/2 + this.yValues[nextPoint]); 
-      this.tileContext.stroke();
+      context.beginPath();
+      context.fillStyle = 'grey';
+      context.lineWidth = 2;
+      context.moveTo(this.x + step, this.y + this.h/2 + this.yValues[index]);
+      context.lineTo(this.x + step + 1, this.y + this.h/2 + this.yValues[nextPoint]); 
+      context.stroke();
       
       index++;
       nextPoint = index + 1;
       if (index >= this.w) index = 0;                    
-      if (nextPoint >= this.w) nextPoint = 0; 
+      if (nextPoint >= this.w) nextPoint = 0;
     }
-
+    context.restore();  // clear clipping region
+    
+    context.save();
     if (this.border) {
       // border - guideline for now
-      this.tileContext.beginPath();
-      //context.rect(this.x,this.y, this.w,this.h);
-      this.tileContext.rect(0,0, this.w,this.h);
-      this.tileContext.strokeStyle = 'black';
-      this.tileContext.lineWidth = 3;
-      this.tileContext.stroke();
+      context.beginPath();
+      context.rect(this.x,this.y, this.w,this.h);
+      context.strokeStyle = 'black';
+      context.lineWidth = 1;
+      context.stroke();
     }
     if (this.titleOn) {      
       //placeCentreText(ctx, text, xl, xr, y, color, fontSize, lnW = 2)
@@ -267,13 +267,7 @@ class MathsTile {
       context.fillStyle = 'blue';
       context.arc(0, 0, 5, 0, 2*Math.PI);
       context.fill();       
-    }
-    
-    
-    // copy this.tileContext (graph & ball) to context
-    context.drawImage(this.tileCanvas, this.x,this.y);
-    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    
+    }    
     context.restore();
   }
     
