@@ -48,7 +48,44 @@ const EQU_COLOR = 0;
 const EQU_TITLE = 1;
 const EQU_EQUATION = 2;
 //              color     title                            anonymous maths function taking radians
-var equA = [[ '#F4EC00', 'tan(x)',                        (rad) => { return Math.tan(rad); } ],
+var equA = [
+            [ '#F4EC00', 'tan(x)',                        (rad) => { return Math.tan(rad); } ],
+            [ '#99650D', 'sin(x)',                        (rad) => { return Math.sin(rad); } ],
+            [ '#E89E00', 'cos(x)',                        (rad) => { return Math.cos(rad); } ],            
+            [ '#5E2100', 'sin(sin(x)^8)',                 (rad) => { return Math.sin(Math.pow(8, Math.sin(rad))); } ],
+            [ '#600000', '(sqrt(x)/x + sqrt(x)/2) / 5',   (rad) => { return (Math.sqrt(rad)/rad + Math.sqrt(rad)/2) /5; } ],
+            [ '#630E32', 'floor((sin(rad) * 5) +1) / 5))',(rad) => { return (Math.floor((Math.sin(rad) * 5) +1) /5); } ],
+            [ '#840919', 'sin(rad) + cos(rad)/4',         (rad) => { return Math.sin(rad) + Math.cos(rad*4)/4; } ],
+            [ '#AA842A', 'sin(x*10)',                     (rad) => { return Math.sin(rad*10); } ],
+            [ '#C17700', 'sin(x)+cos(rad*10)/4',          (rad) => { return Math.sin(rad)+Math.cos(rad*10)/4; } ],
+            [ '#F4C300', 'sec(x)',                        (rad) => { return (1 / Math.cos(rad)) /20; } ],
+            [ '#93832F', 'cos(sin(x)^4)',                 (rad) => { return Math.cos(Math.pow(4, Math.sin(rad))); } ],
+            [ '#3D2409', 'f(x)',                          (rad) => { return (Math.sqrt(rad)/rad + Math.sqrt(rad)/2) /3 + (Math.sin(rad*10)/4); }  ],
+            [ '#F4EC00', 'tan(x)',                        (rad) => { return Math.tan(rad); } ],
+            [ '#99650D', 'sin(x)',                        (rad) => { return Math.sin(rad); } ],
+            [ '#E89E00', 'cos(x)',                        (rad) => { return Math.cos(rad); } ],            
+            [ '#5E2100', 'sin(sin(x)^8)',                 (rad) => { return Math.sin(Math.pow(8, Math.sin(rad))); } ],
+            [ '#600000', '(sqrt(x)/x + sqrt(x)/2) / 5',   (rad) => { return (Math.sqrt(rad)/rad + Math.sqrt(rad)/2) /5; } ],
+            [ '#630E32', 'floor((sin(rad) * 5) +1) / 5))',(rad) => { return (Math.floor((Math.sin(rad) * 5) +1) /5); } ],
+            [ '#840919', 'sin(rad) + cos(rad)/4',         (rad) => { return Math.sin(rad) + Math.cos(rad*4)/4; } ],
+            [ '#AA842A', 'sin(x*10)',                     (rad) => { return Math.sin(rad*10); } ],
+            [ '#C17700', 'sin(x)+cos(rad*10)/4',          (rad) => { return Math.sin(rad)+Math.cos(rad*10)/4; } ],
+            [ '#F4C300', 'sec(x)',                        (rad) => { return (1 / Math.cos(rad)) /20; } ],
+            [ '#93832F', 'cos(sin(x)^4)',                 (rad) => { return Math.cos(Math.pow(4, Math.sin(rad))); } ],
+            [ '#3D2409', 'f(x)',                          (rad) => { return (Math.sqrt(rad)/rad + Math.sqrt(rad)/2) /3 + (Math.sin(rad*10)/4); }  ],
+            [ '#F4EC00', 'tan(x)',                        (rad) => { return Math.tan(rad); } ],
+            [ '#99650D', 'sin(x)',                        (rad) => { return Math.sin(rad); } ],
+            [ '#E89E00', 'cos(x)',                        (rad) => { return Math.cos(rad); } ],            
+            [ '#5E2100', 'sin(sin(x)^8)',                 (rad) => { return Math.sin(Math.pow(8, Math.sin(rad))); } ],
+            [ '#600000', '(sqrt(x)/x + sqrt(x)/2) / 5',   (rad) => { return (Math.sqrt(rad)/rad + Math.sqrt(rad)/2) /5; } ],
+            [ '#630E32', 'floor((sin(rad) * 5) +1) / 5))',(rad) => { return (Math.floor((Math.sin(rad) * 5) +1) /5); } ],
+            [ '#840919', 'sin(rad) + cos(rad)/4',         (rad) => { return Math.sin(rad) + Math.cos(rad*4)/4; } ],
+            [ '#AA842A', 'sin(x*10)',                     (rad) => { return Math.sin(rad*10); } ],
+            [ '#C17700', 'sin(x)+cos(rad*10)/4',          (rad) => { return Math.sin(rad)+Math.cos(rad*10)/4; } ],
+            [ '#F4C300', 'sec(x)',                        (rad) => { return (1 / Math.cos(rad)) /20; } ],
+            [ '#93832F', 'cos(sin(x)^4)',                 (rad) => { return Math.cos(Math.pow(4, Math.sin(rad))); } ],
+            [ '#3D2409', 'f(x)',                          (rad) => { return (Math.sqrt(rad)/rad + Math.sqrt(rad)/2) /3 + (Math.sin(rad*10)/4); }  ],
+            [ '#F4EC00', 'tan(x)',                        (rad) => { return Math.tan(rad); } ],
             [ '#99650D', 'sin(x)',                        (rad) => { return Math.sin(rad); } ],
             [ '#E89E00', 'cos(x)',                        (rad) => { return Math.cos(rad); } ],            
             [ '#5E2100', 'sin(sin(x)^8)',                 (rad) => { return Math.sin(Math.pow(8, Math.sin(rad))); } ],
@@ -82,8 +119,11 @@ const settings = {
   //dimensions: [ 2000, 1224 ],
   animate: true
 };
+//const xTiles = 8;
+//const yTiles = 6 ;
 const xTiles = 4;
 const yTiles = 3 ;
+
 const minSpacerSize = 10;
 
 const sketch = ({ context, width, height }) => {  
@@ -94,18 +134,29 @@ const sketch = ({ context, width, height }) => {
   let cnt = 0;
   for (let rectX = 0; rectX < xTiles; rectX++) {
     for (let rectY = 0; rectY < yTiles; rectY++) {
-      mathTiles.push( new MathsTile(rectX * (size + spaceX) + (spaceX/2),   // centre w/ + (spaceX/2) offset
-                                    rectY * (size + spaceY),
-                                    size,
-                                    equA[cnt][EQU_EQUATION],
-                                    equA[cnt][EQU_TITLE],
-                                    equA[cnt][EQU_COLOR])
-                     );
-      cnt++;
+      if ((rectX === xTiles -1) && (rectY === yTiles -1)) { // put histo in last square
+        mathTiles.push( new RafHistogram(rectX * (size + spaceX) + (spaceX/2),   // centre w/ + (spaceX/2) offset
+                                      rectY * (size + spaceY),
+                                      size,
+                                      equA[cnt][EQU_EQUATION],
+                                      equA[cnt][EQU_TITLE],
+                                      equA[cnt][EQU_COLOR])
+                       );
+      } else {
+        mathTiles.push( new MathsTile(rectX * (size + spaceX) + (spaceX/2),   // centre w/ + (spaceX/2) offset
+                                      rectY * (size + spaceY),
+                                      size,
+                                      equA[cnt][EQU_EQUATION],
+                                      equA[cnt][EQU_TITLE],
+                                      equA[cnt][EQU_COLOR])
+                       );
+        
+      }
+      cnt++;        
       cl(`pX:${rectX * (size + spaceX)}, pY:${rectY * (size + spaceY)}, size:${size}, spcX-Y:${spaceX}-${spaceY}`);
     }
   }
-  
+    
   cl('setTimeout(resetWatermarks)')
   setTimeout(resetMetrics, 5000);
   
@@ -152,10 +203,6 @@ const sketch = ({ context, width, height }) => {
 
 
 class MathsTile {
-  static CIRCLE_DOT = 0;
-  static LINE_BUG = 1;
-  static LINE = 2;
-  
   constructor(x, y, size, equationCallback, title, color ){
     this.x = x;
     this.y = y;
@@ -327,6 +374,51 @@ class MathsTile {
     ctx.restore();
   }  
 }
+
+class RafHistogram extends MathsTile{
+  constructor(x, y, size, equationCallback, title, color ){
+    super(x, y, size, equationCallback, title, color);
+  }
+  
+  draw(context){
+      context.beginPath();
+      context.rect(this.x,this.y, this.w,this.h);
+      context.strokeStyle = 'CornflowerBlue';
+      context.lineWidth = 4;
+      context.stroke();
+      
+      let barW = this.w/rafBuckets.length;
+      let fsd = Math.max(...rafBuckets);
+      let unitH = this.y / fsd;
+      context.fillStyle = 'CornflowerBlue';
+      
+      for (let col = 0; col < rafBuckets.length; col++) {
+        let val = rafBuckets[col] ?? 0;
+        //cl(`x:${this.x + col*barW} - y:${this.y + this.h - val*unitH} w:${barW} h:${val*unitH}`);
+        cl(`t.y:${this.y} t.h:${this.h} val:${val} fsd:${fsd} uH: ${unitH} h:${val*unitH}`);
+        context.fillRect(this.x + col*barW, this.y + this.h - val*unitH, barW, val*unitH);
+      }
+      
+  }
+}
+
+    //if (rafBuckets[idx] === undefined)                                          //
+    //  rafBuckets[idx] = 1;                                                      //
+    //else{                                                                       //
+    //  rafBuckets[idx]++;                                                        //
+    //}                                                                           //
+    //if (rafCount % 60 === 0) {                                                  //
+    //  cl(performance.now());                                                    //
+    //  cl(`This frame:    ${rafFrameTime}`);                                     //
+    //  cl(`Average frame: ${rafAveFrameTime}`);                                  //
+    //  cl(`Low tide:      ${rafLowWatermark}`);                                  //
+    //  cl(`High tide:     ${rafHighWatermark}`);                                 //
+    //  cl(`rafCount:      ${rafCount}`);                                         //
+    //  cl(`totalTime:     ${performance.now() - rafTotalTimeStart}`);            //
+    //  cl('rafBuckets');                                                         //
+    //  cl(rafBuckets);                                                           //
+    //}
+
 
 //createpane();    
 canvasSketch(sketch, settings);
