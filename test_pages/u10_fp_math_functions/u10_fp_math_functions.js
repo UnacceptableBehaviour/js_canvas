@@ -383,19 +383,29 @@ class RafHistogram extends MathsTile{
   draw(context){
       context.beginPath();
       context.rect(this.x,this.y, this.w,this.h);
-      context.strokeStyle = 'CornflowerBlue';
-      context.lineWidth = 4;
+      context.strokeStyle = 'black';
+      context.lineWidth = 2;
       context.stroke();
+      context.strokeStyle = 'CornflowerBlue';
       
       let barW = this.w/rafBuckets.length;
-      let fsd = Math.max(...rafBuckets);
-      let unitH = this.y / fsd;
+      //let max = Math.max(...rafBuckets) ?? 1;   // return NaN if any element is not a number IE undefined!
+      
+      // we know the shape of this data - the peak is early in the array and happens once! < INCORRECT
+      //let max = Math.max(rafBuckets.filter(element => typeof element === 'number'));
+      let max = 1;
+      let maxAt = 1;
+      for (let i=0; i<rafBuckets.length; i++) {
+        if (max < rafBuckets[i]) { max = rafBuckets[i]; maxAt = i; }
+      }      
+      
+      let unitH = this.h / max;
       context.fillStyle = 'CornflowerBlue';
       
       for (let col = 0; col < rafBuckets.length; col++) {
         let val = rafBuckets[col] ?? 0;
         //cl(`x:${this.x + col*barW} - y:${this.y + this.h - val*unitH} w:${barW} h:${val*unitH}`);
-        cl(`t.y:${this.y} t.h:${this.h} val:${val} fsd:${fsd} uH: ${unitH} h:${val*unitH}`);
+        cl(`t.y:${this.y} t.h:${this.h} val:${val} max:${max} uH: ${unitH} h:${val*unitH}`);
         context.fillRect(this.x + col*barW, this.y + this.h - val*unitH, barW, val*unitH);
       }
       
