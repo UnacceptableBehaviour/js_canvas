@@ -119,10 +119,10 @@ const settings = {
   //dimensions: [ 2000, 1224 ],
   animate: true
 };
-//const xTiles = 8;
-//const yTiles = 6 ;
-const xTiles = 4;
-const yTiles = 3 ;
+const xTiles = 8;
+const yTiles = 6 ;
+//const xTiles = 4;
+//const yTiles = 3 ;
 
 const minSpacerSize = 10;
 
@@ -405,7 +405,7 @@ class RafHistogram extends MathsTile{
       for (let col = 0; col < rafBuckets.length; col++) {
         let val = rafBuckets[col] ?? 0;
         //cl(`x:${this.x + col*barW} - y:${this.y + this.h - val*unitH} w:${barW} h:${val*unitH}`);
-        cl(`t.y:${this.y} t.h:${this.h} val:${val} max:${max} uH: ${unitH} h:${val*unitH}`);
+        //cl(`t.y:${this.y} t.h:${this.h} val:${val} max:${max} uH: ${unitH} h:${val*unitH}`);
         context.fillRect(this.x + col*barW, this.y + this.h - val*unitH, barW, val*unitH);
       }
       
