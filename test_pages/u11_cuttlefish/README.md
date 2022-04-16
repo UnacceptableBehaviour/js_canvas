@@ -10,8 +10,8 @@ At the bottom full spectrum reflection - **leucophores** contain spherical prote
   
   
 ![cuttlefish chomato/irido/leuco phores stack image](https://github.com/UnacceptableBehaviour/js_canvas/blob/master/test_pages/u11_cuttlefish/images/graphic_j_nanoph-2021-0102_fig_001.jpg)  
-[Source](https://www.degruyter.com/document/doi/10.1515/nanoph-2021-0102/html) - 
   
+[Source](https://www.degruyter.com/document/doi/10.1515/nanoph-2021-0102/html) - 
 https://www.degruyter.com/document/doi/10.1515/nanoph-2021-0102/html
   
 ## Markup examples quick ref edit in each template:
