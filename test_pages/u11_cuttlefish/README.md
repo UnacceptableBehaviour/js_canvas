@@ -1,5 +1,15 @@
-# JS Visualisation Tests Template
-Basic template to create JS visiulasation tests - copy '_template' direcory & go.  
+# Thoughts - Cuttlefish
+This pulsing image [from FP ex 4](https://github.com/UnacceptableBehaviour/js_canvas/tree/master/test_pages/u10_fp_math_functions) 
+reminded me of cuttlefish skin, might make an interesting project:  
+![lots-blobs](https://github.com/UnacceptableBehaviour/js_canvas/blob/master/test_pages/u11_cuttlefish/images/2022.04.15-18.26.14.png)
+  
+Apparently cuttlefish have 3 layers of chromatophores, yellow closest to the surface then red then brown [@ 20sec to 1m20](https://www.youtube.com/watch?v=zf0bEJoEfQ8).  
+Then the Iridophores (red, green, blue and pink) are the cells that are made up of stacks of thin protein plates that function as multilayer reflectors,
+At the bottom full spectrum reflection - leucophores contain spherical protein assemblages that scatter light equally well throughout the visible, IR and UV parts of the spectrum.
+  
+![cuttlefish chomato/irido/leuco phores stack image](https://github.com/UnacceptableBehaviour/js_canvas/blob/master/test_pages/u11_cuttlefish/images/graphic_j_nanoph-2021-0102_fig_001.jpg)  
+[Source](https://www.degruyter.com/document/doi/10.1515/nanoph-2021-0102/html) - 
+https://www.degruyter.com/document/doi/10.1515/nanoph-2021-0102/html
   
 ## Markup examples quick ref edit in each template:
   
@@ -19,29 +29,12 @@ Notes on experiments.
 To URL:
 [create_TOC_for_md.py](https://github.com/UnacceptableBehaviour/movie_picker/blob/master/create_TOC_for_md.py) 
   
-To image:  
-![Amoeba Dance](https://github.com/UnacceptableBehaviour/js_canvas/blob/master/test_pages/_template/amoeba-dance.png)  
-[Image credit to Memo Akten](http://www.memo.tv/works/amoeba-dance/)  
   
 ### Code
 ```
 > cd into directory: /path/js_canvas/test_pages/copy_of_template
 > open index.html
 ```
-
-### Table - Titles at top
-  
-name | notation | example
-| - | - | - | 
-**LOW** | - | -
-constant time		| O(1)						| Simple calculations, array lookups
-logarithmic time		| O(log n)					| Binary search
-quadratic time		| O(n^2)						| Bubble sort
-factorial time		| O(n!)						| Brute force travelling salesman
-**HIGH**  | - | [many more here - wikipedia](https://en.wikipedia.org/wiki/Time_complexity#Table_of_common_time_complexities)
-
-
-
 
 
 # Resources
