@@ -85,8 +85,8 @@ class Canvas {
   constructor(parent = document.body, width = settings.dimensions[0], height = settings.dimensions[1]) {
     console.log(`Canvas:\nparent: ${parent} - ${document.body}`);
     this.canvas = document.createElement('canvas');
-    this.canvas.width = width;
-    this.canvas.height = height;
+    this.canvas.width = window.innerWidth;
+    this.canvas.height = window.innerHeight;
     parent.appendChild(this.canvas);
     this.ctx = this.canvas.getContext('2d');
   }
