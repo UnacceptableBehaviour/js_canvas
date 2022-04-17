@@ -121,6 +121,19 @@ context.restore();                              // clear clipping region
 | 12    | yes       | cpy canvas      | 4980     | 12.4        | 18.4         | 96.5         |
 | 12    | yes       | ctx.clip(path)  | 5400     | 5.59        | 8.41         | 64.2         |
   
+![HistogramTile Added]()
+  
+### 5. Understanding the Profiler
+Grey dotted line that delimits the 16.6ms anim. frm. never lines up with Animation Frame Fired.  
+What triggers Animation Frame Fired, is this not a HW timer? Hows this working?  
+  
+The HEAP memory use has a sawtooth pattern, is this continuous allocation & garbage collection?  
+  
+What does Partially Presented Frame mean? (yellow stripes)  
+  
+  
+  
+  
   
   
 # Resources
