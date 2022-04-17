@@ -3,7 +3,7 @@ Course notes from [Creative Coding: Making Visuals with JavaScript](https://www.
 course which I recommend 100%. A great introduction to a modern programming language [javascript](https://eloquentjavascript.net/) and creative art.
   
 For each lesson in the course theres an **IMAGE** of the final page / canvas, **DESCRIPTION**, **CODE** and **README**  
-The last 3 but one: **Diffusion Rainbow**, **Flock of Boids** & **Shortest Path Moving Target** are experiments with the framework.  
+The last 3 but one: **Diffusion Rainbow**, **Flock of Boids**, **Shortest Path Moving Target** & **Dynamic of Maths Equations** are experiments with the framework.  
 The last one being a markup of some code written by [Josh Bradley](https://joshbradley.me/object-collisions-with-canvas/) 
 with comments added to remind me how it works when I come back to it! Plus turned it into a module.  
   
@@ -25,7 +25,7 @@ with comments added to remind me how it works when I come back to it! Plus turne
 | ^ Code @ [u8_fp_flock.js](https://github.com/UnacceptableBehaviour/js_canvas/blob/master/test_pages/u8_fp_flock/u8_fp_flock.js) | [README.md](https://github.com/UnacceptableBehaviour/js_canvas/blob/master/test_pages/u8_fp_flock/README.md) | 
 | ![sk](https://github.com/UnacceptableBehaviour/js_canvas/blob/master/test_pages/u9_fp_random_target/images/2022.03.13-19.32.50.png) | Highlighted shortest path in multinode animated network. Basic Node.js library implementation for algorithm support. |
 | ^ Code @ [u9_fp_random_target.js](https://github.com/UnacceptableBehaviour/js_canvas/blob/b06198baa8ad26ff6bed0ed5eb69aad1f8cb5b8f/test_pages/u9_fp_random_target/u9_fp_random_target.js) - [anim](https://github.com/UnacceptableBehaviour/js_canvas/blob/master/test_pages/u9_fp_random_target/anim/2022.03.15-19.28.22.mov) | [README.md](https://github.com/UnacceptableBehaviour/js_canvas/blob/master/test_pages/u9_fp_random_target/README.md) |
-| ![sk](https://github.com/UnacceptableBehaviour/js_canvas/blob/master/test_pages/u10_fp_math_functions/images/2022.03.31-14.51.30.png) | Add description |
+| ![sk](https://github.com/UnacceptableBehaviour/js_canvas/blob/master/test_pages/u10_fp_math_functions/images/2022.03.31-14.51.30.png) | EXP No4:<br>Dynamic of Maths Equations<br>Try and reproduce something like this page [here](https://soulwire.co.uk/math-for-motion/) from Justin Windle - A creative developer whos work I was introduced to doing this course. |
 | ^ Code @ [u10_fp_math_functions.js](https://github.com/UnacceptableBehaviour/js_canvas/blob/master/test_pages/u10_fp_math_functions/u10_fp_math_functions.js) - [anim]() | [README.md](https://github.com/UnacceptableBehaviour/js_canvas/blob/master/test_pages/u10_fp_math_functions/README.md) |
 | ![sk](https://github.com/UnacceptableBehaviour/js_canvas/blob/master/js_lib_test_CORS_issue/collision_canvas.png) | This a great post about how to use vanilla canvas - clean code and well explained steps to creating it. [Canvas - javascript & html - Josh Bradley](https://joshbradley.me/object-collisions-with-canvas/) - [code](https://gist.github.com/joshuabradley012/bd2bc96bbe1909ca8555a792d6a36e04)|
 | ^ Code @ [collision_canvas.js](https://github.com/UnacceptableBehaviour/js_canvas/blob/master/js_lib_test_CORS_issue/collision_canvas.js) | [README.md](https://github.com/UnacceptableBehaviour/js_canvas/blob/master/js_lib_test_CORS_issue/README.md) | 

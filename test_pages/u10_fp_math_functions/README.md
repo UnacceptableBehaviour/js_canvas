@@ -1,4 +1,4 @@
-# End of Course Project 4 - Maths Tiles
+# End of Course Project 4 - Dynamic of Maths Equations (Maths Tiles)
 ### Aim
 Try and reproduce something like this page [here](https://soulwire.co.uk/math-for-motion/) from Justin Windle
 A creative developer whos work I was introduced to doing this course.

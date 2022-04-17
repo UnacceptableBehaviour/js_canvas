@@ -3,8 +3,6 @@ const random = require('canvas-sketch-util/random');
 const math = require('canvas-sketch-util/math');
 const Tweakpane = require('tweakpane');
 
-const algos = require('../u9_fp_random_target/lib/algos_sftest');
-
 // helpers
 const cl = (str) => {
   console.log(str);
@@ -45,6 +43,8 @@ function resetMetrics() {
   rafEvents = 0;
 }
 
+// TODO - equations loop at #12 tan(x) is a repeat of #0
+// MAKE ALL UNIQUE
 const EQU_COLOR = 0;
 const EQU_TITLE = 1;
 const EQU_EQUATION = 2;
@@ -243,10 +243,6 @@ class MathsTile {
       this.yValues.push(y);
     }
     
-    // data source canvas
-    // TODO create local canvas to clip drawing
-    this.tileCanvas = document.createElement('canvas');
-    this.tileContext = this.tileCanvas.getContext('2d');
   }
   
   draw(context){
@@ -460,11 +456,6 @@ class RafHistogram extends MathsTile{
   
 }
 
-
-
 //createpane();    
 canvasSketch(sketch, settings);
 
-// TODO remove all refs - not used
-cl('IMPORTED MODULE: algos_sftest');
-algos.algoInfo();
