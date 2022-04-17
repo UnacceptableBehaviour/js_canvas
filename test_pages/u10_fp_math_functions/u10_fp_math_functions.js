@@ -119,10 +119,12 @@ const settings = {
   //dimensions: [ 2000, 1224 ],
   animate: true
 };
-const xTiles = 8;
-const yTiles = 6 ;
-//const xTiles = 4;
-//const yTiles = 3 ;
+//const xTiles = 8;
+//const yTiles = 6;
+const xTiles = 4;
+const yTiles = 3;
+//const xTiles = 3;
+//const yTiles = 2;
 
 const minSpacerSize = 10;
 
@@ -201,7 +203,8 @@ const sketch = ({ context, width, height }) => {
   };
 };
 
-
+// TODO - break MathTile into Tile and MathsTile extends Tile
+// RafHistogram extends Tile - remove equation refs
 class MathsTile {
   constructor(x, y, size, equationCallback, title, color ){
     this.x = x;
@@ -291,7 +294,7 @@ class MathsTile {
       context.stroke();
     }
     if (this.titleOn) {      
-      //placeCentreText(ctx, text, xl, xr, y, color, fontSize, lnW = 2)
+      //placeCentreText(context, text, xl, xr, y, color, fontSize, lnW = 2)
       // left parameter in so can pull it out as a function later
       this.placeCentreText(context, this.title, this.x, this.x + this.w, this.y + this.h, 'black', this.fontSz);
     }
@@ -334,47 +337,49 @@ class MathsTile {
     this.border = tf && true;
   }
   
-  placeCentreText(ctx, text, xl, xr, y, color, fontSize, lnW = 2) {    
+  placeCentreText(context, text, xl, xr, y, color, fontSize, lnW = 2) {    
     //   |                                 |      < fontSize(epth)
     //   xl             texts              xr
     //                    |
     //                    ^ markMidddle
-    ctx.save();
+    context.save();
     
     // font def
-    ctx.font = `${fontSize}px Arial`;
-    ctx.textBaseline = 'middle'; // hanging
-    ctx.textAlign = 'center';
+    context.font = `${fontSize}px Arial`;
+    context.textBaseline = 'middle'; // hanging
+    context.textAlign = 'center';
       
     let markMiddle = xl + (xr - xl) / 2;
-    let textMetrics = ctx.measureText(text);
+    let textMetrics = context.measureText(text);
     let textStart = markMiddle;
     
     if (this.textEdgeMarkers) {
       // place left vert line
-      ctx.beginPath();
-      ctx.lineWidth = lnW;
-      ctx.strokeStyle = color;
-      ctx.moveTo(xl, y);
-      ctx.lineTo(xl, y+fontSize);  // line depth - marker depth
-      ctx.stroke(); 
+      context.beginPath();
+      context.lineWidth = lnW;
+      context.strokeStyle = color;
+      context.moveTo(xl, y);
+      context.lineTo(xl, y+fontSize);  // line depth - marker depth
+      context.stroke(); 
     
       // place right vert line
-      ctx.beginPath();
-      ctx.lineWidth = lnW;
-      ctx.strokeStyle = color;
-      ctx.moveTo(xr, y);
-      ctx.lineTo(xr, y+fontSize);  // line depth - marker depth
-      ctx.stroke();
+      context.beginPath();
+      context.lineWidth = lnW;
+      context.strokeStyle = color;
+      context.moveTo(xr, y);
+      context.lineTo(xr, y+fontSize);  // line depth - marker depth
+      context.stroke();
     }
   
     // place text between if it fits below if not
-    ctx.fillStyle = color;
-    ctx.fillText(text, textStart, y+fontSize);
-    ctx.restore();
+    context.fillStyle = color;
+    context.fillText(text, textStart, y+fontSize);
+    context.restore();
   }  
 }
 
+// TODO - break MathTile into Tile and MathsTile extends Tile
+// RafHistogram extends Tile - remove equation refs
 class RafHistogram extends MathsTile{
   constructor(x, y, size, equationCallback, title, color ){
     super(x, y, size, equationCallback, title, color);
@@ -409,29 +414,50 @@ class RafHistogram extends MathsTile{
         context.fillRect(this.x + col*barW, this.y + this.h - val*unitH, barW, val*unitH);
       }
       
+      this.placeChartText(context, 'green');
   }
+  
+  placeChartText(context, color) {    
+    // place text left justified right half
+    context.save();
+    let text = [  'raf paint / ms ',
+                  ' ',
+                  `H: ${rafHighWatermark.toFixed(2)} `,
+                  //' ',
+                  `Av: ${rafAveFrameTime.toFixed(2)} `,
+                  //' ',
+                  `L: ${rafLowWatermark.toFixed(2)} `,
+                ];
+
+    let rows = text.length;
+    let fontSize = Math.floor(this.h / (rows * 2));
+    let padding = fontSize / 4;
+    let rowHeight = fontSize + padding;
+    let textStart = Math.floor(this.x + (this.w / 2));    
+    let rowZero = Math.floor(this.y + ((this.h - (rowHeight * rows)) / 2));
+    let maxWidth = this.w / 2;
+                
+    // font def
+    context.font = `${fontSize}px Arial`;
+    context.textBaseline = 'middle'; // hanging
+    context.textAlign = 'left';
+            
+    // place text between if it fits below if not
+    context.fillStyle = color;
+    for (let r=0; r<rows; r++) {
+      context.fillText(text[r], textStart, rowZero + rowHeight * r, maxWidth);
+    }
+    context.restore();
+
+  } 
+  
 }
 
-    //if (rafBuckets[idx] === undefined)                                          //
-    //  rafBuckets[idx] = 1;                                                      //
-    //else{                                                                       //
-    //  rafBuckets[idx]++;                                                        //
-    //}                                                                           //
-    //if (rafCount % 60 === 0) {                                                  //
-    //  cl(performance.now());                                                    //
-    //  cl(`This frame:    ${rafFrameTime}`);                                     //
-    //  cl(`Average frame: ${rafAveFrameTime}`);                                  //
-    //  cl(`Low tide:      ${rafLowWatermark}`);                                  //
-    //  cl(`High tide:     ${rafHighWatermark}`);                                 //
-    //  cl(`rafCount:      ${rafCount}`);                                         //
-    //  cl(`totalTime:     ${performance.now() - rafTotalTimeStart}`);            //
-    //  cl('rafBuckets');                                                         //
-    //  cl(rafBuckets);                                                           //
-    //}
 
 
 //createpane();    
 canvasSketch(sketch, settings);
 
+// TODO remove all refs - not used
 cl('IMPORTED MODULE: algos_sftest');
 algos.algoInfo();
