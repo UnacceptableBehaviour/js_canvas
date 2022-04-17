@@ -32,22 +32,25 @@ Notes on experiments.
 To URL:
 [create_TOC_for_md.py](https://github.com/UnacceptableBehaviour/movie_picker/blob/master/create_TOC_for_md.py) 
   
-  
-### Code
-```
-> cd into directory: /path/js_canvas/test_pages/copy_of_template
-> open index.html
-```
 
 
 # Resources
-#### Domestika - Creative Coding: Making Visuals with JavaScript
-https://www.domestika.org/auth/login#course_lesson_28425  
-[Creative Coding: Making Visuals with JavaScript](https://www.domestika.org/auth/login#course_lesson_28425)
-
-#### Markdown syntax (.md)
-https://www.markdownguide.org/basic-syntax/  
-
+**CEPHALOPODS - Cephalopod Camouflage: Cells and Organs of the Skin**  
+https://www.nature.com/scitable/topicpage/cephalopod-camouflage-cells-and-organs-of-the-144048968/  
+  
+**CEPHALOPODS - Dynamic pigmentary and structural coloration within cephalopod chromatophore organs**
+https://www.researchgate.net/publication/331451657_Dynamic_pigmentary_and_structural_coloration_within_cephalopod_chromatophore_organs  
+  
+**CEPHALOPODS - Unmixing octopus camouflage by multispectral mapping of Octopus bimaculoides’ chromatic elements**  
+https://www.degruyter.com/document/doi/10.1515/nanoph-2021-0102/html  
+  
+**VARIOUS MECHANISMS/SPECIES - Morphological and Physiological Colour Changes in the Animal Kingdom**  
+https://www.researchgate.net/publication/327311628_Morphological_and_Physiological_Colour_Changes_in_the_Animal_Kingdom
+  
+  
+  
+  
+  
 https://github.com/UnacceptableBehaviour/algorithms/blob/master/images/2022.03.13-19.57.14.png
 Some experiments:  
 | 1 | 2 | 3 | 4 |
