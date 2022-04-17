@@ -11,6 +11,7 @@ const cl = (str) => {
 };
 
 // paint metrics
+var paintMetricsEnabled = false;
 var rafCount = 0;
 var rafStartTime = 0;
 var rafFinishTime = 0;
@@ -136,7 +137,7 @@ const sketch = ({ context, width, height }) => {
   let cnt = 0;
   for (let rectX = 0; rectX < xTiles; rectX++) {
     for (let rectY = 0; rectY < yTiles; rectY++) {
-      if ((rectX === xTiles -1) && (rectY === yTiles -1)) { // put histo in last square
+      if ((paintMetricsEnabled) && ((rectX === xTiles -1) && (rectY === yTiles -1))) { // put histo in last square
         mathTiles.push( new RafHistogram(rectX * (size + spaceX) + (spaceX/2),   // centre w/ + (spaceX/2) offset
                                       rectY * (size + spaceY),
                                       size,
@@ -158,12 +159,16 @@ const sketch = ({ context, width, height }) => {
       cl(`pX:${rectX * (size + spaceX)}, pY:${rectY * (size + spaceY)}, size:${size}, spcX-Y:${spaceX}-${spaceY}`);
     }
   }
-    
-  cl('setTimeout(resetWatermarks)')
-  setTimeout(resetMetrics, 5000);
+  
+  if (paintMetricsEnabled) {
+    cl('setTimeout(resetWatermarks)');
+    setTimeout(resetMetrics, 5000);
+  } else {
+    cl('* * * paintMetrics DISABLED * * *');
+  }
   
   return ({ context, width, height }) => {
-    rafStartTime = performance.now();                                           //
+    if (paintMetricsEnabled) rafStartTime = performance.now();                  //
     // metrics - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -//
     
     context.fillStyle = 'beige';
@@ -176,29 +181,31 @@ const sketch = ({ context, width, height }) => {
     }
   
     // metrics - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -//
-    rafFinishTime = performance.now();                                          //
-    rafCount++;                                                                 //
-    rafFrameTime = rafFinishTime - rafStartTime;                                //
-    rafTotalTime += rafFrameTime;                                               //
-    rafAveFrameTime = rafTotalTime / rafCount;                                  //
-    if (rafFrameTime < rafLowWatermark) rafLowWatermark = rafFrameTime;         //
-    if (rafFrameTime > rafHighWatermark) rafHighWatermark = rafFrameTime;       //
-    let idx = Math.floor(rafFrameTime);                                         //
-    if (rafBuckets[idx] === undefined)                                          //
-      rafBuckets[idx] = 1;                                                      //
-    else{                                                                       //
-      rafBuckets[idx]++;                                                        //
-    }                                                                           //
-    if (rafCount % 60 === 0) {                                                  //
-      cl(performance.now());                                                    //
-      cl(`This frame:    ${rafFrameTime}`);                                     //
-      cl(`Average frame: ${rafAveFrameTime}`);                                  //
-      cl(`Low tide:      ${rafLowWatermark}`);                                  //
-      cl(`High tide:     ${rafHighWatermark}`);                                 //
-      cl(`rafCount:      ${rafCount}`);                                         //
-      cl(`totalTime:     ${performance.now() - rafTotalTimeStart}`);            //
-      cl('rafBuckets');                                                         //
-      cl(rafBuckets);                                                           //
+    if (paintMetricsEnabled) {                                                  //
+      rafFinishTime = performance.now();                                        //
+      rafCount++;                                                               //
+      rafFrameTime = rafFinishTime - rafStartTime;                              //
+      rafTotalTime += rafFrameTime;                                             //
+      rafAveFrameTime = rafTotalTime / rafCount;                                //
+      if (rafFrameTime < rafLowWatermark) rafLowWatermark = rafFrameTime;       //
+      if (rafFrameTime > rafHighWatermark) rafHighWatermark = rafFrameTime;     //
+      let idx = Math.floor(rafFrameTime);                                       //
+      if (rafBuckets[idx] === undefined)                                        //
+        rafBuckets[idx] = 1;                                                    //
+      else{                                                                     //
+        rafBuckets[idx]++;                                                      //
+      }                                                                         //
+      if (rafCount % 60 === 0) {                                                //
+        cl(performance.now());                                                  //
+        cl(`This frame:    ${rafFrameTime}`);                                   //
+        cl(`Average frame: ${rafAveFrameTime}`);                                //
+        cl(`Low tide:      ${rafLowWatermark}`);                                //
+        cl(`High tide:     ${rafHighWatermark}`);                               //
+        cl(`rafCount:      ${rafCount}`);                                       //
+        cl(`totalTime:     ${performance.now() - rafTotalTimeStart}`);          //
+        cl('rafBuckets');                                                       //
+        cl(rafBuckets);                                                         //
+      }      
     }
   };
 };

@@ -123,16 +123,18 @@ context.restore();                              // clear clipping region
   
 ![HistogramTile Added](https://github.com/UnacceptableBehaviour/js_canvas/blob/master/test_pages/u10_fp_math_functions/images/2022.04.17-13.12.44.png)
   
-### 5. Understanding the Profiler
-![profiler-image](https://github.com/UnacceptableBehaviour/js_canvas/blob/master/test_pages/u10_fp_math_functions/images/Screenshot%202022-04-17%20at%2013.32.21.png)
-Grey dotted line that delimits the 16.6ms anim. frm. never lines up with Animation Frame Fired.  
-What triggers Animation Frame Fired, is this not a HW timer? Hows this working?  
   
-The HEAP memory use has a sawtooth pattern, is this continuous allocation & garbage collection?  
+![profiler-image](https://github.com/UnacceptableBehaviour/js_canvas/blob/master/test_pages/u10_fp_math_functions/images/Screenshot%202022-04-17%20at%2013.32.21.png)
+  
+### 5. Understanding the Profiler
+**Good intro vid** - [here](https://www.youtube.com/watch?v=KWM5wxlDuis)
+  
+The HEAP memory use has a sawtooth pattern, is this continuous allocation & garbage collection?
+[Follow this up - Heap]
+[Investigate Mem Alloc by Function](https://developer.chrome.com/docs/devtools/memory-problems/#allocation-profile) 
   
 What does Partially Presented Frame mean? (yellow stripes)  
-  
-  
+[FROM](https://developer.chrome.com/docs/devtools/evaluate-performance/reference/) "Chrome did its best to render at least some visual updates in time. For example, in case the work of the main thread of the renderer process (canvas animation) is late but the compositor thread (scrolling) is in time."
   
   
   
@@ -146,7 +148,10 @@ https://www.w3schools.com/tags/ref_canvas.asp
   
 **Canvas - Clipping**  
 https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/clip
-
+  
+**Performance features reference**  
+https://developer.chrome.com/docs/devtools/evaluate-performance/reference/  
+  
 **Chrome Performance Analysis**  
 https://www.codetd.com/en/article/9044611  
 **FP**  (First Paint) for the first time to draw  
@@ -160,6 +165,9 @@ https://www.codetd.com/en/article/9044611
 **FID** (First Input Delay) Input delay for the first time  
 **CLS** (Cumulative Layout Shift) the cumulative offset layout  
 **SI**  (Speed Index)  
+  
+**Guide to Chrome's performance profiler - CodeMad TV**  
+https://www.youtube.com/watch?v=KWM5wxlDuis  
   
 **NPM package manager**  
 https://www.digitalocean.com/community/tutorials/how-to-use-node-js-modules-with-npm-and-package-json
