@@ -121,9 +121,10 @@ context.restore();                              // clear clipping region
 | 12    | yes       | cpy canvas      | 4980     | 12.4        | 18.4         | 96.5         |
 | 12    | yes       | ctx.clip(path)  | 5400     | 5.59        | 8.41         | 64.2         |
   
-![HistogramTile Added]()
+![HistogramTile Added](https://github.com/UnacceptableBehaviour/js_canvas/blob/master/test_pages/u10_fp_math_functions/images/2022.04.17-13.12.44.png)
   
 ### 5. Understanding the Profiler
+![profiler-image](https://github.com/UnacceptableBehaviour/js_canvas/blob/master/test_pages/u10_fp_math_functions/images/Screenshot%202022-04-17%20at%2013.32.21.png)
 Grey dotted line that delimits the 16.6ms anim. frm. never lines up with Animation Frame Fired.  
 What triggers Animation Frame Fired, is this not a HW timer? Hows this working?  
   
