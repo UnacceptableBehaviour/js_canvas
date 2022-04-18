@@ -41,7 +41,44 @@ const EQU_COLOR = 0;
 const EQU_TITLE = 1;
 const EQU_EQUATION = 2;
 //              color     title                            anonymous maths function taking radians
-var equA = [[ '#F4EC00', 'tan(x)',                        (rad) => { return Math.tan(rad); } ],
+var equA = [
+            [ '#F4EC00', 'tan(x)',                        (rad) => { return Math.tan(rad); } ],
+            [ '#99650D', 'sin(x)',                        (rad) => { return Math.sin(rad); } ],
+            [ '#E89E00', 'cos(x)',                        (rad) => { return Math.cos(rad); } ],            
+            [ '#5E2100', 'sin(sin(x)^8)',                 (rad) => { return Math.sin(Math.pow(8, Math.sin(rad))); } ],
+            [ '#600000', '(sqrt(x)/x + sqrt(x)/2) / 5',   (rad) => { return (Math.sqrt(rad)/rad + Math.sqrt(rad)/2) /5; } ],
+            [ '#630E32', 'floor((sin(rad) * 5) +1) / 5))',(rad) => { return (Math.floor((Math.sin(rad) * 5) +1) /5); } ],
+            [ '#840919', 'sin(rad) + cos(rad)/4',         (rad) => { return Math.sin(rad) + Math.cos(rad*4)/4; } ],
+            [ '#AA842A', 'sin(x*10)',                     (rad) => { return Math.sin(rad*10); } ],
+            [ '#C17700', 'sin(x)+cos(rad*10)/4',          (rad) => { return Math.sin(rad)+Math.cos(rad*10)/4; } ],
+            [ '#F4C300', 'sec(x)',                        (rad) => { return (1 / Math.cos(rad)) /20; } ],
+            [ '#93832F', 'cos(sin(x)^4)',                 (rad) => { return Math.cos(Math.pow(4, Math.sin(rad))); } ],
+            [ '#3D2409', 'f(x)',                          (rad) => { return (Math.sqrt(rad)/rad + Math.sqrt(rad)/2) /3 + (Math.sin(rad*10)/4); }  ],
+            [ '#F4EC00', 'tan(x)',                        (rad) => { return Math.tan(rad); } ],
+            [ '#99650D', 'sin(x)',                        (rad) => { return Math.sin(rad); } ],
+            [ '#E89E00', 'cos(x)',                        (rad) => { return Math.cos(rad); } ],            
+            [ '#5E2100', 'sin(sin(x)^8)',                 (rad) => { return Math.sin(Math.pow(8, Math.sin(rad))); } ],
+            [ '#600000', '(sqrt(x)/x + sqrt(x)/2) / 5',   (rad) => { return (Math.sqrt(rad)/rad + Math.sqrt(rad)/2) /5; } ],
+            [ '#630E32', 'floor((sin(rad) * 5) +1) / 5))',(rad) => { return (Math.floor((Math.sin(rad) * 5) +1) /5); } ],
+            [ '#840919', 'sin(rad) + cos(rad)/4',         (rad) => { return Math.sin(rad) + Math.cos(rad*4)/4; } ],
+            [ '#AA842A', 'sin(x*10)',                     (rad) => { return Math.sin(rad*10); } ],
+            [ '#C17700', 'sin(x)+cos(rad*10)/4',          (rad) => { return Math.sin(rad)+Math.cos(rad*10)/4; } ],
+            [ '#F4C300', 'sec(x)',                        (rad) => { return (1 / Math.cos(rad)) /20; } ],
+            [ '#93832F', 'cos(sin(x)^4)',                 (rad) => { return Math.cos(Math.pow(4, Math.sin(rad))); } ],
+            [ '#3D2409', 'f(x)',                          (rad) => { return (Math.sqrt(rad)/rad + Math.sqrt(rad)/2) /3 + (Math.sin(rad*10)/4); }  ],
+            [ '#F4EC00', 'tan(x)',                        (rad) => { return Math.tan(rad); } ],
+            [ '#99650D', 'sin(x)',                        (rad) => { return Math.sin(rad); } ],
+            [ '#E89E00', 'cos(x)',                        (rad) => { return Math.cos(rad); } ],            
+            [ '#5E2100', 'sin(sin(x)^8)',                 (rad) => { return Math.sin(Math.pow(8, Math.sin(rad))); } ],
+            [ '#600000', '(sqrt(x)/x + sqrt(x)/2) / 5',   (rad) => { return (Math.sqrt(rad)/rad + Math.sqrt(rad)/2) /5; } ],
+            [ '#630E32', 'floor((sin(rad) * 5) +1) / 5))',(rad) => { return (Math.floor((Math.sin(rad) * 5) +1) /5); } ],
+            [ '#840919', 'sin(rad) + cos(rad)/4',         (rad) => { return Math.sin(rad) + Math.cos(rad*4)/4; } ],
+            [ '#AA842A', 'sin(x*10)',                     (rad) => { return Math.sin(rad*10); } ],
+            [ '#C17700', 'sin(x)+cos(rad*10)/4',          (rad) => { return Math.sin(rad)+Math.cos(rad*10)/4; } ],
+            [ '#F4C300', 'sec(x)',                        (rad) => { return (1 / Math.cos(rad)) /20; } ],
+            [ '#93832F', 'cos(sin(x)^4)',                 (rad) => { return Math.cos(Math.pow(4, Math.sin(rad))); } ],
+            [ '#3D2409', 'f(x)',                          (rad) => { return (Math.sqrt(rad)/rad + Math.sqrt(rad)/2) /3 + (Math.sin(rad*10)/4); }  ],
+            [ '#F4EC00', 'tan(x)',                        (rad) => { return Math.tan(rad); } ],
             [ '#99650D', 'sin(x)',                        (rad) => { return Math.sin(rad); } ],
             [ '#E89E00', 'cos(x)',                        (rad) => { return Math.cos(rad); } ],            
             [ '#5E2100', 'sin(sin(x)^8)',                 (rad) => { return Math.sin(Math.pow(8, Math.sin(rad))); } ],
@@ -75,8 +112,8 @@ const settings = {
   //dimensions: [ 2000, 1224 ],
   animate: true
 };
-const xTiles = 4;
-const yTiles = 3;
+const xTiles = 4;     //portrait
+const yTiles = 6;
 const minSpacerSize = 10;
 
 console.log(`Main: ${document.body}`);
@@ -88,11 +125,11 @@ class Canvas {
     this.canvas.width = window.innerWidth;
     this.canvas.height = window.innerHeight;
     parent.appendChild(this.canvas);
-    this.ctx = this.canvas.getContext('2d');
+    this.context = this.canvas.getContext('2d');
   }
 
   getContext(){
-    return this.ctx;
+    return this.context;
   }
   
   getCanvasWH(){
@@ -143,6 +180,11 @@ class MathsTile {
     //context.translate(this.x, this.y);  
     context.lineWidth = 2;    
 
+    // M1
+    let clipRegion = new Path2D();
+    clipRegion.rect(this.x,this.y, this.w,this.h); // x,y,w,h
+    context.clip(clipRegion,"nonzero");
+    
     // circle    
     context.beginPath();
     let ballRadius = Math.abs(this.yValues[this.offset]) * this.ballScale;
@@ -150,28 +192,38 @@ class MathsTile {
     context.fillStyle = this.radialColor;
     context.fill();
 
-    // TODO make line from last dot to dot - do paint metrics first
-    // waveform dots
     let index = this.offset;
-    for (let step = 0; step < this.w; step += 2) {
+    let nextPoint = index + 1;
+    if (nextPoint >= this.w) nextPoint = 0;
+    
+    for (let step = 0; step < this.w; step++) {
+    //for (let step = 0; step < 5 ; step++) {
       // draw a dot per step
       context.beginPath();
       context.fillStyle = 'grey';
-      context.arc(this.x + step, this.y + this.h/2 + this.yValues[index], this.waveDotWidth, 0, Math.PI*2);      
-      context.fill();
-      index++; 
-      if (index >= this.w) index = 0;
+      context.lineWidth = 2;
+      context.moveTo(this.x + step, this.y + this.h/2 + this.yValues[index]);
+      context.lineTo(this.x + step + 1, this.y + this.h/2 + this.yValues[nextPoint]); 
+      context.stroke();
+      
+      index++;
+      nextPoint = index + 1;
+      if (index >= this.w) index = 0;                    
+      if (nextPoint >= this.w) nextPoint = 0;
     }
+    context.restore();  // clear clipping region
 
+    context.save();
     if (this.border) {
       // border - guideline for now
       context.beginPath();
       context.rect(this.x,this.y, this.w,this.h);
       context.strokeStyle = 'black';
+      context.lineWidth = 1;
       context.stroke();
     }
     if (this.titleOn) {      
-      //placeCentreText(ctx, text, xl, xr, y, color, fontSize, lnW = 2)
+      //placeCentreText(context, text, xl, xr, y, color, fontSize, lnW = 2)
       // left parameter in so can pull it out as a function later
       this.placeCentreText(context, this.title, this.x, this.x + this.w, this.y + this.h, 'black', this.fontSz);
     }
@@ -214,44 +266,44 @@ class MathsTile {
     this.border = tf && true;
   }
   
-  placeCentreText(ctx, text, xl, xr, y, color, fontSize, lnW = 2) {    
+  placeCentreText(context, text, xl, xr, y, color, fontSize, lnW = 2) {    
     //   |                                 |      < fontSize(epth)
     //   xl             texts              xr
     //                    |
     //                    ^ markMidddle
-    ctx.save();
+    context.save();
     
     // font def
-    ctx.font = `${fontSize}px Arial`;
-    ctx.textBaseline = 'middle'; // hanging
-    ctx.textAlign = 'center';
+    context.font = `${fontSize}px Arial`;
+    context.textBaseline = 'middle'; // hanging
+    context.textAlign = 'center';
       
     let markMiddle = xl + (xr - xl) / 2;
-    let textMetrics = ctx.measureText(text);
+    let textMetrics = context.measureText(text);
     let textStart = markMiddle;
     
     if (this.textEdgeMarkers) {
       // place left vert line
-      ctx.beginPath();
-      ctx.lineWidth = lnW;
-      ctx.strokeStyle = color;
-      ctx.moveTo(xl, y);
-      ctx.lineTo(xl, y+fontSize);  // line depth - marker depth
-      ctx.stroke(); 
+      context.beginPath();
+      context.lineWidth = lnW;
+      context.strokeStyle = color;
+      context.moveTo(xl, y);
+      context.lineTo(xl, y+fontSize);  // line depth - marker depth
+      context.stroke(); 
     
       // place right vert line
-      ctx.beginPath();
-      ctx.lineWidth = lnW;
-      ctx.strokeStyle = color;
-      ctx.moveTo(xr, y);
-      ctx.lineTo(xr, y+fontSize);  // line depth - marker depth
-      ctx.stroke();
+      context.beginPath();
+      context.lineWidth = lnW;
+      context.strokeStyle = color;
+      context.moveTo(xr, y);
+      context.lineTo(xr, y+fontSize);  // line depth - marker depth
+      context.stroke();
     }
   
     // place text between if it fits below if not
-    ctx.fillStyle = color;
-    ctx.fillText(text, textStart, y+fontSize);
-    ctx.restore();
+    context.fillStyle = color;
+    context.fillText(text, textStart, y+fontSize);
+    context.restore();
   }  
 }
 
