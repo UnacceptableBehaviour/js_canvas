@@ -3,7 +3,9 @@ from pathlib import Path
 
 from pprint import pprint
 
-
+# source = ''       # when using root - check
+source = 'docs'     # when using /docs as source - removes docs from the path
+repo_name = 'js_canvas'
 project_root = Path('/Users/simon/a_syllabus/lang/html_css_js/js_canvas/docs/static')
 
 # const FILES_TO_CACHE = [
@@ -20,7 +22,7 @@ def get_list_of_potential_files_to_cache(search_path, cache_root):
         if p.is_dir() or '.DS_Store' in str(p): continue
         comps = str(p).split(dir_before_root)
         cache_targets = Path(comps[1])
-        print(f"  '{cache_targets}',")
+        print(f"  '/{repo_name}{cache_targets}',")
         paths.append(cache_targets)    
     
     print('];')
