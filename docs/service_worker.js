@@ -26,9 +26,9 @@ const FILES_TO_CACHE = [
   '/js_canvas/',
   '/js_canvas/index.html',
   //'/js_canvas/service_worker.js',
-  //'/js_canvas/static/favicon.ico',
-  //'/js_canvas/static/manifest.json',
-  //'/js_canvas/static/offline.html',
+  '/js_canvas/static/favicon.ico',
+  '/js_canvas/static/manifest.json',
+  '/js_canvas/static/offline.html',
   //'/js_canvas/static/css/bootstrap.min.css',
   //'/js_canvas/static/css/styles.css',
   //'/js_canvas/static/css/weigh_in.css',
@@ -83,6 +83,8 @@ self.addEventListener('install', (evt) => {
   evt.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
       console.log('[ServiceWorker] Pre-caching offline page');
+      console.log(`[ServiceWorker] No of FILES_TO_CACHE:${FILES_TO_CACHE.length}`);
+      
       return cache.addAll(FILES_TO_CACHE);
     })
   );
