@@ -25,10 +25,10 @@ const CACHE_NAME = `dtk-gitio-cache_${verion_numner_passed_in}`;  // TODO add ve
 const FILES_TO_CACHE = [
   '/js_canvas/',
   '/js_canvas/index.html',
+  //'/js_canvas/service_worker.js',
   '/js_canvas/static/favicon.ico',
   '/js_canvas/static/manifest.json',
   '/js_canvas/static/offline.html',
-  '/js_canvas/static/service_worker.js',
   '/js_canvas/static/css/bootstrap.min.css',
   '/js_canvas/static/css/styles.css',
   '/js_canvas/static/css/weigh_in.css',
