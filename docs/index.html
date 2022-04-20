@@ -38,7 +38,7 @@
         <script>
           if ('serviceWorker' in navigator) {            
             window.addEventListener('load', () => {
-              navigator.serviceWorker.register('service_worker.js')
+              navigator.serviceWorker.register('/js_canvas/service_worker.js', {scope: '/js_canvas/'})
                   .then((reg) => {
                     console.log('SW registered - scope:', reg.scope); // reg.scope: http://localhost:50999/                    
                     console.log('Service worker registered.', reg);              
