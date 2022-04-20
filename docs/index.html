@@ -10,7 +10,10 @@
         <meta name="viewport"    content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <meta name="mood-mapper" content="pwa mood & food tracker">
         <meta name="theme-color" content="#C30085"/>        
-                
+
+        <!-- Web app manifest -->
+        <link rel="manifest" href="static/manifest.json">
+        
         <!-- iOS -->
         <link rel="apple-touch-icon"                       href="static/images/icons/icon-192x192.png">
         <meta name="apple-mobile-web-app-capable"          content="yes">
@@ -29,6 +32,19 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>    
         <script src="https://use.fontawesome.com/releases/v5.7.0/js/all.js"></script>-->
         <script src='static/js_modules/dtk_storage.js'></script>
+        <script>
+          if ('serviceWorker' in navigator) {            
+            window.addEventListener('load', () => {
+              navigator.serviceWorker.register('service_worker.js')
+                  .then((reg) => {
+                    console.log('SW registered - scope:', reg.scope); // reg.scope: http://localhost:50999/                    
+                    console.log('Service worker registered.', reg);              
+                  });
+            });
+          } else {
+            console.log("serviceWorker NOT in navigator");
+          }          
+        </script>        
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
     </head>
