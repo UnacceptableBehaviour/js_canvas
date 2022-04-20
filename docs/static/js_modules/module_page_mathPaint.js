@@ -22,7 +22,7 @@ function load_page() {
 }
 
 export function getButtonInfo(containers){
-  console.log(`module_page_blank.js: registering ${pageId} - to ${containers.main}`);
+  console.log(`module_page_mathPaint.js: registering ${pageId} - to ${containers.main}`);
   
   pageTarget = containers.main;
   
