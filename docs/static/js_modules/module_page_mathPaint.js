@@ -8,9 +8,10 @@
 var pageTarget;
 var pageId = 'mathPaint_page';
 var htmlSource = 'static/html/mathPaint.html';
+var jsSource = 'static/js_modules/content/mathTiles.js';
 
 function load_page() {
-  console.log(`module_page_mathPaint.js: ${pageId} - loading: ${htmlSource}`);
+  console.log(`module_page_mathPaint.js: ${pageId} - loading html: ${htmlSource}`);
   
   fetch(htmlSource)
   .then(function(response) {
@@ -18,6 +19,21 @@ function load_page() {
   })
   .then(function(body) {
     document.getElementById(pageTarget).innerHTML = body;
+  });
+
+  
+  console.log(`module_page_mathPaint.js: ${pageId} - loading JS: ${jsSource}`);
+  
+  fetch(jsSource)
+  .then(function(response) {
+    return response.text();
+  })
+  .then(function(text) {    
+    var script = document.createElement("script");
+    script.innerHTML = text;
+    document.getElementById(pageTarget).appendChild(script);
+    //or
+    //document.body.appendChild(script);    
   });
 }
 

@@ -116,11 +116,14 @@ const xTiles = 4;
 const yTiles = 3;
 const minSpacerSize = 10;
 
-console.log(`Main: ${document.body}`);
+
+
+var targetContainer = document.getElementById('maths_paint');
+console.log(`mathTiles.js targetContainer: ${targetContainer}`);
 
 class Canvas {
-  constructor(parent = document.body, width = settings.dimensions[0], height = settings.dimensions[1]) {
-    console.log(`Canvas:\nparent: ${parent} - ${document.body}`);
+  constructor(parent = targetContainer, width = settings.dimensions[0], height = settings.dimensions[1]) {
+    console.log(`Canvas:\nparent: ${parent} - document.body:${document.body}`);
     this.canvas = document.createElement('canvas');
     this.canvas.width = window.innerWidth;
     this.canvas.height = window.innerHeight;
