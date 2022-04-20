@@ -7,7 +7,7 @@
   //</script>
 var pageTarget;
 var pageId = 'home_page';
-var htmlSource = '/static/html/home.html';
+var htmlSource = 'static/html/home.html';
 
 function load_page() {
   console.log(`module_page_home.js: ${pageId} - loading: ${htmlSource}`);
@@ -29,7 +29,7 @@ export function getButtonInfo(containers){
   var buttonInfo = {};
 
   buttonInfo.callback = load_page;
-  buttonInfo.image    = '../static/images/svg/home.svg'; // or '' < will use text if no image
+  buttonInfo.image    = 'static/images/svg/home.svg'; // or '' < will use text if no image
   buttonInfo.alt      = 'nutritable';
   buttonInfo.text     = 'NT';
   

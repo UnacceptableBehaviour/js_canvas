@@ -7,7 +7,7 @@
   //</script>
 var pageTarget;
 var pageId = 'tracker_page';
-var htmlSource = '/static/html/tracker.html';
+var htmlSource = 'static/html/tracker.html';
 
 function load_page() {
   console.log(`module_page_tracker.js: ${pageId} - loading: ${htmlSource}`);
@@ -29,7 +29,7 @@ export function getButtonInfo(containers){
   var buttonInfo = {};
 
   buttonInfo.callback = load_page;
-  buttonInfo.image    = '/static/images/svg/pencil.svg'; // or '' < will use text if no image
+  buttonInfo.image    = 'static/images/svg/pencil.svg'; // or '' < will use text if no image
   buttonInfo.alt      = 'tracker';
   buttonInfo.text     = 'TR';
   

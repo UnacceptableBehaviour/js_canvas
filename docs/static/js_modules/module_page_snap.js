@@ -7,7 +7,7 @@
   //</script>
 var pageTarget;
 var pageId = 'snap_page';
-var htmlSource = '/static/html/snap.html';
+var htmlSource = 'static/html/snap.html';
 
 function load_page() {
   console.log(`module_page_snap.js: ${pageId} - loading: ${htmlSource}`);
@@ -29,7 +29,7 @@ export function getButtonInfo(containers){
   var buttonInfo = {};
 
   buttonInfo.callback = load_page;
-  buttonInfo.image    = '../static/images/svg/snap.svg'; // or '' < will use text if no image
+  buttonInfo.image    = 'static/images/svg/snap.svg'; // or '' < will use text if no image
   buttonInfo.alt      = 'photo';
   buttonInfo.text     = 'IMG';
   

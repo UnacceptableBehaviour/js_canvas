@@ -34,19 +34,6 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>    
         <script src="https://use.fontawesome.com/releases/v5.7.0/js/all.js"></script>-->
         <script src='static/js_modules/dtk_storage.js'></script>
-<!--        <script>
-          if ('serviceWorker' in navigator) {            
-            window.addEventListener('load', () => {
-              navigator.serviceWorker.register('/service_worker.js')
-                  .then((reg) => {
-                    console.log('SW registered - scope:', reg.scope); // reg.scope: http://localhost:50999/                    
-                    console.log('Service worker registered.', reg);              
-                  });
-            });
-          } else {
-            console.log("serviceWorker NOT in navigator");
-          }          
-        </script>-->
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
     </head>
@@ -55,25 +42,6 @@
 
     <body>
 
-<!--    <button id='bt_home'>
-            <a href="{{url_for('pwa_tracker_home')}}"><img src="static/images/PNG/check1.png" alt="tick" srcset="static/images/svg/check1.svg"></a>
-        </button>
-
-        <button id='bt_db_snap'>
-            <a href="{{url_for('not_implemented')}}"><img src="static/images/PNG/camera.png" alt="tick" srcset="static/images/svg/camera.svg"></a>                    
-        </button>
-        
-        <button id='bt_weigh_in'>
-            <a href="{{url_for('weigh_in')}}"><img src="static/images/PNG/balance-scale.png" alt="tick" srcset="static/images/svg/balance-scale.svg"></a>
-        </button>
-        
-        <button id='bt_settings'>
-            <a href="{{url_for('settings')}}"><img src="static/images/PNG/cog.png" alt="tick" srcset="static/images/svg/cog.svg"></a>
-        </button>
-
-
-        {% block content %}
-        {% endblock %}-->
 
         <div class="container pwa_page" id="pwa_navbar">
         <!--<div class="row padding pwa_page" id="pwa_navbar">-->

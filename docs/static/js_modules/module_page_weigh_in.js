@@ -7,7 +7,7 @@
   //</script>
 var pageTarget;
 var pageId = 'weigh_in_page';
-var htmlSource = '/static/html/weigh_in.html';
+var htmlSource = 'static/html/weigh_in.html';
 
 function load_page() {
   console.log(`module_page_weigh_in.js: ${pageId} - loading: ${htmlSource}`);
@@ -29,7 +29,7 @@ export function getButtonInfo(containers){
   var buttonInfo = {};
 
   buttonInfo.callback = load_page;
-  buttonInfo.image    = '../static/images/svg/weigh_in.svg'; // or '' < will use text if no image
+  buttonInfo.image    = 'static/images/svg/weigh_in.svg'; // or '' < will use text if no image
   buttonInfo.alt      = 'weigh in';
   buttonInfo.text     = 'WI';
   
