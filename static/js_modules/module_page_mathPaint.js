@@ -8,7 +8,7 @@
 var pageTarget;
 var pageId = 'mathPaint_page';
 var htmlSource = 'static/html/mathPaint.html';
-var jsSource = 'static/js_modules/content/mathTiles.js';
+var jsSource = 'test_pages/u10_fp_math_functions/mathTiles.js';
 
 function load_page() {
   console.log(`module_page_mathPaint.js: ${pageId} - loading html: ${htmlSource}`);
