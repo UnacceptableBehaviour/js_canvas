@@ -112,9 +112,11 @@ const settings = {
   //dimensions: [ 2000, 1224 ],
   animate: true
 };
-const xTiles = 4;     //portrait
-const yTiles = 6;
+const xTiles = 4;     
+const yTiles = 3;
 const minSpacerSize = 10;
+
+
 
 var targetContainer = document.getElementById('maths_paint');
 console.log(`mathTiles.js targetContainer: ${targetContainer}`);

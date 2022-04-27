@@ -1,12 +1,15 @@
-const canvasSketch = require('canvas-sketch');
-const math = require('canvas-sketch-util/math');
-const random = require('canvas-sketch-util/random');
-const Tweakpane = require('tweakpane');
-
 // helpers
 const cl = (str) => {
   console.log(str);
 }
+
+cl(`u8_fp_flock.js: loading - ${global.canvasSketch} - ${typeof(global.canvasSketch)} <`);
+
+//const canvasSketch = require('canvas-sketch');
+//const math = require('canvas-sketch-util/math');
+//const random = require('canvas-sketch-util/random');
+//const Tweakpane = require('tweakpane');
+
 
 class Vector {
   constructor(x, y, z){

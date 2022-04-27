@@ -6,13 +6,14 @@
   //  console.log(`recipe_t JS ${recipes[0]['ri_name']} - inline CONCLUDED`);  // sanity check      
   //</script>
 var pageTarget;
-var pageId = 'mathPaint_page';
-var htmlSource = 'static/html/mathPaint.html';
-var jsSource = 'test_pages/u10_fp_math_functions/mathTiles.js';
-var jsElementId = 'maths_paint';
+var pageId = 'boids_page';
+var htmlSource = 'static/html/boids.html';
+//var jsSource = 'test_pages/u8_fp_flock/u8_fp_flock.js';
+var jsSource = 'test_pages/u8_fp_flock/u8_fp_flock_exec_test.js';
+var jsElementId = 'flock_boids';
 
 function load_page() {
-  console.log(`module_page_mathPaint.js: ${pageId} - loading html: ${htmlSource}`);
+  console.log(`module_page_boids.js: ${pageId} - loading html: ${htmlSource}`);
   
   fetch(htmlSource)
   .then(function(response) {
@@ -23,7 +24,7 @@ function load_page() {
   });
 
   
-  console.log(`module_page_mathPaint.js: ${pageId} - loading JS: ${jsSource}`);
+  console.log(`module_page_boids.js: ${pageId} - loading JS: ${jsSource}`);
   
   fetch(jsSource)
   .then(function(response) {
@@ -31,6 +32,7 @@ function load_page() {
   })
   .then(function(text) {    
     var script = document.createElement("script");
+    script.setAttribute("type", "module");
     script.innerHTML = text;
     document.getElementById(jsElementId).appendChild(script);
     //or
@@ -39,7 +41,7 @@ function load_page() {
 }
 
 export function getButtonInfo(containers){
-  console.log(`module_page_mathPaint.js: registering ${pageId} - to ${containers.main}`);
+  console.log(`module_page_boids.js: registering ${pageId} - to ${containers.main}`);
   
   pageTarget = containers.main;
   
@@ -47,8 +49,8 @@ export function getButtonInfo(containers){
 
   buttonInfo.callback = load_page;
   buttonInfo.image    = ''; //'static/images/svg/blank.svg'; // or '' < will use text if no image
-  buttonInfo.alt      = 'mathPaint';
-  buttonInfo.text     = 'MP';
+  buttonInfo.alt      = 'flockBoids';
+  buttonInfo.text     = 'FB';
   
   return buttonInfo;
 }
