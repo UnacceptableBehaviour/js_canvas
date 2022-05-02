@@ -16,6 +16,18 @@ At the bottom full spectrum reflection - **LEUCOPHORES** contain spherical prote
 [Source](https://www.degruyter.com/document/doi/10.1515/nanoph-2021-0102/html) - 
 https://www.degruyter.com/document/doi/10.1515/nanoph-2021-0102/html
   
+  
+## Colour Cube - #995611
+Spectrum:   
+| R | G | B |  
+| - | - | - |  
+| FF | 00 | 00-FF |
+| 00-FF | 00 | FF |
+| 00 | 00-FF | FF |
+| 00 | FF | 00-FF |
+| 00-FF | FF | 00 |
+| FF | 00-FF | 00 |
+  
 ## Markup examples quick ref edit in each template:
   
 Some experiments:  
